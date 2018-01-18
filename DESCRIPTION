@@ -1,0 +1,14 @@
+Package: ghypner
+Type: Package
+Title: Generalised Hypergeometric Network Ensembles
+Version: 0.1.100118
+Date: as.POSIXlt(2017-12-04)
+Authors@R: person("Giona", "Casiraghi", email = "giona@ethz.ch",
+  role = c("aut", "cre"))
+Maintainer: Giona Casiraghi <giona@ethz.ch>
+Description: ...
+Depends: R (>= 2.10)
+License: AGPL-3
+Imports: 
+Suggests: BiasedUrn
+RoxygenNote: 6.0.1
