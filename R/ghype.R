@@ -81,14 +81,3 @@ as.ghype.list <- function(object, ...){
   class(model) <- 'ghype'
   return(model)
 }
-
-# as.ghype.nrm <- function(object, ...){
-#   model <- list(
-#     'xi'= object$xi,
-#     'omega' = object$omega,
-#     'directed' = object$directed,
-#     'selfloops' = object$selfloops
-#   )
-#   class(model) <- 'ghype'
-#   return(model)
-# }

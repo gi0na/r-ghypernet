@@ -16,7 +16,7 @@
 #' @keywords ~kwd1 ~kwd2
 #' @examples
 #'
-#'
+#' @export
 mat2vec.ix <- function(mat, directed,
                        selfloops) {
   # Returns the indices to
@@ -52,7 +52,7 @@ mat2vec.ix <- function(mat, directed,
 #' @keywords ~kwd1 ~kwd2
 #' @examples
 #'
-#'
+#' @export
 vec2mat <- function(vec,directed,selfloops,n){
   mat <- matrix(0,n,n)
   idx <- mat2vec.ix(mat,directed,selfloops)

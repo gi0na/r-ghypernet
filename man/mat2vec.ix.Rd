@@ -25,7 +25,6 @@ mat2vec.ix(mat, directed, selfloops)
 }
 \examples{
 
-
 }
 \references{
 ~put references to the literature/web site here ~

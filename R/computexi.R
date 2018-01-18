@@ -13,6 +13,7 @@
 #' @keywords ~kwd1 ~kwd2
 #' @examples
 #'
+#' @export
 ComputeXi <- function(adj, directed, selfloops) {
   # returns the matrix xi according to the nodes degrees
   Kin <- apply(adj, 2, sum)

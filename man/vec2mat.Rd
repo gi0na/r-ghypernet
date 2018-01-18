@@ -24,7 +24,6 @@ vec2mat(vec, directed, selfloops, n)
 }
 \examples{
 
-
 }
 \references{
 ~put references to the literature/web site here ~
