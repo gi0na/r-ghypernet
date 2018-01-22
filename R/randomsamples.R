@@ -9,20 +9,20 @@
 #' @export
 #'
 #' @examples
-RandomGraph <- function(nsamples, model, m, multinomial=NULL){
+RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL){
   directed <- model$directed
   selfloops <- model$selfloops
+  if(is.null(m))
+    m <- model$m
   idx <- mat2vec.ix(model$xi,directed,selfloops)
   omega <- model$omega[idx]
   xi <- model$xi[idx]
   if (is.null(multinomial)) {
     # number of colors and number of
     # links
-    ix <- mat2vec.ix(adj, directed,
-                     selfloops)
     if (requireNamespace("BiasedUrn",
-                         quietly = TRUE) && sum(ix) <
-        2000 && (sum(adj[ix])/sum(ix)) <
+                         quietly = TRUE) && sum(idx) <
+        2000 && (m/sum(idx)) <
         1) {
       multinomial <- FALSE
     } else {

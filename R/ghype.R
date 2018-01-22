@@ -42,12 +42,19 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     }
   }
 
-  model <- as.ghype(list('xi'= xi,
+  n <- nrow(object)
+  m <- sum(object[mat2vec.ix(object, directed, selfloops)])
+
+  model <- as.ghype(list('adj' = object,
+                         'xi'= xi,
                          'omega' = omega,
+                         'n' = n,
+                         'm' = m,
                          'directed' = directed,
                          'selfloops' = selfloops))
   return(model)
 }
+
 
 #' Title
 #'
@@ -73,11 +80,20 @@ as.ghype <- function(object, ...){
 #' @examples
 as.ghype.list <- function(object, ...){
   model <- list(
+    'adj' = object$adj,
+    'n' = object$n,
+    'm' = object$m,
     'xi'= object$xi,
     'omega' = object$omega,
     'directed' = object$directed,
-    'selfloops' = object$selfloops
+    'selfloops' = object$selfloops,
+    'loglikelihood' = object$loglikelihood
   )
+  if(is.null(model$loglikelihood) & !is.null(model$adj)){
+    model$loglikelihood <- logl(adj=model$adj, xi=model$xi,
+                                omega=model$omega, directed=model$directed,
+                                selfloops=model$selfloops)
+  }
   class(model) <- 'ghype'
   return(model)
 }

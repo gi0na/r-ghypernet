@@ -1,4 +1,4 @@
-Package: ghypner
+Package: hypernets
 Type: Package
 Title: Generalised Hypergeometric Network Ensembles
 Version: 0.1.100118
@@ -9,6 +9,6 @@ Maintainer: Giona Casiraghi <giona@ethz.ch>
 Description: ...
 Depends: R (>= 2.10)
 License: AGPL-3
-Imports: 
-Suggests: BiasedUrn
+Imports: parallel
+Suggests: BiasedUrn, igraph
 RoxygenNote: 6.0.1
