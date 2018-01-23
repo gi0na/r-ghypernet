@@ -75,7 +75,7 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' @export
 #'
 #' @examples
-BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, ...){
+BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, seed=NULL, ...){
 
   functionslist <- c(
     'page_rank',
@@ -95,7 +95,7 @@ BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=100
   }
 
   model <- ghype(object = graph, directed, selfloops, xi, omega)
-  rsamples <- RandomGraph(nsamples, model, length(igraph::E(g)))
+  rsamples <- RandomGraph(nsamples, model, length(igraph::E(g)), seed=seed)
   gsamples <- CreateIgGraphs(adjlist = rsamples, directed = directed, selfloops = selfloops)
   if(as.character(substitute(property)) %in% functionslist){
     dproperty <- sapply(X = gsamples, FUN = function(graph, ...){match.fun(FUN = property)(graph, ...)$vector}, ...)

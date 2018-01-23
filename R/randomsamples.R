@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL){
+RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   directed <- model$directed
   selfloops <- model$selfloops
   if(is.null(m))
@@ -28,6 +28,9 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL){
     } else {
       multinomial <- TRUE
     }
+  }
+  if(!is.null(seed)){
+    set.seed(seed)
   }
   if (multinomial) {
     p <- omega*xi/sum(omega*xi)
