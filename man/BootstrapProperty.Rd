@@ -5,10 +5,10 @@
 \title{Title}
 \usage{
 BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
-  xi = NULL, omega = NULL, ...)
+  xi = NULL, omega = NULL, m = NULL, seed = NULL, ...)
 }
 \arguments{
-\item{...}{}
+\item{seed}{}
 }
 \description{
 Title

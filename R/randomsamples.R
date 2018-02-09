@@ -38,8 +38,10 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   } else {
     rvec <- BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega)
   }
-  return(
-    lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n)
-    {vec2mat(vec = rvec[,cls], directed, selfloops,n)},
-    rvec=rvec, directed=directed, selfloops=selfloops,n=nrow(model$xi)))
+  graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n)
+  {vec2mat(vec = rvec[,cls], directed, selfloops,n)},
+  rvec=rvec, directed=directed, selfloops=selfloops,n=nrow(model$xi))
+  if(nsamples==1)
+    graphlist <- graphlist[[1]]
+  return(graphlist)
 }
