@@ -55,6 +55,41 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   return(model)
 }
 
+#' Title
+#'
+#' @param object
+#' @param directed
+#' @param selfloops
+#' @param xi
+#' @param omega
+#' @param unbiased
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
+
+  if(is.null(omega)){
+    if(unbiased){
+      omega <- matrix(1,nrow(object), ncol(object))
+    }
+  }
+
+  n <- nrow(xi)
+  m <- sqrt(sum(xi))
+
+  model <- as.ghype(list('adj' = object,
+                         'xi'= xi,
+                         'omega' = omega,
+                         'n' = n,
+                         'm' = m,
+                         'directed' = directed,
+                         'selfloops' = selfloops))
+  return(model)
+}
+
 
 #' Title
 #'
