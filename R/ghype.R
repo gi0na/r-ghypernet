@@ -34,6 +34,7 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   if(is.null(xi)){
     xi=ComputeXi(object,directed,selfloops)
   }
+
   if(is.null(omega)){
     if(unbiased){
       omega <- matrix(1,nrow(object), ncol(object))
@@ -42,7 +43,12 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     }
   }
 
-  n <- nrow(object)
+  if(nrow(object)==ncol(object)){
+    n <- nrow(object)
+  } else{
+    n <- nrow(object)+ncol(object)
+  }
+
   m <- sum(object[mat2vec.ix(object, directed, selfloops)])
 
   model <- as.ghype(list('adj' = object,

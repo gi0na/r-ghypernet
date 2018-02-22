@@ -24,11 +24,13 @@ mat2vec.ix <- function(mat, directed,
   # removing unused entries in the
   # case of undirected or no
   # selfloops graphs
-  if (!directed) {
-    mat[lower.tri(mat, !selfloops)] <- NA
-  } else {
-    if (!selfloops)
-      diag(mat) <- NA
+  if(nrow(mat)==ncol(mat)){
+    if (!directed) {
+      mat[lower.tri(mat, !selfloops)] <- NA
+    } else {
+      if (!selfloops)
+        diag(mat) <- NA
+    }
   }
   ix <- !is.na(mat)
   return(ix)
