@@ -28,5 +28,14 @@ isNetwork <- function(graph, directed, selfloops){
   null <- ghype(graph, directed, selfloops, unbiased = TRUE)
   n <- full$n
   df <- n*(n-!selfloops)/(1+!directed)
+  if(igraph::is.igraph(graph)){
+    if(igraph::is.bipartite(graph))
+      df <- sum(V(graph)$type)*sum(!V(graph)$type)
+  }
+  if(is.matrix(graph)){
+    if(nrow(graph)!=ncol(graph)){
+      df <- nrow(graph)*ncol(graph)
+    }
+  }
   return(llratiotest(null,full,df))
 }

@@ -19,21 +19,23 @@ ComputeXi <- function(adj, directed, selfloops) {
   Kin <- apply(adj, 2, sum)
   Kout <- apply(adj, 1, sum)
   xi <- tcrossprod(Kout, Kin)
-  if(!selfloops & directed){
-    diagxi <- diag(xi)
-    vbas <- floor( diagxi /(ncol(adj)-1))
-    diagxir <- diagxi -vbas*(ncol(adj)-1)
-    set.seed(10)
-    diag(xi) <- 0
-    xi <- #floor(
-      (xi+t(vxi(1:nrow(adj), diagxir, vbas, xi, adj))) #/(as.integer(!directed)+1))
-    # if(!directed){
-    # xi[upper.tri(xi,FALSE)] <- ceiling( apply( cbind(xi[upper.tri(xi,FALSE)], t( xi )[upper.tri(xi,FALSE)] ), 1, mean) )
-    # xi[lower.tri(xi,FALSE)] <- t( xi )[lower.tri(xi,FALSE)]
-    # }
-  } else {
-    if(!directed){
-      xi <- ceiling(xi/2)
+  if(nrow(adj)==ncol(adj)){
+    if(!selfloops & directed){
+      diagxi <- diag(xi)
+      vbas <- floor( diagxi /(ncol(adj)-1))
+      diagxir <- diagxi -vbas*(ncol(adj)-1)
+      set.seed(10)
+      diag(xi) <- 0
+      xi <- #floor(
+        (xi+t(vxi(1:nrow(adj), diagxir, vbas, xi, adj))) #/(as.integer(!directed)+1))
+      # if(!directed){
+      # xi[upper.tri(xi,FALSE)] <- ceiling( apply( cbind(xi[upper.tri(xi,FALSE)], t( xi )[upper.tri(xi,FALSE)] ), 1, mean) )
+      # xi[lower.tri(xi,FALSE)] <- t( xi )[lower.tri(xi,FALSE)]
+      # }
+    } else {
+      if(!directed){
+        xi <- ceiling(xi/2)
+      }
     }
   }
   return(xi)

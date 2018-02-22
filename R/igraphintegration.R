@@ -34,11 +34,16 @@ CreateIgGraphs <- function(adjlist, directed, selfloops){
 #' @examples
 ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
 
-  adj <- igraph::get.adjacency(graph = object, type = "both", sparse = FALSE)
+  if(igraph::is_bipartite(object)){
+    adj <- igraph::get.incidence(graph = object, sparse = FALSE)
+  } else{
+    adj <- igraph::get.adjacency(graph = object, type = "both", sparse = FALSE)
+  }
 
   if(is.null(xi)){
     xi=ComputeXi(adj,directed,selfloops)
   }
+
   if(is.null(omega)){
     if(unbiased){
       omega <- matrix(1,nrow(adj), ncol(adj))
@@ -47,7 +52,12 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     }
   }
 
-  n <- nrow(adj)
+  if(nrow(adj)==ncol(adj)){
+    n <- nrow(adj)
+  } else{
+    n <- nrow(adj)+ncol(adj)
+  }
+
   m <- sum(adj[mat2vec.ix(adj, directed, selfloops)])
 
   model <- as.ghype(list('adj' = adj,
