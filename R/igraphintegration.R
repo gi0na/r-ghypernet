@@ -112,7 +112,7 @@ BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=100
   rsamples <- RandomGraph(nsamples, model, m, seed=seed)
   gsamples <- CreateIgGraphs(adjlist = rsamples, directed = directed, selfloops = selfloops)
   if(as.character(substitute(property)) %in% functionslist){
-    dproperty <- sapply(X = gsamples, FUN = function(graph, ...){match.fun(FUN = property)(graph, ...)$vector}, ...)
+    dproperty <- sapply(X = gsamples, FUN = function(graph, directed, ...){match.fun(FUN = property)(graph, directed=directed, ...)$vector}, directed=directed, ...)
   } else{
     dproperty <- sapply(X = gsamples, FUN = property, ...)
   }
