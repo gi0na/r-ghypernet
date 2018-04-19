@@ -24,7 +24,6 @@ ComputeXi <- function(adj, directed, selfloops) {
       diagxi <- diag(xi)
       vbas <- floor( diagxi /(ncol(adj)-1))
       diagxir <- diagxi -vbas*(ncol(adj)-1)
-      set.seed(10)
       diag(xi) <- 0
       xi <- #floor(
         (xi+t(vxi(1:nrow(adj), diagxir, vbas, xi, adj))) #/(as.integer(!directed)+1))
