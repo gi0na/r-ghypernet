@@ -5,7 +5,7 @@
 \title{Title}
 \usage{
 BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
-  xi = NULL, omega = NULL, m = NULL, seed = NULL, ...)
+  xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL, ...)
 }
 \arguments{
 \item{seed}{}

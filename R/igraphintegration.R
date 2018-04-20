@@ -87,7 +87,7 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' @export
 #'
 #' @examples
-BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, m=NULL, seed=NULL, ...){
+BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, model=NULL, m=NULL, seed=NULL, ...){
 
   functionslist <- c(
     'page_rank',
@@ -103,12 +103,19 @@ BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=100
   }
 
   if(!igraph::is.igraph(graph)){
-    graph <- igraph::graph_from_adjacency_matrix(graph, mode=mode, diag = selfloops)
+    if(nrow(graph)!=ncol(graph)){
+      # default to out direction for bipartite graphs
+      graph <- igraph::graph_from_incidence_matrix(graph, directed = directed, mode='out')
+    } else{
+      graph <- igraph::graph_from_adjacency_matrix(graph, mode=mode, diag = selfloops)
+    }
   }
   if(is.null(m))
     m <- length(igraph::E(graph))
 
-  model <- ghype(object = graph, directed, selfloops, xi, omega)
+  if(is.null(model))
+    model <- ghype(object = graph, directed, selfloops, xi, omega)
+
   rsamples <- RandomGraph(nsamples, model, m, seed=seed)
   gsamples <- CreateIgGraphs(adjlist = rsamples, directed = directed, selfloops = selfloops)
   if(as.character(substitute(property)) %in% functionslist){
