@@ -17,7 +17,7 @@ print.ghype <- function(x, ...){
     selfloops <- 'selfloops'
   out <- paste('ghypne',directed,',',selfloops,'\n')
   cat(out)
-  out <- paste(x$n, 'vertices,', x$m, 'edges','\n')
+  out <- paste(x$n[1], 'vertices,', x$m, 'edges','\n')
   cat(out)
   cat('Loglikelihood:\n')
   cat(x$loglikelihood)

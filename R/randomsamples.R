@@ -40,7 +40,7 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   }
   graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n)
   {vec2mat(vec = rvec[,cls], directed, selfloops,n)},
-  rvec=rvec, directed=directed, selfloops=selfloops,n=nrow(model$xi))
+  rvec=rvec, directed=directed, selfloops=selfloops,n=model$n)
   if(nsamples==1)
     graphlist <- graphlist[[1]]
   return(graphlist)
