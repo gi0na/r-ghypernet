@@ -26,7 +26,7 @@ llratiotest <- function(nullmodel, altmodel, df){
 isNetwork <- function(graph, directed, selfloops){
   full <- ghype(graph, directed, selfloops)
   null <- ghype(graph, directed, selfloops, unbiased = TRUE)
-  n <- full$n
+  n <- full$n[1]
   df <- n*(n-!selfloops)/(1+!directed)
   if(igraph::is.igraph(graph)){
     if(igraph::is.bipartite(graph))

@@ -46,7 +46,7 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   if(nrow(object)==ncol(object)){
     n <- nrow(object)
   } else{
-    n <- nrow(object)+ncol(object)
+    n <- c(nrow(object)+ncol(object),nrow(object),ncol(object))
   }
 
   m <- sum(object[mat2vec.ix(object, directed, selfloops)])

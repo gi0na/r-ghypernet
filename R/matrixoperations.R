@@ -56,7 +56,12 @@ mat2vec.ix <- function(mat, directed,
 #'
 #' @export
 vec2mat <- function(vec,directed,selfloops,n){
-  mat <- matrix(0,n,n)
+  if(length(n)>1){
+    m <- n[3]
+  } else{
+    m <- n
+  }
+  mat <- matrix(0,n[2],m)
   idx <- mat2vec.ix(mat,directed,selfloops)
   mat[idx] <- vec
   return(mat)
