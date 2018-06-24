@@ -36,10 +36,10 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
     p <- omega*xi/sum(omega*xi)
     rvec <- rmultinom(n = nsamples, size = m, prob = p)
   } else {
-    rvec <- BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega)
+    rvec <- cbind(BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega))
   }
-  graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n)
-  {vec2mat(vec = rvec[,cls], directed, selfloops,n)},
+  graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n){
+    vec2mat(vec = rvec[,cls], directed, selfloops,n)},
   rvec=rvec, directed=directed, selfloops=selfloops,n=model$n)
   if(nsamples==1)
     graphlist <- graphlist[[1]]
