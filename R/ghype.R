@@ -35,11 +35,15 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     xi=ComputeXi(object,directed,selfloops)
   }
 
+  df <- NULL
+
   if(is.null(omega)){
+    df <- sum(mat2vec.ix(xi,directed,selfloops))
     if(unbiased){
       omega <- matrix(1,nrow(object), ncol(object))
     } else{
       omega <- FitOmega(adj = object, xi = xi, directed = directed, selfloops = selfloops)
+      df <- df + sum(mat2vec.ix(omega,directed,selfloops))
     }
   }
 
@@ -57,7 +61,8 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
                          'n' = n,
                          'm' = m,
                          'directed' = directed,
-                         'selfloops' = selfloops))
+                         'selfloops' = selfloops,
+                         'df' = df))
   return(model)
 }
 
@@ -92,7 +97,8 @@ ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbi
                          'n' = n,
                          'm' = m,
                          'directed' = directed,
-                         'selfloops' = selfloops))
+                         'selfloops' = selfloops,
+                         'df' = NULL))
   return(model)
 }
 
@@ -128,7 +134,8 @@ as.ghype.list <- function(object, ...){
     'omega' = object$omega,
     'directed' = object$directed,
     'selfloops' = object$selfloops,
-    'loglikelihood' = object$loglikelihood
+    'loglikelihood' = object$loglikelihood,
+    'df' = object$df
   )
   if(is.null(model$loglikelihood) & !is.null(model$adj)){
     model$loglikelihood <- logl(adj=model$adj, xi=model$xi,

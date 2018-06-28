@@ -44,11 +44,15 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     xi=ComputeXi(adj,directed,selfloops)
   }
 
+  df <- NULL
+
   if(is.null(omega)){
+    df <- sum(mat2vec.ix(xi,directed,selfloops))
     if(unbiased){
-      omega <- matrix(1,nrow(adj), ncol(adj))
+      omega <- matrix(1,nrow(object), ncol(object))
     } else{
-      omega <- FitOmega(adj = adj, xi = xi, directed = directed, selfloops = selfloops)
+      omega <- FitOmega(adj = object, xi = xi, directed = directed, selfloops = selfloops)
+      df <- df + sum(mat2vec.ix(omega,directed,selfloops))
     }
   }
 
@@ -66,7 +70,8 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
                          'n' = n,
                          'm' = m,
                          'directed' = directed,
-                         'selfloops' = selfloops))
+                         'selfloops' = selfloops,
+                         'df' = df))
   return(model)
 }
 

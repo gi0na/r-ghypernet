@@ -8,8 +8,11 @@
 #' @export
 #'
 #' @examples
-llratiotest <- function(nullmodel, altmodel, df){
+llratiotest <- function(nullmodel, altmodel, df=NULL){
   llratio <- loglratio(nullmodel,altmodel)
+  if(is.null(df)){
+    df <- altmodel$df-nullmodel$df
+  }
   return(pchisq(q = -2*llratio, df = df, lower.tail = FALSE))
 }
 
