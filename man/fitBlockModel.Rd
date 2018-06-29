@@ -4,15 +4,9 @@
 \alias{fitBlockModel}
 \title{Title}
 \usage{
-fitBlockModel(adj, labels, directed, selfloops)
+fitBlockModel(adj, labels, directed, selfloops, directedBlocks = FALSE)
 }
 \arguments{
-\item{adj}{}
-
-\item{labels}{}
-
-\item{directed}{}
-
 \item{selfloops}{}
 }
 \description{

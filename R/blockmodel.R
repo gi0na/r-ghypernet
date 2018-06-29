@@ -12,9 +12,9 @@
 #' @import plyr
 #'
 #' @examples
-fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE){
+fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE){
 
-  if(!directed & directedBlocks)
+  if(!directed & (homophily | inBlockOnly) & directedBlocks)
     directedBlocks <- FALSE
 
   # generate unique blockids
@@ -25,13 +25,30 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   # generate block matrix
   blocks <- blockids %*% t(blockids)
 
+  if(homophily & inBlockOnly){
+    e <- simpleError('homophily and inBlockOnly parameters are in conflict')
+    stop(e)
+  }
+
+  # if homophily model, fit only in-group vs out-group
+  if(homophily){
+    blocks[blocks %in% blockids^2] <- 1
+    blocks[blocks != 1] <- 2
+  }
+
+  # if inBlockOnly model, fit different in-group parameters
+  # but only one out-group parameter
+  if(inBlockOnly){
+    blocks[!(blocks %in% blockids^2)] <- 0
+  }
+
   if(directedBlocks){
     blocks[lower.tri(blocks,F)] <- - blocks[lower.tri(blocks,F)]
     blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
   }
 
   # construct xi matrix
-  xi <- hypernets::ComputeXi(adj,directed,selfloops)
+  xi <- ComputeXi(adj,directed,selfloops)
 
   # generate map xi and adj values to blocks
   xiframe <- data.frame(xi=xi[mat2vec.ix(xi,directed,selfloops)], block=blocks[mat2vec.ix(xi,directed,selfloops)])
@@ -44,23 +61,29 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 
   # solve linear system for omega:
   # build matrix and vector
+
   A <- - mb[,2] %*% t(xib[,2]) + diag(m*xib[,2])
-  b <- rep(0,nrow(A))
 
   # remove entries = 0 to set omegas=0 there
   zerosid <- which(mb[,2]==0)
-  A <- A[-zerosid,]
-  A <- A[,-zerosid]
-  b <- b[-zerosid]
 
-  # set max sized block to omega=1
-  maxid <- which.max(mb[-zerosid,2])
-  b[maxid] <- 1
-  A[maxid,] <- b
+  if(length(zerosid)!=0){
+    A <- A[-zerosid,]
+    A <- A[,-zerosid]
+  }
+
+
+  # set one parameter omega to 1
+  b <- - A[-1,1]
+
 
   # solve system to find omega values
   omegab <- rep(0,length(xib[,1]))
-  omegab[-zerosid] <- solve(A,b)
+  if(length(zerosid)!=0){
+    omegab[-zerosid] <- c(1,solve(A[-1,-1],b))
+  } else{
+    omegab <- c(1,solve(A[-1,-1],b))
+  }
   omegab <- data.frame(block=xib[,1],omegab=omegab)
 
   # map values to full omega vector
@@ -73,15 +96,103 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega)
 
   # generate block omega matrix for reference
-  blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
+  if((!homophily) & (!inBlockOnly)){
+    blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
 
-  if(directedBlocks)
-    blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
+    if(directedBlocks)
+      blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
 
-  rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
-  blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
+    rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
+    blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
+  } else{
+    blockOmega <- NULL
+  }
   model$blockOmega <- blockOmega
   model$df <- sum(mat2vec.ix(xi,directed,selfloops)) + nrow(omegab)-1
+  model$directedBlocks <- directedBlocks
+  ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
+  if(length(zerosid)!=0){
+    ci[-zerosid,][1,] <- c(1,1,0)
+    ci[-zerosid,][-1,] <-
+      blockmodel.ci(omegaBlocks = omegab[-zerosid,2][-1],
+                    xiBlocks = xib[-zerosid,2][-1],
+                    mBlocks = mb[-zerosid,2][-1], m=model$m)
+  } else{
+    ci[1,] <- c(1,1,0)
+    ci[-1,] <-
+      blockmodel.ci(omegaBlocks = omegab[,2][-1],
+                    xiBlocks = xib[,2][-1],
+                    mBlocks = mb[,2][-1], m=model$m)
+  }
+  model$ci <- ci
+  model$coef <- omegab[,2]
+
+  class(model) <- append('ghypeBlock', class(model))
+  model$call <- match.call()
 
   return(model)
+}
+
+
+
+
+#' Computes Fisher Information matrix for estimators in block models.
+#'
+#'  ~~ A concise (1-5 lines) description of what the function does. ~~
+#'
+#'  ~~ If necessary, more details than the description above ~~
+#'
+#' @param beta  ~~Describe \code{beta} here~~
+#' @param w  ~~Describe \code{w} here~~
+#' @param xi  ~~Describe \code{xi} here~~
+#' @param adj  ~~Describe \code{adj} here~~
+#' @param directed  ~~Describe \code{directed} here~~
+#' @param selfloops  ~~Describe \code{selfloops} here~~
+#' @return val
+#' @note  ~~further notes~~
+#' @author  ~~who you are~~
+#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+#' @references  ~put references to the literature/web site here ~
+#' @keywords ~kwd1 ~kwd2
+#'
+#'
+JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
+  # Returns Fisher Information
+  if(length(xiBlocks)>1){
+    Jn <- (m*diag(xiBlocks) - mBlocks %*% t(xiBlocks))
+  } else{
+    Jn <- (m*xiBlocks - mBlocks %*% t(xiBlocks))
+  }
+  return(Jn)
+}
+
+
+#' Confidence intervals for block models.
+#'
+#'  ~~ A concise (1-5 lines) description of what the function does. ~~
+#'
+#'  ~~ If necessary, more details than the description above ~~
+#'
+#' @param nr.m  ~~Describe \code{nr.m} here~~
+#' @param w  ~~Describe \code{w} here~~
+#' @param adj  ~~Describe \code{adj} here~~
+#' @param pval  ~~Describe \code{pval} here~~
+#' @return
+#' @note  ~~further notes~~
+#' @author  ~~who you are~~
+#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+#' @references  ~put references to the literature/web site here ~
+#' @keywords ~kwd1 ~kwd2
+#'
+blockmodel.ci <- function(omegaBlocks, xiBlocks, mBlocks, m,
+                  pval=.05) {
+  jn <- JnBlock(omegaBlocks, xiBlocks, mBlocks, m)
+  jn <- sqrt(diag(solve(jn)))
+
+  ci <- cbind(omegaBlocks - stats::qnorm(pval/2,
+                                  lower.tail = F) * jn, omegaBlocks +
+                stats::qnorm(pval/2, lower.tail = F) *
+                jn, jn)
+  colnames(ci) <- c(paste(pval, "% ci"), paste(1 - pval, "% ci"), "jn")
+  ci
 }

@@ -4,7 +4,7 @@
 \alias{llratiotest}
 \title{Title}
 \usage{
-llratiotest(nullmodel, altmodel, df)
+llratiotest(nullmodel, altmodel, df = NULL)
 }
 \arguments{
 \item{df}{}

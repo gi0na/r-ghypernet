@@ -55,7 +55,8 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 
   m <- sum(object[mat2vec.ix(object, directed, selfloops)])
 
-  model <- as.ghype(list('adj' = object,
+  model <- as.ghype(list(call = match.call(),
+                         'adj' = object,
                          'xi'= xi,
                          'omega' = omega,
                          'n' = n,
@@ -91,7 +92,8 @@ ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbi
   n <- nrow(xi)
   m <- sqrt(sum(xi))
 
-  model <- as.ghype(list('adj' = object,
+  model <- as.ghype(list(call = match.call(),
+                         'adj' = object,
                          'xi'= xi,
                          'omega' = omega,
                          'n' = n,
@@ -127,6 +129,7 @@ as.ghype <- function(object, ...){
 #' @examples
 as.ghype.list <- function(object, ...){
   model <- list(
+    call = object$call,
     'adj' = object$adj,
     'n' = object$n,
     'm' = object$m,

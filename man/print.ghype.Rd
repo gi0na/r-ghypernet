@@ -4,7 +4,7 @@
 \alias{print.ghype}
 \title{Title}
 \usage{
-\method{print}{ghype}(x, ...)
+\method{print}{ghype}(x, suppressCall = FALSE, ...)
 }
 \arguments{
 \item{...}{}

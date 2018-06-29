@@ -64,7 +64,8 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 
   m <- sum(adj[mat2vec.ix(adj, directed, selfloops)])
 
-  model <- as.ghype(list('adj' = adj,
+  model <- as.ghype(list(call = match.call(),
+                         'adj' = adj,
                          'xi'= xi,
                          'omega' = omega,
                          'n' = n,
