@@ -49,7 +49,7 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   if(is.null(omega)){
     df <- sum(mat2vec.ix(xi,directed,selfloops))
     if(unbiased){
-      omega <- matrix(1,nrow(object), ncol(object))
+      omega <- matrix(1,nrow(adj), ncol(adj))
     } else{
       omega <- FitOmega(adj = object, xi = xi, directed = directed, selfloops = selfloops)
       df <- df + sum(mat2vec.ix(omega,directed,selfloops))
