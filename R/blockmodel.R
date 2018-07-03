@@ -12,7 +12,7 @@
 #' @import plyr
 #'
 #' @examples
-fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE){
+fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
 
   if(!directed & (homophily | inBlockOnly) & directedBlocks)
     directedBlocks <- FALSE
@@ -48,7 +48,9 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   }
 
   # construct xi matrix
-  xi <- ComputeXi(adj,directed,selfloops)
+  if(is.null(xi)){
+    xi <- ComputeXi(adj,directed,selfloops)
+  }
 
   # generate map xi and adj values to blocks
   xiframe <- data.frame(xi=xi[mat2vec.ix(xi,directed,selfloops)], block=blocks[mat2vec.ix(xi,directed,selfloops)])

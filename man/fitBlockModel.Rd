@@ -4,7 +4,8 @@
 \alias{fitBlockModel}
 \title{Title}
 \usage{
-fitBlockModel(adj, labels, directed, selfloops, directedBlocks = FALSE)
+fitBlockModel(adj, labels, directed, selfloops, directedBlocks = FALSE,
+  homophily = FALSE, inBlockOnly = FALSE, xi = NULL)
 }
 \arguments{
 \item{selfloops}{}
