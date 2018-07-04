@@ -1,0 +1,110 @@
+---
+title: "Finding Significant Links with Hypernets"
+author: "Giona CasiraghI"
+date: "20/4/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this example we use the hypernets package to detect significant links.
+We use the Karate Club as running example.
+
+### Load Packages
+
+```{r}
+library(hypernets)
+library(igraph)
+library(igraphdata)
+data("karate")
+```
+
+### Estimate the ensemble
+
+First we estimate a soft-configuration model from the data.
+The second model is a block model based on the two 'factions' of members of the club
+
+```{r}
+adj <- get.adjacency(karate, attr = 'weight', sparse = F)
+
+mod <- ghype(adj,directed = F, selfloops = F, unbiased = T)
+
+blockmatrix <- V(karate)$color%*%t(V(karate)$color)
+blockmatrix[blockmatrix==4] <- 1
+blockmatrix[blockmatrix==2] <- .1
+blockModel <- ghype(adj,directed = F, selfloops = F, omega = blockmatrix)
+```
+
+## Finding the significance of the links
+We use the built-in function in the hypernets package to compute the significance of each link as described in Casiraghi et al. 2017.
+The function takes the adjacency matrix of the network and the model from which estimating the probability to observe as many edges as those in the graph.
+We can obtain a high-pass noise filtering choosing a significance level and filtering those links which have a low significance.
+
+```{r}
+# obtain significance matrix
+signmat <- linkSignificance(adj, mod)
+
+# filter adjacency matrix
+adjfiltered <- adj
+adjfiltered[signmat<.99] <- 0
+```
+
+### Plot the results
+
+We plot the original graph first, then a graph were the non-significant links are colored red.
+The final plot only shows the significant links.
+
+Note that the configuration model is not able to predict the strong links within the groups, as those go beyond simple degree effects.
+The results reflect this showing the two factions separated and only the links due to homophily effect left.
+
+```{r}
+adjcolor <- adj
+adjcolor[adj>0] <- 2
+adjcolor[signmat<.99] <- 1
+adjcolor[adj==0] <- 0
+gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
+g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
+E(g)$color[E(g)$color==1] <- "red"
+E(g)$color[E(g)$color==2] <- "black"
+
+V(gfiltered)$color <- V(g)$color <- V(karate)$color
+plot(karate)
+plot(g)
+plot(gfiltered)
+```
+
+
+## Block Model
+As the Karate Club consists of two factions, we can refine the model adding the block structure to it.
+Then we can filter out the links that are not significant according to this more complex model.
+
+What we expect in this case is that most of the whithin-group links are now not significant anymore, as they can be explained by the joint effect of configuration model and block model.
+Hence the links that remains after filtering are those that go beyond this joint effect.
+In particular, only few nodes of a group interact with the other group, i.e. the between-groups links are concentrated between few dyads.
+From the model instead we should expect most nodes of a group weakly interacting with the other group.
+Hence, we can expect that the significant links will be mainly those between groups.
+The results are in accordance with our intuition.
+
+```{r}
+signmat <- linkSignificance(adj, blockModel)
+adjfiltered <- adj
+adjfiltered[signmat<.99] <- 0
+```
+
+```{r}
+adjcolor <- adj
+adjcolor[adj>0] <- 2
+adjcolor[signmat<.99] <- 1
+adjcolor[adj==0] <- 0
+gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
+g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
+E(g)$color[E(g)$color==1] <- "red"
+E(g)$color[E(g)$color==2] <- "black"
+
+V(gfiltered)$color <- V(g)$color <- V(karate)$color
+plot(karate)
+plot(g)
+plot(gfiltered)
+```

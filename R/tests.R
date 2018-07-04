@@ -42,3 +42,35 @@ isNetwork <- function(graph, directed, selfloops){
   }
   return(llratiotest(null,full,df))
 }
+
+#' Title
+#'
+#' @param graph
+#' @param directed
+#' @param selfloops
+#'
+#' @return
+#' @export
+#'
+#' @examples
+linkSignificance <- function(graph, model){
+  ## TODO: assume graph is adjacency for now. Extend with method for graph and for matrices
+
+  directed <- model$directed
+  selfloops <- model$selfloops
+
+  # get relevant indices
+  idx <- mat2vec.ix(graph, directed, selfloops)
+
+  # compute parameters for marginal distributions
+  xibar <- sum(model$xi[idx])-model$xi[idx]
+  omegabar <- (sum(model$xi[idx]*model$omega[idx])-model$xi[idx]*model$omega[idx])/xibar
+
+  # compute vector of probabilities using Wallenius univariate distribution
+  probvec <- Vectorize(FUN = function(id){
+    BiasedUrn::pWNCHypergeo(x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id], n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id])
+    }, vectorize.args = 'id')(1:sum(idx))
+
+  # return matrix of significance for each entry of original adjacency
+  return(vec2mat(probvec,directed,selfloops,nrow(graph)))
+}
