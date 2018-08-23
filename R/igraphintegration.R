@@ -37,7 +37,8 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   if(igraph::is_bipartite(object)){
     adj <- igraph::get.incidence(graph = object, sparse = FALSE)
   } else{
-    adj <- igraph::get.adjacency(graph = object, type = "both", sparse = FALSE)
+    adj <- igraph::get.adjacency(graph = object, type = "upper", sparse = FALSE)
+    adj <- adj + t(adj)
   }
 
   if(is.null(xi)){
