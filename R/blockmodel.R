@@ -64,29 +64,46 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   # solve linear system for omega:
   # build matrix and vector
 
-  A <- - mb[,2] %*% t(xib[,2]) + diag(m*xib[,2])
+  # A <- - mb[,2] %*% t(xib[,2]) + diag(m*xib[,2])
+  #
+  # # remove entries = 0 to set omegas=0 there
+  # zerosid <- which(mb[,2]==0)
+  #
+  # if(length(zerosid)!=0){
+  #   A <- A[-zerosid,]
+  #   A <- A[,-zerosid]
+  # }
+  #
+  #
+  # # set one parameter omega to 1
+  # b <- - A[-1,1]
+  #
+  #
+  # # solve system to find omega values
+  # omegab <- rep(0,length(xib[,1]))
+  # if(length(zerosid)!=0){
+  #   omegab[-zerosid] <- c(1,solve(A[-1,-1],b))
+  # } else{
+  #   omegab <- c(1,solve(A[-1,-1],b))
+  # }
 
-  # remove entries = 0 to set omegas=0 there
-  zerosid <- which(mb[,2]==0)
+  # use ensemble for omega:
 
-  if(length(zerosid)!=0){
-    A <- A[-zerosid,]
-    A <- A[,-zerosid]
-  }
+  omega.v <- rep(NA,length(mb[,2]))
+  tmp <- MLE_omega_idx(mb[,2],xib[,2])
+  idx.zero <- tmp$zero; idx.one <- tmp$one; rm(tmp)
+  omega.v[idx.one] <- 1; omega.v[idx.zero] <- 0
+  omega.v[!idx.one & !idx.zero] <- fitted_omega_wallenius(mb[,2][!idx.one & !idx.zero], xib[,2][!idx.one & !idx.zero])
 
+  # omegab <- FitOmega(adj = vec2mat(vec = mb[,2],directed = directedBlocks,selfloops = TRUE,(length(unique(blockids))*(!homophily)+2*homophily)),
+  #          xi = vec2mat(vec = xib[,2],directed = directedBlocks,selfloops = TRUE,(length(unique(blockids))*(!homophily)+2*homophily)),
+  #          directed = directedBlocks, selfloops = TRUE)
+  # omegab <- omegab[mat2vec.ix(mat = omegab, directed = directedBlocks, selfloops = TRUE)]
+  #
+  # if(homophily)
+  #   omegab <- omegab[-3]
 
-  # set one parameter omega to 1
-  b <- - A[-1,1]
-
-
-  # solve system to find omega values
-  omegab <- rep(0,length(xib[,1]))
-  if(length(zerosid)!=0){
-    omegab[-zerosid] <- c(1,solve(A[-1,-1],b))
-  } else{
-    omegab <- c(1,solve(A[-1,-1],b))
-  }
-  omegab <- data.frame(block=xib[,1],omegab=omegab)
+  omegab <- data.frame(block=xib[,1],omegab=omega.v)
 
   # map values to full omega vector
   omegav <- plyr::mapvalues(xiframe[,2],from=sort(unique(xiframe[,2])), to=omegab[,2][rank(omegab[,1])])
@@ -113,19 +130,19 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   model$df <- sum(mat2vec.ix(xi,directed,selfloops)) + nrow(omegab)-1
   model$directedBlocks <- directedBlocks
   ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
-  if(length(zerosid)!=0){
-    ci[-zerosid,][1,] <- c(1,1,0)
-    ci[-zerosid,][-1,] <-
-      blockmodel.ci(omegaBlocks = omegab[-zerosid,2][-1],
-                    xiBlocks = xib[-zerosid,2][-1],
-                    mBlocks = mb[-zerosid,2][-1], m=model$m)
-  } else{
+  # if(length(zerosid)!=0){
+  #   ci[-zerosid,][1,] <- c(1,1,0)
+  #   ci[-zerosid,][-1,] <-
+  #     blockmodel.ci(omegaBlocks = omegab[-zerosid,2][-1],
+  #                   xiBlocks = xib[-zerosid,2][-1],
+  #                   mBlocks = mb[-zerosid,2][-1], m=model$m)
+  # } else{
     ci[1,] <- c(1,1,0)
     ci[-1,] <-
       blockmodel.ci(omegaBlocks = omegab[,2][-1],
                     xiBlocks = xib[,2][-1],
                     mBlocks = mb[,2][-1], m=model$m)
-  }
+  # }
   model$ci <- ci
   model$coef <- omegab[,2]
 
