@@ -33,7 +33,7 @@ ComputeXi <- function(adj, directed, selfloops) {
       # }
     } else {
       if(!directed){
-        xi <- ceiling(xi/2)
+        xi <- xi + t(xi) - diag(diag(xi))
       }
     }
   }
