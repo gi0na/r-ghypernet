@@ -4,7 +4,8 @@
 \alias{isNetwork}
 \title{Title}
 \usage{
-isNetwork(graph, directed, selfloops)
+isNetwork(graph, directed, selfloops, Beta = NULL, nempirical = NULL,
+  parallel = FALSE, returnBeta = FALSE)
 }
 \arguments{
 \item{selfloops}{}

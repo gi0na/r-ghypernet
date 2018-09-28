@@ -73,7 +73,7 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
                          'm' = m,
                          'directed' = directed,
                          'selfloops' = selfloops,
-                         'df' = df))
+                         'df' = df ))
   return(model)
 }
 

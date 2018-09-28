@@ -115,13 +115,15 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega)
 
   # generate block omega matrix for reference
-  if((!homophily) & (!inBlockOnly)){
+  if( FALSE ){ # (!homophily) & (!inBlockOnly)){
     blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
 
     if(directedBlocks)
       blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
 
     rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
+
+    ## BUG: if one node singleton in community and selfloops not allowed there is no entry in omegab for it, set manually to 0
     blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
   } else{
     blockOmega <- NULL
@@ -145,6 +147,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   # }
   model$ci <- ci
   model$coef <- omegab[,2]
+  model$labels <- labels
 
   class(model) <- append('ghypeBlock', class(model))
   model$call <- match.call()
