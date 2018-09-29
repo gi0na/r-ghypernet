@@ -14,7 +14,10 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   selfloops <- model$selfloops
   if(is.null(m))
     m <- model$m
-  idx <- mat2vec.ix(model$xi,directed,selfloops)
+
+  idx <- mat2vec.ix(model$xi,TRUE,TRUE)
+  if(length(model$n)==1)
+    idx <- mat2vec.ix(model$xi,directed,selfloops)
   omega <- model$omega[idx]
   xi <- model$xi[idx]
   if (is.null(multinomial)) {

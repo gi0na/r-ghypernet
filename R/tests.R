@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-configurationtest <- function(graph, directed, selfloops, nempirical=NULL){
+configurationtest <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL){
 
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
@@ -31,6 +31,9 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL){
   llratio <- -2* (loglikeregular-loglikeconf)
 
   if(is.null(nempirical)) nempirical <- 100
+  ncores <- 1
+  if(is.numeric(parallel)) ncores <- parallel
+  if(isTRUE(parallel)) ncores <- parallel::detectCores() - 1
 
   gees <- NULL
   if(nrow(adj)<200){
@@ -39,7 +42,7 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL){
     gees <- stats::rmultinom(n = nempirical, prob = xiregular[ix]/sum(xiregular[ix]), size = m)
   }
 
-  nullllratio <- sapply(X = 1:nempirical, FUN = function(id){
+  nullllratio <- unlist(parallel::mclapply(X = 1:nempirical, FUN = function(id){
     adjr <- NULL
     if(nrow(adj)<200){
       adjr <- gees[id,]
@@ -52,11 +55,11 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL){
     loglikeregularr <- extraDistr::dmvhyper(x = adjr, n = xiregular[ix], k = m, log = TRUE)
     loglikeconfr <- extraDistr::dmvhyper(x = adjr, n = xiconfigurationr[ix], k = m, log = TRUE)
     -2 * (loglikeregularr-loglikeconfr)
-  })
+  }, mc.cores = ncores))
 
   mm <- -2*m*log(1/sum(ix))
-  mu <- mean(nullllratio)
-  va <- var(nullllratio)
+  mu <- mean(nullllratio, na.rm = TRUE)
+  va <- var(nullllratio, na.rm = TRUE)
 
   a <- (mu/(mm*va))*(mu*(mm-mu)-va)
   b <- (mm-mu)*a/mu
@@ -94,7 +97,9 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
       directed <- nullmodel$directed
       selfloops <- nullmodel$selfloops
 
-      ix <- as.matrix(mat2vec.ix(nullmodel$xi,directed,selfloops))
+      ix <- as.matrix(mat2vec.ix(nullmodel$xi,TRUE,TRUE))
+      if(length(nullmodel$n)==1)
+        ix <- as.matrix(mat2vec.ix(nullmodel$xi,directed,selfloops))
       ps <- nullmodel$omega[ix]*nullmodel$xi[ix]
       mm <- -2*nullmodel$m*log(min(ps[ps!=0])/sum(ps))
 
@@ -107,7 +112,7 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
       if(isTRUE(parallel)) ncores <- parallel::detectCores() - 1
 
       nullllratio <- unlist(parallel::mclapply(X = gees, FUN = function(g, directed, null, alt){
-        if(!directed){
+        if(!directed && length(nullmodel$n)==1){
           adj <- g + t(g)
         } else{
           adj <- g
