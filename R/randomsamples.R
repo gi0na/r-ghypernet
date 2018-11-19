@@ -10,11 +10,20 @@
 #'
 #' @examples
 RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
+  multinomial <- TRUE
   directed <- model$directed
   selfloops <- model$selfloops
   if(is.null(m))
     m <- model$m
-  idx <- mat2vec.ix(model$xi,directed,selfloops)
+
+  idx <- mat2vec.ix(model$xi,TRUE,TRUE)
+  if(length(model$n)==1 | is.null(model$n))
+    idx <- mat2vec.ix(model$xi,directed,selfloops)
+
+  n <- model$n
+  if(is.null(n))
+    n <- nrow(model$xi)
+
   omega <- model$omega[idx]
   xi <- model$xi[idx]
   if (is.null(multinomial)) {
@@ -40,7 +49,7 @@ RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   }
   graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n){
     vec2mat(vec = rvec[,cls], directed, selfloops,n)},
-  rvec=rvec, directed=directed, selfloops=selfloops,n=model$n)
+  rvec=rvec, directed=directed, selfloops=selfloops,n=n)
   if(nsamples==1)
     graphlist <- graphlist[[1]]
   return(graphlist)

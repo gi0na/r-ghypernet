@@ -4,7 +4,7 @@
 \alias{linkSignificance}
 \title{Title}
 \usage{
-linkSignificance(graph, directed, selfloops, model)
+linkSignificance(graph, model)
 }
 \arguments{
 \item{selfloops}{}

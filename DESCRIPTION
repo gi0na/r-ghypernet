@@ -13,4 +13,4 @@ Imports: parallel,
          plyr,
          numbers
 Suggests: BiasedUrn, igraph
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

@@ -4,7 +4,7 @@
 \alias{ComputeXi}
 \title{Auxilliary function. Computes Xi matrix.}
 \usage{
-ComputeXi(adj, directed, selfloops)
+ComputeXi(adj, directed, selfloops, regular = FALSE)
 }
 \arguments{
 \item{adj}{~~Describe \code{adj} here~~}

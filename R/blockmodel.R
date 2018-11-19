@@ -4,15 +4,35 @@
 #' @param labels
 #' @param directed
 #' @param selfloops
+#' @param directedBlocks
+#' @param homophily
+#' @param inBlockOnly
+#' @param xi
 #'
 #' @return
 #' @export
 #'
-#' @import numbers
-#' @import plyr
-#'
 #' @examples
 fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
+  bccm(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi)
+}
+
+#' Title
+#'
+#' @param adj
+#' @param labels
+#' @param directed
+#' @param selfloops
+#' @param directedBlocks
+#' @param homophily
+#' @param inBlockOnly
+#' @param xi
+#'
+#' @return
+#' @export
+#'
+#' @examples
+bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
 
   if(!directed & (homophily | inBlockOnly) & directedBlocks)
     directedBlocks <- FALSE
@@ -32,7 +52,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 
   # if homophily model, fit only in-group vs out-group
   if(homophily){
-    blocks[blocks %in% blockids^2] <- 1
+    blocks[blocks %in% unique(blockids)^2] <- 1
     blocks[blocks != 1] <- 2
   }
 
@@ -47,9 +67,30 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
     blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
   }
 
+  # # construct xi matrix
+  # if(is.null(xi)){
+  #   if(configurationtest(graph = adj, directed = directed, selfloops = selfloops)>1e-4){
+  #     ix <- mat2vec.ix(adj, directed, selfloops)
+  #     m <- sum(adj[ix])
+  #     xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
+  #     # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
+  #     xi <- ceiling(xiregular)
+  #   } else{
+  #     xi <- ComputeXi(adj,directed,selfloops)
+  #   }
+  # }
+
   # construct xi matrix
   if(is.null(xi)){
-    xi <- ComputeXi(adj,directed,selfloops)
+    xiregular <- FALSE
+    if(configurationtest(graph = adj, directed = directed, selfloops = selfloops)>1e-4)
+      xiregular <- TRUE
+
+    xi <- ComputeXi(adj,directed,selfloops, regular=xiregular)
+
+  } else{
+    if(length(xi) == 1 && xi == 'regular')
+      xi <- ComputeXi(adj,directed,selfloops, regular=TRUE)
   }
 
   # generate map xi and adj values to blocks
@@ -59,6 +100,15 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   # compute xi-blocks and adj-blocks
   xib <- plyr::ddply(xiframe, 'block', plyr::numcolwise(sum))
   mb <- plyr::ddply(adjframe, 'block', plyr::numcolwise(sum))
+
+  ## BUG: if one node singleton in community and selfloops not allowed there is no entry in omegab for it, set manually to 0
+  if(!selfloops){
+    vblockcounts <- plyr::count(blockids)
+    if(any(vblockcounts$freq<2)){
+      xib <- rbind(xib, cbind(block=vblockcounts$x[which(vblockcounts$freq<2)]^2, xi=rep(0, sum(vblockcounts$freq<2))))
+      mb <- rbind(mb, cbind(block=vblockcounts$x[which(vblockcounts$freq<2)]^2, adj=rep(0, sum(vblockcounts$freq<2))))
+    }
+  }
   m <- sum(adj[mat2vec.ix(xi,directed,selfloops)])
 
   # solve linear system for omega:
@@ -93,6 +143,11 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   tmp <- MLE_omega_idx(mb[,2],xib[,2])
   idx.zero <- tmp$zero; idx.one <- tmp$one; rm(tmp)
   omega.v[idx.one] <- 1; omega.v[idx.zero] <- 0
+  # print(mb[,2][!idx.one & !idx.zero])
+  # print(xib[,2][!idx.one & !idx.zero])
+  # print(adjframe)
+  # print(xiframe)
+  # print('---')
   omega.v[!idx.one & !idx.zero] <- fitted_omega_wallenius(mb[,2][!idx.one & !idx.zero], xib[,2][!idx.one & !idx.zero])
 
   # omegab <- FitOmega(adj = vec2mat(vec = mb[,2],directed = directedBlocks,selfloops = TRUE,(length(unique(blockids))*(!homophily)+2*homophily)),
@@ -106,7 +161,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   omegab <- data.frame(block=xib[,1],omegab=omega.v)
 
   # map values to full omega vector
-  omegav <- plyr::mapvalues(xiframe[,2],from=sort(unique(xiframe[,2])), to=omegab[,2][rank(omegab[,1])])
+  omegav <- plyr::mapvalues(xiframe[,2],from=sort(unique(xiframe[,2])), to=omegab[,2][rank(omegab[,1][1:length(unique(xiframe[,2]))])])
 
   # generate omega matrix
   omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
@@ -115,13 +170,14 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega)
 
   # generate block omega matrix for reference
-  if((!homophily) & (!inBlockOnly)){
+  if( (!homophily) & (!inBlockOnly)){
     blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
 
     if(directedBlocks)
       blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
 
     rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
+
     blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
   } else{
     blockOmega <- NULL
@@ -137,7 +193,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   #                   xiBlocks = xib[-zerosid,2][-1],
   #                   mBlocks = mb[-zerosid,2][-1], m=model$m)
   # } else{
-    ci[1,] <- c(1,1,0)
+    ci[1,] <- c(omegab[1,2],omegab[1,2],0)
     ci[-1,] <-
       blockmodel.ci(omegaBlocks = omegab[,2][-1],
                     xiBlocks = xib[,2][-1],
@@ -145,8 +201,10 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
   # }
   model$ci <- ci
   model$coef <- omegab[,2]
+  names(model$coef) <- omegab[,1]
+  model$labels <- labels
 
-  class(model) <- append('ghypeBlock', class(model))
+  class(model) <- append('bccm', 'ghypeBlock', class(model))
   model$call <- match.call()
 
   return(model)
@@ -206,7 +264,10 @@ JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
 blockmodel.ci <- function(omegaBlocks, xiBlocks, mBlocks, m,
                   pval=.05) {
   jn <- JnBlock(omegaBlocks, xiBlocks, mBlocks, m)
-  jn <- sqrt(diag(solve(jn)))
+  solve2 <- purrr::possibly(function(MM){
+    sqrt(diag(solve(MM)))
+  }, otherwise = NA)
+  jn <- solve2(jn)
 
   ci <- cbind(omegaBlocks - stats::qnorm(pval/2,
                                   lower.tail = F) * jn, omegaBlocks +

@@ -8,13 +8,13 @@
 #' @export
 #'
 #' @examples
-CreateIgGraphs <- function(adjlist, directed, selfloops){
+CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=FALSE){
   if(directed)
     mode <- 'directed'
   if(!directed)
     mode <- 'undirected'
 
-  lapply(X = adjlist, FUN = igraph::graph_from_adjacency_matrix, mode=mode, diag=selfloops)
+  lapply(X = adjlist, FUN = igraph::graph_from_adjacency_matrix, mode=mode, diag=selfloops, weighted=weighted)
 }
 
 
@@ -73,7 +73,7 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
                          'm' = m,
                          'directed' = directed,
                          'selfloops' = selfloops,
-                         'df' = df))
+                         'df' = df ))
   return(model)
 }
 

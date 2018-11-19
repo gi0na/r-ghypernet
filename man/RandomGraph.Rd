@@ -4,7 +4,8 @@
 \alias{RandomGraph}
 \title{Title}
 \usage{
-RandomGraph(nsamples, model, m = NULL, multinomial = NULL, seed = NULL)
+RandomGraph(nsamples, model, m = NULL, multinomial = NULL,
+  seed = NULL)
 }
 \arguments{
 \item{multinomial}{}
