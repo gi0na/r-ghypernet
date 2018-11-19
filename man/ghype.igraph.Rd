@@ -4,8 +4,8 @@
 \alias{ghype.igraph}
 \title{Title}
 \usage{
-\method{ghype}{igraph}(object, directed, selfloops, xi = NULL, omega = NULL,
-  unbiased = FALSE, ...)
+\method{ghype}{igraph}(object, directed, selfloops, xi = NULL,
+  omega = NULL, unbiased = FALSE, ...)
 }
 \arguments{
 \item{...}{}

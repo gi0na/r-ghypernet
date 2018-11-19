@@ -14,11 +14,27 @@
 #' @examples
 #'
 #' @export
-ComputeXi <- function(adj, directed, selfloops) {
+ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   # returns the matrix xi according to the nodes degrees
-  Kin <- apply(adj, 2, sum)
-  Kout <- apply(adj, 1, sum)
-  xi <- tcrossprod(Kout, Kin)
+
+  if(regular){
+    ix <- mat2vec.ix(adj, directed, selfloops)
+    m <- sum(adj[ix])
+    xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
+    # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
+    xi <- ceiling(xiregular)
+  } else{
+    if(!directed & !isSymmetric(adj)){
+      warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
+                Adjacency matrix symmetrised as adj <- adj + t(adj)')
+      adj <- adj + t(adj)
+    }
+    if(!selfloops)
+      diag(adj) <- 0
+    Kin <- apply(adj, 2, sum)
+    Kout <- apply(adj, 1, sum)
+    xi <- tcrossprod(Kout, Kin)
+  }
   if(nrow(adj)==ncol(adj)){
     if(!selfloops & directed){
       diagxi <- diag(xi)

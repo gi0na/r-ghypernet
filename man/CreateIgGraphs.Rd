@@ -4,7 +4,7 @@
 \alias{CreateIgGraphs}
 \title{Title}
 \usage{
-CreateIgGraphs(adjlist, directed, selfloops)
+CreateIgGraphs(adjlist, directed, selfloops, weighted = FALSE)
 }
 \arguments{
 \item{selfloops}{}

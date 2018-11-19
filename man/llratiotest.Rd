@@ -4,8 +4,9 @@
 \alias{llratiotest}
 \title{Title}
 \usage{
-llratiotest(nullmodel, altmodel, df = NULL, williams = FALSE, Beta = TRUE,
-  seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE)
+llratiotest(nullmodel, altmodel, df = NULL, williams = FALSE,
+  Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE,
+  returnBeta = FALSE)
 }
 \arguments{
 \item{df}{}

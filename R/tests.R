@@ -20,14 +20,22 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL, paral
 
   ix <- mat2vec.ix(adj, directed, selfloops)
   m <- sum(adj[ix])
-  xiregular <- matrix(m^2/sum(ix), nrow(adj), ncol(adj))
-  if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
-  xiregular <- round(xiregular)
+  xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
+  # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
+  xiregular <- ceiling(xiregular)
 
   xiconfiguration <- ComputeXi(adj, directed, selfloops)
 
-  loglikeregular <- extraDistr::dmvhyper(x = adj[ix], n = xiregular[ix], k = m, log = TRUE)
-  loglikeconf <- extraDistr::dmvhyper(x = adj[ix], n = xiconfiguration[ix], k = m, log = TRUE)
+  # if(nrow(adj)<50){
+    loglikeregular <- extraDistr::dmvhyper(x = adj[ix], n = xiregular[ix], k = m, log = TRUE)
+    loglikeconf <- extraDistr::dmvhyper(x = adj[ix], n = xiconfiguration[ix], k = m, log = TRUE)
+  # } else{
+  #   print(sum(xiregular[ix]))
+  #   loglikeregular <- stats::dmultinom(x = adj[ix], prob = xiregular[ix]/sum(xiregular[ix]), log = TRUE)
+  #   print(sum(xiconfiguration[ix]))
+  #   loglikeconf <- stats::dmultinom(x = adj[ix], prob = xiconfiguration[ix]/sum(xiconfiguration[ix]), log = TRUE)
+  # }
+
   llratio <- -2* (loglikeregular-loglikeconf)
 
   if(is.null(nempirical)) nempirical <- 100
@@ -49,8 +57,9 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL, paral
     } else{
       adjr <- gees[,id]
     }
-    tmp <- vec2mat(adjr,directed,selfloops,n = nrow(adj))
-    if(!directed) tmp <- tmp + t(tmp) - diag(diag(tmp))
+    n <- c(1, nrow(adj),ncol(adj))
+    tmp <- vec2mat(adjr,directed,selfloops,n = n)
+    if(!directed & n[2]==n[3]) tmp <- tmp + t(tmp) - diag(diag(tmp))
     xiconfigurationr <- ComputeXi(tmp, directed, selfloops)
     loglikeregularr <- extraDistr::dmvhyper(x = adjr, n = xiregular[ix], k = m, log = TRUE)
     loglikeconfr <- extraDistr::dmvhyper(x = adjr, n = xiconfigurationr[ix], k = m, log = TRUE)
@@ -111,16 +120,18 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
       if(is.numeric(parallel)) ncores <- parallel
       if(isTRUE(parallel)) ncores <- parallel::detectCores() - 1
 
-      nullllratio <- unlist(parallel::mclapply(X = gees, FUN = function(g, directed, null, alt){
-        if(!directed && length(nullmodel$n)==1){
+      nullllratio <- unlist(parallel::mclapply(X = gees, FUN = function(g, directed, null, alt, bip){
+        if(!directed &!bip){ # && length(nullmodel$n)==1){
           adj <- g + t(g)
         } else{
           adj <- g
         }
-        empnull <- eval(updateModel(null,adj))
-        empalt <- eval(updateModel(alt,adj))
+        empnull <- eval(updateModel(nullmodel,adj))
+
+        empalt <- eval(updateModel(altmodel,adj))
+
         return(-2*loglratio(empnull,empalt))
-      }, mc.cores = ncores, directed = directed, null = nullmodel, alt = altmodel))
+      }, mc.cores = ncores, directed = directed, null = nullmodel, alt = altmodel, bip = length(nullmodel$n)>1))
 
       mu <- mean(nullllratio)
       va <- var(nullllratio)
@@ -161,8 +172,25 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
 #'
 #' @examples
 isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, parallel = FALSE, returnBeta = FALSE){
-  fullmod <- ghype(graph, directed, selfloops)
-  nullmod <- ghype(graph, directed, selfloops, unbiased = TRUE)
+  conftest <- configurationtest(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel)
+  if(conftest >= 1e-3){
+    adj <- graph
+    if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
+      adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
+      if(!directed)
+        adj <- adj + t(adj)
+    }
+    ix <- mat2vec.ix(adj, directed, selfloops)
+    m <- sum(adj[ix])
+    xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
+    # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
+    xiregular <- ceiling(xiregular)
+    fullmod <- ghype(graph, directed, selfloops)
+    nullmod <- ghype(object = graph, directed = directed, selfloops = selfloops, xi = xiregular, unbiased = TRUE)
+  } else{
+    fullmod <- ghype(graph, directed, selfloops)
+    nullmod <- ghype(graph, directed, selfloops, unbiased = TRUE)
+  }
   # n <- full$n[1]
   # df <- n*(n-!selfloops)/(1+!directed)
   # if(igraph::is.igraph(graph)){
@@ -201,10 +229,25 @@ linkSignificance <- function(graph, model){
   xibar <- sum(model$xi[idx])-model$xi[idx]
   omegabar <- (sum(model$xi[idx]*model$omega[idx])-model$xi[idx]*model$omega[idx])/xibar
 
-  # compute vector of probabilities using Wallenius univariate distribution
-  probvec <- Vectorize(FUN = function(id){
-    BiasedUrn::pWNCHypergeo(x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id], n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id])
-    }, vectorize.args = 'id')(1:sum(idx))
+  # compute vector of probabilities using Wallenius univariate distribution or binomial
+  id <- graph[idx]!=0
+  probvec <- rep(1, sum(idx))
+
+  if((mean(xibar)/sum(graph[idx]))<1e3){
+    probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
+      x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+      n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
+      lower.tail = FALSE
+      )
+  } else{
+    probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
+      q = graph[idx][id], size = sum(graph[idx]),
+      prob = model$xi[idx][id]* model$omega[idx][id]/(
+            model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
+            ),
+      lower.tail = FALSE
+      )
+  }
 
   # return matrix of significance for each entry of original adjacency
   return(vec2mat(probvec,directed,selfloops,nrow(graph)))

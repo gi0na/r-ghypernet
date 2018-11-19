@@ -8,13 +8,13 @@
 #' @export
 #'
 #' @examples
-CreateIgGraphs <- function(adjlist, directed, selfloops){
+CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=FALSE){
   if(directed)
     mode <- 'directed'
   if(!directed)
     mode <- 'undirected'
 
-  lapply(X = adjlist, FUN = igraph::graph_from_adjacency_matrix, mode=mode, diag=selfloops)
+  lapply(X = adjlist, FUN = igraph::graph_from_adjacency_matrix, mode=mode, diag=selfloops, weighted=weighted)
 }
 
 

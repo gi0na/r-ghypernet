@@ -4,8 +4,8 @@
 \alias{ghype.matrix}
 \title{Title}
 \usage{
-\method{ghype}{matrix}(object, directed, selfloops, xi = NULL, omega = NULL,
-  unbiased = FALSE, ...)
+\method{ghype}{matrix}(object, directed, selfloops, xi = NULL,
+  omega = NULL, unbiased = FALSE, ...)
 }
 \arguments{
 \item{...}{}

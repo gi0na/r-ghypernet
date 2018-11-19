@@ -4,7 +4,8 @@
 \alias{configurationtest}
 \title{Title}
 \usage{
-configurationtest(graph, directed, selfloops, nempirical = NULL)
+configurationtest(graph, directed, selfloops, nempirical = NULL,
+  parallel = NULL)
 }
 \arguments{
 \item{nempirical}{}
