@@ -20,17 +20,19 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   if(regular){
     ix <- mat2vec.ix(adj, directed, selfloops)
     m <- sum(adj[ix])
-    xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
-    # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
+    M <- m^2
+    if(!directed) M <- 4*M
+    xiregular <- matrix(M/sum(ix), nrow(adj), ncol(adj))
+    xiregular[!ix] <- 0
+    if(!selfloops) diag(xiregular) <- 0
     xi <- ceiling(xiregular)
   } else{
     if(!directed & !isSymmetric(adj)){
       warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
-                Adjacency matrix symmetrised as adj <- adj + t(adj)')
+              Adjacency matrix symmetrised as adj <- adj + t(adj)')
       adj <- adj + t(adj)
     }
-    if(!selfloops)
-      diag(adj) <- 0
+    if(!selfloops) diag(adj) <- 0
     Kin <- apply(adj, 2, sum)
     Kout <- apply(adj, 1, sum)
     xi <- tcrossprod(Kout, Kin)
@@ -50,11 +52,18 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
     } else {
       if(!directed){
         xi <- xi + t(xi) - diag(diag(xi))
+        if(!selfloops){
+          ix <- mat2vec.ix(adj, directed, selfloops)
+          sdiag <- sum(diag(xi))
+          xi <- ceiling(xi + sdiag/sum(ix))
+          diag(xi) <- 0
+        }
       }
     }
   }
   return(xi)
-}
+  }
+
 
 
 
