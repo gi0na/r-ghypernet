@@ -7,7 +7,7 @@ updateModel <- function(model, adj){
   newcall <- NULL
   if(length(grep('function', callname))>0){
     if(length(grep('block', callname))>0 | length(grep('labels', callname))>0){
-      callname <- 'fitBlockModel'
+      callname <- 'bccm'
     } else{
       callname <- 'ghype'
     }
@@ -20,8 +20,8 @@ updateModel <- function(model, adj){
     callname <- 'ghype'
     newcall <- call(name = callname, object=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, unbiased=all(model$omega==1))
   } else{
-    if(length(grep('Block', callname))>0){
-      callname <- 'fitBlockModel'
+    if(length(grep('bccm', callname))>0){
+      callname <- 'bccm'
       newcall <- call(name = callname, adj=adj, labels=model$labels, directed=model$directed, selfloops=model$selfloops, xi=xi)
     }
     if(length(grep('nrm', callname))>0){

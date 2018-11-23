@@ -127,9 +127,7 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
           adj <- g
         }
         empnull <- eval(updateModel(nullmodel,adj))
-
         empalt <- eval(updateModel(altmodel,adj))
-
         return(-2*loglratio(empnull,empalt))
       }, mc.cores = ncores, directed = directed, null = nullmodel, alt = altmodel, bip = length(nullmodel$n)>1))
 

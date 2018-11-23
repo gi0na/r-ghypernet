@@ -204,7 +204,7 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
   names(model$coef) <- omegab[,1]
   model$labels <- labels
 
-  class(model) <- append('bccm', 'ghypeBlock', class(model))
+  class(model) <- append(c('bccm','ghypeBlock'), class(model))
   model$call <- match.call()
 
   return(model)

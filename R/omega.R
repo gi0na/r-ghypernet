@@ -20,9 +20,9 @@ MLE_omega_idx <- function(adj,xi){
   ## omega for adj==0 has to be set to 0 to speed up process
   ## if Xi==0 and adj!=0 rise warning and set omega to 0 anyway (MLE does not exist)
   idx.zero <- adj==0 | xi==0
-  idx.one <- adj==xi
-  if(any(adj[xi==0]!=0))
-    print("warning: MLE does not exist -- adj[Xi==0]!=0")
+  idx.one <- adj>=xi
+  if(any(adj[xi<=adj]!=0))
+    warning('MLE does not exist -- adj[xi<=adj]!=0')
   return(list("zero"=idx.zero,"one"=idx.one))
 }
 
