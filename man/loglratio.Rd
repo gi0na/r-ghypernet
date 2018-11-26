@@ -2,38 +2,18 @@
 % Please edit documentation in R/logl.R
 \name{loglratio}
 \alias{loglratio}
-\title{Computes log-likelihood ratio for nrm models.}
+\title{Compute log-likelihood ratio for ghype models.}
 \usage{
 loglratio(mod0, mod1)
 }
 \arguments{
-\item{mod0}{~~Describe \code{mod0} here~~}
+\item{mod0}{ghype, null model}
 
-\item{mod1}{~~Describe \code{mod1} here~~}
+\item{mod1}{ghype, alternative model}
 }
 \value{
-val
+scalar, log-likelihood ratio
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Compute log-likelihood ratio for ghype models.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

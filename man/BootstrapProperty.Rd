@@ -2,15 +2,36 @@
 % Please edit documentation in R/igraphintegration.R
 \name{BootstrapProperty}
 \alias{BootstrapProperty}
-\title{Title}
+\title{TODO}
 \usage{
 BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
   xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL,
   ...)
 }
 \arguments{
-\item{seed}{}
+\item{graph}{adj}
+
+\item{property}{function}
+
+\item{directed}{..}
+
+\item{selfloops}{..}
+
+\item{nsamples}{..}
+
+\item{xi}{..}
+
+\item{omega}{..}
+
+\item{m}{...}
+
+\item{seed}{..}
+
+\item{...}{...}
+}
+\value{
+vector
 }
 \description{
-Title
+.....
 }

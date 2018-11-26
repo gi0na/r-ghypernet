@@ -7,32 +7,20 @@
 vec2mat(vec, directed, selfloops, n)
 }
 \arguments{
-\item{vec}{~~Describe \code{mat} here~~}
+\item{vec}{vector to be put in matrix form}
 
-\item{directed}{~~Describe \code{directed} here~~}
+\item{directed}{a boolean argument specifying whether object is directed or not.}
 
-\item{selfloops}{~~Describe \code{selfloops} here~~}
+\item{selfloops}{a boolean argument specifying whether the model should
+incorporate selfloops.}
+
+\item{n}{vector. if length(n)==1, n is the number of vertices. If length(n)==3
+first element is number of vertices, second and third elements are number of
+vertices for row and column of bipartite matrix.}
+}
+\value{
+matrix nxn generated from vector.
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Auxilliary function, produces matrix from vector
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

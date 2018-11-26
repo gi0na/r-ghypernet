@@ -2,43 +2,27 @@
 % Please edit documentation in R/logl.R
 \name{logl}
 \alias{logl}
-\title{Computes log-likelihood for nrm models.}
+\title{Computes log-likelihood for ghype models.}
 \usage{
 logl(adj, xi, omega, directed, selfloops, multinomial = NULL)
 }
 \arguments{
-\item{adj}{~~Describe \code{adj} here~~}
+\item{adj}{an adjacency matrix}
 
-\item{xi}{~~Describe \code{xi} here~~}
+\item{xi}{a combinatorial matrix}
 
-\item{omega}{~~Describe \code{omega} here~~}
+\item{omega}{a propensity matrix}
 
-\item{directed}{~~Describe \code{directed} here~~}
+\item{directed}{a boolean argument specifying whether object is directed or not.}
 
-\item{selfloops}{~~Describe \code{selfloops} here~~}
+\item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
 
-\item{multinomial}{~~Describe \code{multinomial} here~~}
+\item{multinomial}{optional boolean. Force multinomial approximation?
+If not chosen, multinomial chosen for large graphs.}
+}
+\value{
+loglikelihood value
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Computes log-likelihood for ghype models.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

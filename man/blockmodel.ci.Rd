@@ -15,6 +15,9 @@ blockmodel.ci(omegaBlocks, xiBlocks, mBlocks, m, pval = 0.05)
 
 \item{adj}{~~Describe \code{adj} here~~}
 }
+\value{
+3-vector
+}
 \description{
 ~~ A concise (1-5 lines) description of what the function does. ~~
 }

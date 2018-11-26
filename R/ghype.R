@@ -1,35 +1,52 @@
-#' Title
+#' Fitting gHypEG models
 #'
-#' @param object
-#' @param directed
-#' @param selfloops
-#' @param xi
-#' @param omega
-#' @param unbiased
-#' @param ...
+#' ghype is used to fit gHypEG models when the propensity matrix is known.
+#' It can be used to estimate a null model (soft configuration model), or
+#' the benchmark 'full-model', where the propensity matrix is fitted such
+#' that the expected graph from the fitted model is the one passed to the
+#' function.
+#'
+#' @param object either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param xi an optional matrix defining the combinatorial matrix of the model.
+#' @param omega an optional matrix defining the propensity matrix of the model.
+#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
+#' @param ... additional arguments to be passed to the low level fitting functions.
 #'
 #' @return
+#' ghype return an object of class "ghype".
+#'
 #' @export
 #'
-#' @examples
+#'
 ghype <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
   UseMethod('ghype')
 }
 
-#' Title
+
+#' Fitting gHypEG models
 #'
-#' @param object
-#' @param directed
-#' @param selfloops
-#' @param xi
-#' @param omega
-#' @param unbiased
-#' @param ...
+#' ghype is used to fit gHypEG models when the propensity matrix is known.
+#' It can be used to estimate a null model (soft configuration model), or
+#' the benchmark 'full-model', where the propensity matrix is fitted such
+#' that the expected graph from the fitted model is the one passed to the
+#' function.
+#'
+#' @param object either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param xi an optional matrix defining the combinatorial matrix of the model.
+#' @param omega an optional matrix defining the propensity matrix of the model.
+#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
+#' @param ... additional arguments to be passed to the low level fitting functions.
 #'
 #' @return
+#' ghype return an object of class "ghype".
+#'
 #' @export
 #'
-#' @examples
+#'
 ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
   if(is.null(xi)){
     xi=ComputeXi(object,directed,selfloops)
@@ -67,20 +84,29 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   return(model)
 }
 
-#' Title
+
+#' Fitting gHypEG models
 #'
-#' @param object
-#' @param directed
-#' @param selfloops
-#' @param xi
-#' @param omega
-#' @param unbiased
-#' @param ...
+#' ghype is used to fit gHypEG models when the propensity matrix is known.
+#' It can be used to estimate a null model (soft configuration model), or
+#' the benchmark 'full-model', where the propensity matrix is fitted such
+#' that the expected graph from the fitted model is the one passed to the
+#' function.
+#'
+#' @param object either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param xi an optional matrix defining the combinatorial matrix of the model.
+#' @param omega an optional matrix defining the propensity matrix of the model.
+#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
+#' @param ... additional arguments to be passed to the low level fitting functions.
 #'
 #' @return
+#' ghype return an object of class "ghype".
+#'
 #' @export
 #'
-#' @examples
+#'
 ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
 
   if(is.null(omega)){
@@ -105,28 +131,35 @@ ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbi
 }
 
 
-#' Title
+#' Map list to ghype object
 #'
-#' @param object
-#' @param ...
+#' Manually map a list to a ghype object
+#'
+#' @param object list object to map to ghype.
+#' @param ... additional arguments to be passed to the low level functions.
 #'
 #' @return
+#' an object of class "ghype"
+#'
 #' @export
 #'
-#' @examples
 as.ghype <- function(object, ...){
   UseMethod('as.ghype')
 }
 
-#' Title
+
+#' Map list to ghype object
 #'
-#' @param object
-#' @param ...
+#' Manually map a list to a ghype object
+#'
+#' @param object list object to map to ghype.
+#' @param ... additional arguments to be passed to the low level functions.
 #'
 #' @return
+#' an object of class "ghype"
+#'
 #' @export
 #'
-#' @examples
 as.ghype.list <- function(object, ...){
   model <- list(
     call = object$call,

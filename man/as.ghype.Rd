@@ -2,13 +2,18 @@
 % Please edit documentation in R/ghype.R
 \name{as.ghype}
 \alias{as.ghype}
-\title{Title}
+\title{Map list to ghype object}
 \usage{
 as.ghype(object, ...)
 }
 \arguments{
-\item{...}{}
+\item{object}{list object to map to ghype.}
+
+\item{...}{additional arguments to be passed to the low level functions.}
+}
+\value{
+an object of class "ghype"
 }
 \description{
-Title
+Manually map a list to a ghype object
 }

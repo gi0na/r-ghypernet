@@ -2,14 +2,32 @@
 % Please edit documentation in R/blockmodel.R
 \name{bccm}
 \alias{bccm}
-\title{Title}
+\title{Fitting bccm models}
 \usage{
 bccm(adj, labels, directed, selfloops, directedBlocks = FALSE,
   homophily = FALSE, inBlockOnly = FALSE, xi = NULL)
 }
 \arguments{
-\item{xi}{}
+\item{adj}{the adjacency matrix of the graph.}
+
+\item{labels}{vector, the vertex labels to generate the blocks in the bccm.}
+
+\item{directed}{a boolean argument specifying whether object is directed or not.}
+
+\item{selfloops}{boolean argument specifying whether the model should incorporate selfloops.}
+
+\item{directedBlocks}{boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.}
+
+\item{homophily}{boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.}
+
+\item{inBlockOnly}{boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.}
+
+\item{xi}{an optional matrix defining the combinatorial matrix of the model.}
+}
+\value{
+bccm returns an object of class 'bccm' and 'ghype'.
+'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 }
 \description{
-Title
+bccm is used to fit a block-constrained configuration model.
 }

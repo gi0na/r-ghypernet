@@ -2,38 +2,22 @@
 % Please edit documentation in R/matrixoperations.R
 \name{mat2vec.ix}
 \alias{mat2vec.ix}
-\title{Auxilliary function, gives indices of adjacency matrix for directed,
+\title{Auxilliary function, gives mask for matrix for directed,
 undirected etc.}
 \usage{
 mat2vec.ix(mat, directed, selfloops)
 }
 \arguments{
-\item{mat}{~~Describe \code{mat} here~~}
+\item{mat}{matrix}
 
-\item{directed}{~~Describe \code{directed} here~~}
+\item{directed}{a boolean argument specifying whether object is directed or not.}
 
-\item{selfloops}{~~Describe \code{selfloops} here~~}
+\item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
+}
+\value{
+a boolean matrix that can be used to mask adjacency matrices.
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Auxilliary function, gives mask for matrix for directed,
+undirected etc.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

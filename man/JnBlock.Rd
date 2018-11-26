@@ -2,43 +2,22 @@
 % Please edit documentation in R/blockmodel.R
 \name{JnBlock}
 \alias{JnBlock}
-\title{Computes Fisher Information matrix for estimators in block models.}
+\title{Fisher Information matrix for estimators in block models.}
 \usage{
 JnBlock(omegaBlocks, xiBlocks, mBlocks, m)
 }
 \arguments{
-\item{beta}{~~Describe \code{beta} here~~}
+\item{omegaBlocks}{the block parameters (vector)}
 
-\item{w}{~~Describe \code{w} here~~}
+\item{xiBlocks}{the xi-block (vector)}
 
-\item{xi}{~~Describe \code{xi} here~~}
+\item{mBlocks}{the adj-block (vector)}
 
-\item{adj}{~~Describe \code{adj} here~~}
-
-\item{directed}{~~Describe \code{directed} here~~}
-
-\item{selfloops}{~~Describe \code{selfloops} here~~}
+\item{m}{the number of edges (scalar)}
 }
 \value{
-val
+Fisher Information matrix
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Fisher Information matrix for estimators in block models.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

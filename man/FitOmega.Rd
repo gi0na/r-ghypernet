@@ -2,13 +2,22 @@
 % Please edit documentation in R/omega.R
 \name{FitOmega}
 \alias{FitOmega}
-\title{Title}
+\title{Fit propensity matrix for full model}
 \usage{
 FitOmega(adj, xi, directed, selfloops)
 }
 \arguments{
-\item{selfloops}{}
+\item{adj}{adjacency matrix}
+
+\item{xi}{combinatorial matrix}
+
+\item{directed}{boolean}
+
+\item{selfloops}{boolean}
+}
+\value{
+propensity matrix
 }
 \description{
-Title
+(auxiliary function)
 }

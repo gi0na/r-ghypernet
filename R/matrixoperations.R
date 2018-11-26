@@ -1,20 +1,11 @@
-#' Auxilliary function, gives indices of adjacency matrix for directed,
+#' Auxilliary function, gives mask for matrix for directed,
 #' undirected etc.
 #'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param mat  ~~Describe \code{mat} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
+#' @param mat  matrix
+#' @param directed  a boolean argument specifying whether object is directed or not.
+#' @param selfloops  a boolean argument specifying whether the model should incorporate selfloops.
 #' @return
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
+#' a boolean matrix that can be used to mask adjacency matrices.
 #'
 #' @export
 mat2vec.ix <- function(mat, directed,
@@ -39,21 +30,16 @@ mat2vec.ix <- function(mat, directed,
 
 #' Auxilliary function, produces matrix from vector
 #'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
 #'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param vec  ~~Describe \code{mat} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
+#' @param vec  vector to be put in matrix form
+#' @param directed  a boolean argument specifying whether object is directed or not.
+#' @param selfloops  a boolean argument specifying whether the model should
+#' incorporate selfloops.
+#' @param n vector. if length(n)==1, n is the number of vertices. If length(n)==3
+#' first element is number of vertices, second and third elements are number of
+#' vertices for row and column of bipartite matrix.
 #' @return
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#'
+#' matrix nxn generated from vector.
 #' @export
 vec2mat <- function(vec,directed,selfloops,n){
   if(length(n)>1){

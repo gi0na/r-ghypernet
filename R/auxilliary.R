@@ -32,29 +32,10 @@ updateModel <- function(model, adj){
 
   return(newcall)
 }
-
-#' Title
-#'
-#' @param object
-#' @param ...
-#'
-#' @return
-#' @export
-#'
-#' @examples
-AIC.ghype <- function(object, ...){
-  2*object$df - 2*object$loglikelihood
-}
-
-#' Title
-#'
-#' @param object
-#' @param ...
-#'
-#' @return
-#' @export
-#'
-#' @examples
-BIC.ghype <- function(object, ...){
-  log(object$m)*object$df - 2*object$loglikelihood
+lrtohtest <- function(statistic, parameter, p.value, conf.int, alternative, method, data.name){
+  val <- list(statistic=statistic, parameter=parameter,
+              p.value=p.value, conf.int=conf.int, alternative=alternative,
+              method=method, data.name=data.name)
+  class(val) <- 'htest'
+  return(val)
 }

@@ -1,37 +1,45 @@
-#' Title
+#' Fitting bccm models (deprecated)
 #'
-#' @param adj
-#' @param labels
-#' @param directed
-#' @param selfloops
-#' @param directedBlocks
-#' @param homophily
-#' @param inBlockOnly
-#' @param xi
+#' bccm is used to fit a block-constrained configuration model.
+#'
+#'
+#' @param adj the adjacency matrix of the graph.
+#' @param labels vector, the vertex labels to generate the blocks in the bccm.
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops boolean argument specifying whether the model should incorporate selfloops.
+#' @param directedBlocks boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.
+#' @param homophily boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.
+#' @param inBlockOnly boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.
+#' @param xi an optional matrix defining the combinatorial matrix of the model.
 #'
 #' @return
+#' bccm returns an object of class 'bccm' and 'ghype'.
+#' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
-#' @examples
 fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
   bccm(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi)
 }
 
-#' Title
+#' Fitting bccm models
 #'
-#' @param adj
-#' @param labels
-#' @param directed
-#' @param selfloops
-#' @param directedBlocks
-#' @param homophily
-#' @param inBlockOnly
-#' @param xi
+#' bccm is used to fit a block-constrained configuration model.
+#'
+#'
+#' @param adj the adjacency matrix of the graph.
+#' @param labels vector, the vertex labels to generate the blocks in the bccm.
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops boolean argument specifying whether the model should incorporate selfloops.
+#' @param directedBlocks boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.
+#' @param homophily boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.
+#' @param inBlockOnly boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.
+#' @param xi an optional matrix defining the combinatorial matrix of the model.
 #'
 #' @return
+#' bccm returns an object of class 'bccm' and 'ghype'.
+#' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
-#' @examples
 bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
 
   if(!directed & (homophily | inBlockOnly) & directedBlocks)
@@ -69,7 +77,7 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
 
   # # construct xi matrix
   # if(is.null(xi)){
-  #   if(configurationtest(graph = adj, directed = directed, selfloops = selfloops)>1e-4){
+  #   if(conf.test(graph = adj, directed = directed, selfloops = selfloops)>1e-4){
   #     ix <- mat2vec.ix(adj, directed, selfloops)
   #     m <- sum(adj[ix])
   #     xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
@@ -83,7 +91,7 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
   # construct xi matrix
   if(is.null(xi)){
     xiregular <- FALSE
-    if(configurationtest(graph = adj, directed = directed, selfloops = selfloops)>1e-4)
+    if(conf.test(graph = adj, directed = directed, selfloops = selfloops)$p.value>1e-4)
       xiregular <- TRUE
 
     xi <- ComputeXi(adj,directed,selfloops, regular=xiregular)
@@ -213,25 +221,16 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
 
 
 
-#' Computes Fisher Information matrix for estimators in block models.
+
+#' Fisher Information matrix for estimators in block models.
 #'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
+#' @param omegaBlocks the block parameters (vector)
+#' @param xiBlocks the xi-block (vector)
+#' @param mBlocks the adj-block (vector)
+#' @param m the number of edges (scalar)
 #'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param beta  ~~Describe \code{beta} here~~
-#' @param w  ~~Describe \code{w} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @return val
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#'
+#' @return
+#' Fisher Information matrix
 #'
 JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
   # Returns Fisher Information
@@ -254,7 +253,7 @@ JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
 #' @param w  ~~Describe \code{w} here~~
 #' @param adj  ~~Describe \code{adj} here~~
 #' @param pval  ~~Describe \code{pval} here~~
-#' @return
+#' @return 3-vector
 #' @note  ~~further notes~~
 #' @author  ~~who you are~~
 #' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~

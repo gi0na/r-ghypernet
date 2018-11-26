@@ -2,13 +2,15 @@
 % Please edit documentation in R/print.R
 \name{print.ghype}
 \alias{print.ghype}
-\title{Title}
+\title{Print method for ghype object.}
 \usage{
 \method{print}{ghype}(x, suppressCall = FALSE, ...)
 }
 \arguments{
-\item{...}{}
+\item{x}{ghype model}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Title
+Print method for ghype object.
 }

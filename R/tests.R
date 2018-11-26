@@ -1,15 +1,21 @@
-#' Title
+#' Test regular (gnp) vs configuration model
 #'
-#' @param graph
-#' @param directed
-#' @param selfloops
-#' @param nempirical
+#' Likelihood ratio test for gnp vs configuration model.
+#'
+#' @param graph adjacency matrix or igraph graph
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param nempirical optional, number of graphs to sample from null distribution for empirical distribution.
+#' @param parallel optional, number of cores to use or boolean for parallel computation.
+#' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
+#' performed not in parallel.
 #'
 #' @return
+#' p-value of test.
+#'
 #' @export
 #'
-#' @examples
-configurationtest <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL){
+conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL){
 
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
@@ -73,22 +79,48 @@ configurationtest <- function(graph, directed, selfloops, nempirical=NULL, paral
   a <- (mu/(mm*va))*(mu*(mm-mu)-va)
   b <- (mm-mu)*a/mu
 
-  return(pbeta(q = llratio/mm, shape1 = a, shape2 = b, lower.tail = F))
+  p.value <- pbeta(q = llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+  names(llratio) <- 'lr'
+  parms <- nrow(adj)*(1+directed)-1
+  names(parms) <- 'df'
+  conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+  attributes(conf.int) <- list(conf.level=0.95)
+  alternative <- 'one.sided'
+  method <- 'LR test -- gnp vs CM'
+
+  return(
+    lrtohtest(
+      statistic=llratio, parameter=parms, p.value=p.value, conf.int=conf.int,
+      alternative=alternative, method=method, data.name=NULL
+    )
+    )
 
 }
 
 
-#' Title
+#' Perform likelihood ratio test between two ghype models.
 #'
-#' @param nullmodel
-#' @param altmodel
-#' @param df
+#' lr.test allows to test between two nested ghype models whether there is
+#' enough evidence for the alternative (more complex) model compared to the null model.
+#'
+#' @param nullmodel ghype object. The null model
+#' @param altmodel ghype object. The alternative model
+#' @param df optional scalar. the number of degrees of freedom.
+#' @param williams (deprecated keep FALSE)
+#' @param Beta boolean, whether to use empirical Beta distribution approximation. Default TRUE
+#' @param seed scalar, seed for the empirical distribution.
+#' @param nempirical optional scalar, number of replicates for empirical beta distribution.
+#' @param parallel optional, number of cores to use or boolean for parallel computation.
+#' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
+#' performed not in parallel.
+#' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
 #'
 #' @return
+#'  p-value of test. If returnBeta=TRUE returns the p-value together with the parameters
+#'  of the beta distribution.
 #' @export
 #'
-#' @examples
-llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE){
+lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE){
   llratio <- loglratio(nullmodel,altmodel)
 
   if(!is.null(Beta)){
@@ -97,7 +129,22 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
       a <- Beta[1]
       b <- Beta[2]
       mm <- Beta[3]
-      return(pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F))
+
+      p.value <- pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+      names(llratio) <- 'lr'
+      parms <- altmodel$df-nullmodel$df
+      names(parms) <- 'df'
+      conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+      attributes(conf.int) <- list(conf.level=0.95)
+      alternative <- 'one.sided'
+      method <- 'LR test'
+
+      return(
+        lrtohtest(
+          statistic=-2*llratio, parameter=parms, p.value=p.value, conf.int=conf.int,
+          alternative=alternative, method=method, data.name=NULL
+        )
+      )
     }
 
     if(isTRUE(Beta)){
@@ -139,7 +186,22 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
 
       if(returnBeta)
         return(c(pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F), a,b,mm))
-      return(pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F))
+
+      p.value <- pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+      names(llratio) <- 'lr'
+      parms <- altmodel$df-nullmodel$df
+      names(parms) <- 'df'
+      conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+      attributes(conf.int) <- list(conf.level=0.95)
+      alternative <- 'one.sided'
+      method <- 'LR test'
+
+      return(
+        lrtohtest(
+          statistic=-2*llratio, parameter=parms, p.value=p.value, conf.int=conf.int,
+          alternative=alternative, method=method, data.name=NULL
+        )
+      )
     }
   }
 
@@ -159,18 +221,26 @@ llratiotest <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = T
   return(pchisq(q = -2*llratio/q1, df = df, lower.tail = FALSE))
 }
 
-#' Title
+#' Test SCM vs full ghype.
 #'
-#' @param graph
-#' @param directed
-#' @param selfloops
+#' isNetwork tests a graph for the SCM vs the full ghype model.
+#'
+#' @param graph adjacency matrix or igraph graph
+#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param nempirical optional, number of graphs to sample from null distribution for empirical distribution.
+#' @param parallel optional, number of cores to use or boolean for parallel computation.
+#' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
+#' performed not in parallel.
+#' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
+#'
 #'
 #' @return
-#' @export
+#' p-value of test.
 #'
-#' @examples
+#' @export
 isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, parallel = FALSE, returnBeta = FALSE){
-  conftest <- configurationtest(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel)
+  conftest <- conf.test(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel)
   if(conftest >= 1e-3){
     adj <- graph
     if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
@@ -201,21 +271,33 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
   #     df <- nrow(graph)*ncol(graph)
   #   }
   # }
-  return(llratiotest(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta))
+  return(lr.test(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta))
 }
 
-#' Title
+
+#' Estimate statistical deviations from ghype model
 #'
-#' @param graph
-#' @param directed
-#' @param selfloops
+#' linkSignificance allows to estimate the statistical deviations of an observed
+#' graph from a ghype model.
+#'
+#' @param graph an adjacency matrix or a igraph object.
+#' @param model a ghype model
+#' @param under boolean, estimate under-represented deviations? Default FALSE.
 #'
 #' @return
+#'
+#' matrix of probabilities with same size as adjacency matrix.
+#'
 #' @export
 #'
-#' @examples
-linkSignificance <- function(graph, model){
-  ## TODO: assume graph is adjacency for now. Extend with method for graph and for matrices
+linkSignificance <- function(graph, model, under=FALSE){
+  adj <- graph
+  if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
+    adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
+    if(!directed)
+      adj <- adj + t(adj)
+  }
+  graph <- adj
 
   directed <- model$directed
   selfloops <- model$selfloops
@@ -235,7 +317,7 @@ linkSignificance <- function(graph, model){
     probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
       x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
       n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
-      lower.tail = FALSE
+      lower.tail = under
       )
   } else{
     probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
@@ -243,7 +325,7 @@ linkSignificance <- function(graph, model){
       prob = model$xi[idx][id]* model$omega[idx][id]/(
             model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
             ),
-      lower.tail = FALSE
+      lower.tail = under
       )
   }
 

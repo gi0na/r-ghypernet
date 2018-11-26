@@ -2,14 +2,33 @@
 % Please edit documentation in R/ghype.R
 \name{ghype.matrix}
 \alias{ghype.matrix}
-\title{Title}
+\title{Fitting gHypEG models}
 \usage{
 \method{ghype}{matrix}(object, directed, selfloops, xi = NULL,
   omega = NULL, unbiased = FALSE, ...)
 }
 \arguments{
-\item{...}{}
+\item{object}{either an adjacency matrix or an igraph graph.}
+
+\item{directed}{a boolean argument specifying whether object is directed or not.}
+
+\item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
+
+\item{xi}{an optional matrix defining the combinatorial matrix of the model.}
+
+\item{omega}{an optional matrix defining the propensity matrix of the model.}
+
+\item{unbiased}{a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.}
+
+\item{...}{additional arguments to be passed to the low level fitting functions.}
+}
+\value{
+ghype return an object of class "ghype".
 }
 \description{
-Title
+ghype is used to fit gHypEG models when the propensity matrix is known.
+It can be used to estimate a null model (soft configuration model), or
+the benchmark 'full-model', where the propensity matrix is fitted such
+that the expected graph from the fitted model is the one passed to the
+function.
 }

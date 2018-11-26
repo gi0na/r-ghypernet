@@ -2,13 +2,21 @@
 % Please edit documentation in R/tests.R
 \name{linkSignificance}
 \alias{linkSignificance}
-\title{Title}
+\title{Estimate statistical deviations from ghype model}
 \usage{
-linkSignificance(graph, model)
+linkSignificance(graph, model, under = FALSE)
 }
 \arguments{
-\item{selfloops}{}
+\item{graph}{an adjacency matrix or a igraph object.}
+
+\item{model}{a ghype model}
+
+\item{under}{boolean, estimate under-represented deviations? Default FALSE.}
+}
+\value{
+matrix of probabilities with same size as adjacency matrix.
 }
 \description{
-Title
+linkSignificance allows to estimate the statistical deviations of an observed
+graph from a ghype model.
 }

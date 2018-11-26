@@ -2,13 +2,20 @@
 % Please edit documentation in R/igraphintegration.R
 \name{CreateIgGraphs}
 \alias{CreateIgGraphs}
-\title{Title}
+\title{Convert a list of adjacency matrices to a list of igraph graphs.}
 \usage{
 CreateIgGraphs(adjlist, directed, selfloops, weighted = FALSE)
 }
 \arguments{
-\item{selfloops}{}
+\item{adjlist}{a list of adjacency matrices}
+
+\item{directed}{a boolean argument specifying whether object is directed or not.}
+
+\item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
+}
+\value{
+list of igraph graphs.
 }
 \description{
-Title
+Convert a list of adjacency matrices to a list of igraph graphs.
 }

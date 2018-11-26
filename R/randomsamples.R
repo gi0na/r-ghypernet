@@ -1,15 +1,32 @@
-#' Title
+#' (deprecated) Generate random realisations from ghype model.
 #'
-#' @param nsamples
-#' @param model
-#' @param m
-#' @param multinomial
-#'
+#' @param nsamples scalar number of realisations
+#' @param model ghype model
+#' @param m optional scalar, number of edges to draw
+#' @param multinomial optional boolean, draw from multinomial?
+#' @param seed optional scalar, seed for random sampling.
 #' @return
+#' list of adjacency matrices.
+#'
 #' @export
 #'
-#' @examples
 RandomGraph <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
+  rghype(nsamples, model, m, multinomial, seed)
+}
+
+#' Generate random realisations from ghype model.
+#'
+#' @param nsamples scalar number of realisations
+#' @param model ghype model
+#' @param m optional scalar, number of edges to draw
+#' @param multinomial optional boolean, draw from multinomial?
+#' @param seed optional scalar, seed for random sampling.
+#' @return
+#' list of adjacency matrices.
+#'
+#' @export
+#'
+rghype <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   multinomial <- TRUE
   directed <- model$directed
   selfloops <- model$selfloops

@@ -1,19 +1,18 @@
-#' Auxilliary function. Computes Xi matrix.
+#' Auxilliary function. Computes combinatorial matrix.
 #'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
+#' Combinatorial matrix computed according to soft
+#' configuration model or 'regular' gnp model.
 #'
-#'  ~~ If necessary, more details than the description above ~~
+#' @param adj adjacency matrix
+#' @param directed boolean
+#' @param selfloops boolean
+#' @param regular boolean. Is the combinatorial matrix computed for configuration model or for regular gnp model? default FALSE.
 #'
-#' @param adj  ~~Describe \code{adj} here~~
 #' @return
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
+#' combinatorial matrix
 #'
 #' @export
+#'
 ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   # returns the matrix xi according to the nodes degrees
 
@@ -55,7 +54,11 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
         if(!selfloops){
           ix <- mat2vec.ix(adj, directed, selfloops)
           sdiag <- sum(diag(xi))
-          xi <- ceiling(xi + sdiag/sum(ix))
+          toadd <- ceiling(sdiag/sum(Kin)*Kin/(N-1))
+          # TODO: to improve. ugly for loop
+          for(i in 1:nrow(xi)){
+            xi[i,] <- xi[,i] <- xi[i,] + toadd[i]
+          }
           diag(xi) <- 0
         }
       }
@@ -63,8 +66,6 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   }
   return(xi)
   }
-
-
 
 
 vxi <- function(idx, diagxir, vbas, xi, adj){

@@ -2,33 +2,23 @@
 % Please edit documentation in R/computexi.R
 \name{ComputeXi}
 \alias{ComputeXi}
-\title{Auxilliary function. Computes Xi matrix.}
+\title{Auxilliary function. Computes combinatorial matrix.}
 \usage{
 ComputeXi(adj, directed, selfloops, regular = FALSE)
 }
 \arguments{
-\item{adj}{~~Describe \code{adj} here~~}
+\item{adj}{adjacency matrix}
+
+\item{directed}{boolean}
+
+\item{selfloops}{boolean}
+
+\item{regular}{boolean. Is the combinatorial matrix computed for configuration model or for regular gnp model? default FALSE.}
+}
+\value{
+combinatorial matrix
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Combinatorial matrix computed according to soft
+configuration model or 'regular' gnp model.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

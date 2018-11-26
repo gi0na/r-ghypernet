@@ -1,14 +1,17 @@
-#' Title
+#' Fit propensity matrix for full model
 #'
-#' @param adj
-#' @param xi
-#' @param directed
-#' @param selfloops
+#' (auxiliary function)
+#'
+#' @param adj adjacency matrix
+#' @param xi combinatorial matrix
+#' @param directed boolean
+#' @param selfloops boolean
 #'
 #' @return
+#' propensity matrix
+#'
 #' @export
 #'
-#' @examples
 FitOmega <- function(adj, xi, directed, selfloops){
   return(MLE_omega_wallenius(adj,xi,directed,selfloops))
 }

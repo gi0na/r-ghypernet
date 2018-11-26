@@ -1,13 +1,10 @@
-### print
-#' Title
+#' Print method for ghype object.
 #'
-#' @param x
-#' @param ...
+#' @param x ghype model
+#' @param ... further arguments passed to or from other methods.
 #'
-#' @return
 #' @export
 #'
-#' @examples
 print.ghype <- function(x, suppressCall = FALSE,
                         ...) {
   # print method for ghype class
@@ -32,15 +29,15 @@ print.ghype <- function(x, suppressCall = FALSE,
 }
 
 
-#' Print method for elements of class \code{'ghypeBlock'}.
+#' Print method for elements of class \code{'bccm'}.
 #'
-#' @param x  object of class \code{'nrm'}
+#' @param x  object of class \code{'bccm'}
 #' @param suppressCall  logical, indicating whether to print the call that generated x
 #' @param \dots  optional arguments to print or plot methods.
 #' @author  Giona Casiraghi
-#' @seealso  \code{\link{fitBlockModel}}
+#' @seealso  \code{\link{bccm}}
 #' @export
-print.ghypeBlock <- function(x, suppressCall = FALSE,
+print.bccm <- function(x, suppressCall = FALSE,
                       ...) {
   # print method for ghypeBlock class
   if (!suppressCall) {
