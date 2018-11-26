@@ -1,3 +1,25 @@
+check_specs.igraph <- function(object, ...){
+  if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(object)){
+    if(is.null(directed)){
+      if(igraph::is.directed(object)){
+        directed <- FALSE
+      } else{
+        directed <- TRUE
+      }
+    }
+
+    if(is.null(selfloops)){
+      if(igraph::is.simple(igraph::simplify(object, remove.multiple = TRUE, remove.loops = FALSE))){
+        selfloops <- FALSE
+      } else{
+        selfloops <- TRUE
+      }
+    }
+  }
+  return(c('directed'=directed, 'selfloops'=selfloops))
+}
+
+
 #' Convert a list of adjacency matrices to a list of igraph graphs.
 #'
 #' @param adjlist a list of adjacency matrices

@@ -34,13 +34,26 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #' @param homophily boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.
 #' @param inBlockOnly boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
+#' @param regular optional boolean, fit regular gnp model? if not specified chosen through lr.test.
 #'
 #' @return
 #' bccm returns an object of class 'bccm' and 'ghype'.
 #' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
-bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
+bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = NULL){
+
+  specs <- check_specs(adj)
+  directed <- specs[1]
+  selfloops <- specs[2]
+
+  if(is.matrix(adj)){
+    if(!directed & !isSymmetric(adj)){
+      warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
+              Adjacency matrix symmetrised as adj <- adj + t(adj)')
+      adj <- adj + t(adj)
+    }
+  }
 
   if(!directed & (homophily | inBlockOnly) & directedBlocks)
     directedBlocks <- FALSE
@@ -90,11 +103,13 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
 
   # construct xi matrix
   if(is.null(xi)){
-    xiregular <- FALSE
-    if(conf.test(graph = adj, directed = directed, selfloops = selfloops)$p.value>1e-4)
-      xiregular <- TRUE
+    if(is.null(regular)){
+      regular <- FALSE
+      if(conf.test(graph = adj, directed = directed, selfloops = selfloops)$p.value>1e-4)
+        regular <- TRUE
+    }
 
-    xi <- ComputeXi(adj,directed,selfloops, regular=xiregular)
+    xi <- ComputeXi(adj,directed,selfloops, regular=regular)
 
   } else{
     if(length(xi) == 1 && xi == 'regular')

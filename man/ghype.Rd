@@ -5,7 +5,7 @@
 \title{Fitting gHypEG models}
 \usage{
 ghype(object, directed, selfloops, xi = NULL, omega = NULL,
-  unbiased = FALSE, ...)
+  unbiased = FALSE, regular = FALSE, ...)
 }
 \arguments{
 \item{object}{either an adjacency matrix or an igraph graph.}
@@ -19,6 +19,8 @@ ghype(object, directed, selfloops, xi = NULL, omega = NULL,
 \item{omega}{an optional matrix defining the propensity matrix of the model.}
 
 \item{unbiased}{a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.}
+
+\item{regular}{a boolean argument specifying whether to model the 'gnp' ensemble (no xi), defaults to FALSE.}
 
 \item{...}{additional arguments to be passed to the low level fitting functions.}
 }

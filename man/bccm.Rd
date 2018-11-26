@@ -4,8 +4,9 @@
 \alias{bccm}
 \title{Fitting bccm models}
 \usage{
-bccm(adj, labels, directed, selfloops, directedBlocks = FALSE,
-  homophily = FALSE, inBlockOnly = FALSE, xi = NULL)
+bccm(adj, labels, directed = NULL, selfloops = NULL,
+  directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE,
+  xi = NULL, regular = NULL)
 }
 \arguments{
 \item{adj}{the adjacency matrix of the graph.}
@@ -23,6 +24,8 @@ bccm(adj, labels, directed, selfloops, directedBlocks = FALSE,
 \item{inBlockOnly}{boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.}
 
 \item{xi}{an optional matrix defining the combinatorial matrix of the model.}
+
+\item{regular}{optional boolean, fit regular gnp model? if not specified chosen through lr.test.}
 }
 \value{
 bccm returns an object of class 'bccm' and 'ghype'.
