@@ -191,7 +191,7 @@ bccm <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homop
     blockOmega <- NULL
   }
   model$blockOmega <- blockOmega
-  model$df <- sum(mat2vec.ix(xi,directed,selfloops)) + nrow(omegab)-1
+  model$df <- xiregular + (1-xiregular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
   model$directedBlocks <- directedBlocks
   ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
   # if(length(zerosid)!=0){

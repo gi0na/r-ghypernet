@@ -241,7 +241,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 #' @export
 isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, parallel = FALSE, returnBeta = FALSE){
   conftest <- conf.test(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel)
-  if(conftest >= 1e-3){
+  if(conftest$p.value >= 1e-3){
     adj <- graph
     if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
       adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
