@@ -55,7 +55,7 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 
   if(is.null(xi)){
     xi=ComputeXi(object,directed,selfloops, regular = regular)
-    df <- xiregular + (1-xiregular)*nrow(xi)*(1+directed)
+    df <- regular + (1-regular)*nrow(xi)*(1+directed)
   }
 
   if(is.null(omega)){

@@ -54,7 +54,7 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
         if(!selfloops){
           ix <- mat2vec.ix(adj, directed, selfloops)
           sdiag <- sum(diag(xi))
-          toadd <- ceiling(sdiag/sum(Kin)*Kin/(N-1))
+          toadd <- ceiling(sdiag/sum(Kin)*Kin/(nrow(adj)-1))
           # TODO: to improve. ugly for loop
           for(i in 1:nrow(xi)){
             xi[i,] <- xi[,i] <- xi[i,] + toadd[i]

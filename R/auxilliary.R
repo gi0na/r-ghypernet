@@ -25,8 +25,9 @@ updateModel <- function(model, adj){
       newcall <- call(name = callname, adj=adj, labels=model$labels, directed=model$directed, selfloops=model$selfloops, xi=xi)
     }
     if(length(grep('nrm', callname))>0){
-      callname <- 'ghype'
-      newcall <- call(name = callname, object=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, omega=model$omega)
+      callname <- 'nrm'
+      newcall <- call(name = callname, w=model$predictors, adj=adj, directed=model$directed,
+                      selfloops=model$selfloops, xi=xi, init = c(model$coef[-length(model$coef)],0.01), ci=FALSE)
     }
   }
 

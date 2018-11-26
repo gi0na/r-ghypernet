@@ -161,7 +161,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 
       if(is.numeric(seed)) set.seed(seed)
 
-      gees <- RandomGraph(nempirical, nullmodel)
+      gees <- rghype(nempirical, nullmodel)
 
       ncores <- 1
       if(is.numeric(parallel)) ncores <- parallel
