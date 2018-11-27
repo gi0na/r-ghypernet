@@ -83,6 +83,8 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
                          'm' = m,
                          'directed' = directed,
                          'selfloops' = selfloops,
+                         'regular' = regular,
+                         'unbiased' = unbiased,
                          'df' = df))
   return(model)
 }
@@ -130,6 +132,8 @@ ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbi
                          'm' = m,
                          'directed' = directed,
                          'selfloops' = selfloops,
+                         'regular' = regular,
+                         'unbiased' = unbiased,
                          'df' = NULL))
   return(model)
 }
@@ -175,6 +179,8 @@ as.ghype.list <- function(object, ...){
     'directed' = object$directed,
     'selfloops' = object$selfloops,
     'loglikelihood' = object$loglikelihood,
+    'regular' = object$regular,
+    'unbiased' = object$unbiased,
     'df' = object$df
   )
   if(is.null(model$loglikelihood) & !is.null(model$adj)){
