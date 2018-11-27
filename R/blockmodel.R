@@ -42,10 +42,11 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #' @export
 #'
 bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = NULL){
-
-  specs <- check_specs(adj)
-  directed <- specs[1]
-  selfloops <- specs[2]
+  if(is.null(directed) | is.null(selfloops)){
+    specs <- check_specs(adj)
+    if(is.null(directed)) directed <- specs[1]
+    if(is.null(selfloops)) selfloops <- specs[2]
+  }
 
   if(is.matrix(adj)){
     if(!directed & !isSymmetric(adj)){
@@ -206,7 +207,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     blockOmega <- NULL
   }
   model$blockOmega <- blockOmega
-  model$df <- xiregular + (1-xiregular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
+  model$df <- regular + (1-regular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
   model$directedBlocks <- directedBlocks
   ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
   # if(length(zerosid)!=0){

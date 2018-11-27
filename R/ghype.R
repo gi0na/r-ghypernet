@@ -200,9 +200,11 @@ as.ghype.list <- function(object, ...){
 #'
 scm <- function(object, directed = NULL, selfloops = NULL, ...){
 
-  specs <- check_specs(object)
-  directed <- specs[1]
-  selfloops <- specs[2]
+  if(is.null(directed) | is.null(selfloops)){
+    specs <- check_specs(adj)
+    if(is.null(directed)) directed <- specs[1]
+    if(is.null(selfloops)) selfloops <- specs[2]
+  }
 
   if(is.matrix(object)){
       if(!directed & !isSymmetric(object)){
@@ -232,9 +234,11 @@ scm <- function(object, directed = NULL, selfloops = NULL, ...){
 #'
 regularm <- function(object, directed = NULL, selfloops = NULL, ...){
 
-  specs <- check_specs(object)
-  directed <- specs[1]
-  selfloops <- specs[2]
+  if(is.null(directed) | is.null(selfloops)){
+    specs <- check_specs(adj)
+    if(is.null(directed)) directed <- specs[1]
+    if(is.null(selfloops)) selfloops <- specs[2]
+  }
 
   if(is.matrix(object)){
     if(!directed & !isSymmetric(object)){
