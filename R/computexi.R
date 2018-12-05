@@ -16,7 +16,14 @@
 ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   # returns the matrix xi according to the nodes degrees
 
+  if(!directed & !isSymmetric(adj)){
+    warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
+              Adjacency matrix symmetrised as adj <- adj + t(adj)')
+    adj <- adj + t(adj)
+  }
+
   if(regular){
+    Kin <- apply(adj, 2, sum)
     ix <- mat2vec.ix(adj, directed, selfloops)
     m <- sum(adj[ix])
     M <- m^2
@@ -26,11 +33,6 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
     if(!selfloops) diag(xiregular) <- 0
     xi <- ceiling(xiregular)
   } else{
-    if(!directed & !isSymmetric(adj)){
-      warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
-              Adjacency matrix symmetrised as adj <- adj + t(adj)')
-      adj <- adj + t(adj)
-    }
     if(!selfloops) diag(adj) <- 0
     Kin <- apply(adj, 2, sum)
     Kout <- apply(adj, 1, sum)
