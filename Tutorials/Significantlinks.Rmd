@@ -35,6 +35,7 @@ blockmatrix <- V(karate)$color%*%t(V(karate)$color)
 blockmatrix[blockmatrix==4] <- 1
 blockmatrix[blockmatrix==2] <- .1
 blockModel <- ghype(adj,directed = F, selfloops = F, omega = blockmatrix)
+blockModel2 <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = T)
 ```
 
 ## Finding the significance of the links
@@ -48,7 +49,7 @@ signmat <- linkSignificance(adj, mod)
 
 # filter adjacency matrix
 adjfiltered <- adj
-adjfiltered[signmat<.99] <- 0
+adjfiltered[signmat<(1/mod$m)] <- 0
 ```
 
 ### Plot the results
@@ -62,7 +63,7 @@ The results reflect this showing the two factions separated and only the links d
 ```{r}
 adjcolor <- adj
 adjcolor[adj>0] <- 2
-adjcolor[signmat<.99] <- 1
+adjcolor[signmat<(1/mod$m)] <- 1
 adjcolor[adj==0] <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
@@ -90,13 +91,13 @@ The results are in accordance with our intuition.
 ```{r}
 signmat <- linkSignificance(adj, blockModel)
 adjfiltered <- adj
-adjfiltered[signmat<.99] <- 0
+adjfiltered[signmat<(1/mod$m)] <- 0
 ```
 
 ```{r}
 adjcolor <- adj
 adjcolor[adj>0] <- 2
-adjcolor[signmat<.99] <- 1
+adjcolor[signmat<(1/mod$m)] <- 1
 adjcolor[adj==0] <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
