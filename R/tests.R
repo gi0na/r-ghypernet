@@ -283,7 +283,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #' @param graph an adjacency matrix or a igraph object.
 #' @param model a ghype model
 #' @param under boolean, estimate under-represented deviations? Default FALSE.
-#' @log.p boolean, return log values of probabilities
+#' @param log.p boolean, return log values of probabilities
 #'
 #' @return
 #'
@@ -326,7 +326,7 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
     )
   } else{
 
-    if( ((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial.approximation) ){
+    if( requireNamespace("BiasedUrn", quietly = TRUE) && (((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial.approximation)) ){
       probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
         x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
         n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],

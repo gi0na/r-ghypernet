@@ -4,7 +4,8 @@
 \alias{linkSignificance}
 \title{Estimate statistical deviations from ghype model}
 \usage{
-linkSignificance(graph, model, under = FALSE)
+linkSignificance(graph, model, under = FALSE, log.p = FALSE,
+  binomial.approximation = FALSE)
 }
 \arguments{
 \item{graph}{an adjacency matrix or a igraph object.}
@@ -12,6 +13,8 @@ linkSignificance(graph, model, under = FALSE)
 \item{model}{a ghype model}
 
 \item{under}{boolean, estimate under-represented deviations? Default FALSE.}
+
+\item{log.p}{boolean, return log values of probabilities}
 }
 \value{
 matrix of probabilities with same size as adjacency matrix.
