@@ -1,12 +1,12 @@
 Package: hypernets
 Type: Package
 Title: Generalised Hypergeometric Network Ensembles
-Version: 0.2.280618
-Date: as.POSIXlt(2018-06-28)
+Version: 0.1.15012019
+Date: as.POSIXlt(2019-01-15)
 Authors@R: person("Giona", "Casiraghi", email = "giona@ethz.ch",
   role = c("aut", "cre"))
 Maintainer: Giona Casiraghi <giona@ethz.ch>
-Description: ...
+Description: R implementation for ...
 Depends: R (>= 2.10)
 License: AGPL-3
 Imports: parallel,
