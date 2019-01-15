@@ -29,13 +29,9 @@ The second model is a block model based on the two 'factions' of members of the 
 ```{r}
 adj <- get.adjacency(karate, attr = 'weight', sparse = F)
 
-mod <- ghype(adj,directed = F, selfloops = F, unbiased = T)
+mod <- scm(adj,directed = F, selfloops = F)
 
-blockmatrix <- V(karate)$color%*%t(V(karate)$color)
-blockmatrix[blockmatrix==4] <- 1
-blockmatrix[blockmatrix==2] <- .1
-blockModel <- ghype(adj,directed = F, selfloops = F, omega = blockmatrix)
-blockModel2 <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = T)
+blockModel <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = T)
 ```
 
 ## Finding the significance of the links
