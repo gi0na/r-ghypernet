@@ -29,13 +29,9 @@ The second model is a block model based on the two 'factions' of members of the 
 ```{r}
 adj <- get.adjacency(karate, attr = 'weight', sparse = F)
 
-mod <- ghype(adj,directed = F, selfloops = F, unbiased = T)
+mod <- scm(adj,directed = F, selfloops = F)
 
-blockmatrix <- V(karate)$color%*%t(V(karate)$color)
-blockmatrix[blockmatrix==4] <- 1
-blockmatrix[blockmatrix==2] <- .1
-blockModel <- ghype(adj,directed = F, selfloops = F, omega = blockmatrix)
-blockModel2 <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = T)
+blockModel <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = F)
 ```
 
 ## Finding the significance of the links
@@ -45,11 +41,13 @@ We can obtain a high-pass noise filtering choosing a significance level and filt
 
 ```{r}
 # obtain significance matrix
-signmat <- linkSignificance(adj, mod)
+signmat <- linkSignificance(adj, mod, under = TRUE)
 
 # filter adjacency matrix
 adjfiltered <- adj
-adjfiltered[signmat<(1/mod$m)] <- 0
+adjfiltered[signmat>(1/mod$m)] <- 0
+adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+diag(adjfiltered) <- 0
 ```
 
 ### Plot the results
@@ -64,7 +62,7 @@ The results reflect this showing the two factions separated and only the links d
 adjcolor <- adj
 adjcolor[adj>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
-adjcolor[adj==0] <- 0
+diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
 E(g)$color[E(g)$color==1] <- "red"
@@ -89,16 +87,20 @@ Hence, we can expect that the significant links will be mainly those between gro
 The results are in accordance with our intuition.
 
 ```{r}
-signmat <- linkSignificance(adj, blockModel)
+signmat <- linkSignificance(adj, blockModel, under=FALSE)
+
+# filter adjacency matrix
 adjfiltered <- adj
-adjfiltered[signmat<(1/mod$m)] <- 0
+adjfiltered[signmat>(1/mod$m)] <- 0
+adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+diag(adjfiltered) <- 0
 ```
 
 ```{r}
 adjcolor <- adj
 adjcolor[adj>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
-adjcolor[adj==0] <- 0
+diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
 E(g)$color[E(g)$color==1] <- "red"
