@@ -4,7 +4,7 @@
 \alias{CreateIgGraphs}
 \title{Convert a list of adjacency matrices to a list of igraph graphs.}
 \usage{
-CreateIgGraphs(adjlist, directed, selfloops, weighted = FALSE)
+CreateIgGraphs(adjlist, directed, selfloops, weighted = NULL)
 }
 \arguments{
 \item{adjlist}{a list of adjacency matrices}

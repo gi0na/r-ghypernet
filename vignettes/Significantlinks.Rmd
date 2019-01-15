@@ -2,7 +2,11 @@
 title: "Finding Significant Links with Hypernets"
 author: "Giona CasiraghI"
 date: "20/4/2018"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Finding Significant Links with Hypernets}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

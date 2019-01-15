@@ -1,16 +1,28 @@
 Package: hypernets
 Type: Package
-Title: Generalised Hypergeometric Network Ensembles
-Version: 0.1.15012019
-Date: as.POSIXlt(2019-01-15)
-Authors@R: person("Giona", "Casiraghi", email = "giona@ethz.ch",
-  role = c("aut", "cre"))
-Maintainer: Giona Casiraghi <giona@ethz.ch>
-Description: R implementation for ...
-Depends: R (>= 2.10)
+Title: An implementation of the Generalised Hypergeometric Ensemble of Random Graphs
+Version: 0.3.16012019
+Date: as.POSIXlt(2019-01-16)
+Authors@R: c(
+    person("Giona", "Casiraghi", email = "giona@ethz.ch",
+            role = c("aut", "cre")),
+    person("Vahan", "Nanumyan", email = "vahan@ethz.ch",
+            role = c('aut'))
+            )
+URL: https://ghyper.net
+Description: An implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
+    It provides functions for model fitting and selection of gHypEGs.
+    The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
+      1. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. Generalized Hypergeometric Ensembles: Statistical Hypothesis Testing in Complex Networks. arXiv Prepr. arXiv1607.02441 (2016). at <http://arxiv.org/abs/1607.02441>
+      2. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. in 111-120 (Springer Verlag, 2017). doi:10.1007/978-3-319-67256-4_11
+      3. Casiraghi, G., Nanumyan, V. Generalised hypergeometric ensembles of random graphs: the configuration model as an urn problem. (2018). at <http://arxiv.org/abs/1810.06495>
+      4. Casiraghi, G. Analytical Formulation of the Block-Constrained Configuration Model. (2018). at <http://arxiv.org/abs/1811.05337>
+Depends: R (>= 3.3.1)
 License: AGPL-3
 Imports: parallel,
          plyr,
          numbers
-Suggests: BiasedUrn, igraph
+Suggests: BiasedUrn, igraph, knitr, rmarkdown
+VignetteBuilder: knitr
+Encoding: UTF-8
 RoxygenNote: 6.1.0
