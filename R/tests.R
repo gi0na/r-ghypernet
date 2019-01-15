@@ -291,7 +291,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #'
 #' @export
 #'
-linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE){
+linkSignificance <- function(graph, model, under=FALSE, log_p=FALSE, binomial_approximation = FALSE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
@@ -318,28 +318,28 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   }
   probvec <- rep(1, sum(idx))
 
-  if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){
+  if( all(model$omega == model$omega[1]) & (!binomial_approximation) ){
     probvec[id] <- Vectorize(FUN = phyper, vectorize.args = c('q', 'm','n'))(
       q = graph[idx][id], m = model$xi[idx][id], n = xibar[id],
       k = sum(graph[idx]),
-      lower.tail = under, log.p = log.p
+      lower.tail = under, log.p = log_p
     )
   } else{
 
-    if( ((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial.approximation) ){
+    if( ((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial_approximation) ){
       probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
         x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
         n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
         lower.tail = under
         )
-      if(log.p) probvec <- log(probvec)
+      if(log_p) probvec <- log(probvec)
     } else{
       probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
         q = graph[idx][id], size = sum(graph[idx]),
         prob = model$xi[idx][id]* model$omega[idx][id]/(
               model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
               ),
-        lower.tail = under, log.p = log.p
+        lower.tail = under, log.p = log_p
         )
     }
   }
