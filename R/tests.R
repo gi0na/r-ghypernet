@@ -310,8 +310,12 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   xibar <- sum(model$xi[idx])-model$xi[idx]
   omegabar <- (sum(model$xi[idx]*model$omega[idx])-model$xi[idx]*model$omega[idx])/xibar
 
-  # compute vector of probabilities using Wallenius univariate distribution or binomial
-  id <- graph[idx]!=0
+  # compute vector of probabilities using hypergeometric, Wallenius univariate distribution or binomial
+  if(!under){
+    id <- graph[idx]!=0
+  } else{
+    id <- is.numeric(graph[idx])
+  }
   probvec <- rep(1, sum(idx))
 
   if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){

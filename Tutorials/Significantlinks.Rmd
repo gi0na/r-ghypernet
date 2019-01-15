@@ -60,7 +60,7 @@ The results reflect this showing the two factions separated and only the links d
 adjcolor <- adj
 adjcolor[adj>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
-adjcolor[adj==0] <- 0
+diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
 E(g)$color[E(g)$color==1] <- "red"
@@ -94,7 +94,7 @@ adjfiltered[signmat<(1/mod$m)] <- 0
 adjcolor <- adj
 adjcolor[adj>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
-adjcolor[adj==0] <- 0
+diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
 g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
 E(g)$color[E(g)$color==1] <- "red"
