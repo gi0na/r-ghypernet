@@ -32,7 +32,7 @@ check_specs.igraph <- function(object, ...){
 #'
 #' @export
 #'
-CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=FALSE){
+CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
   if(directed)
     mode <- 'directed'
   if(!directed)
