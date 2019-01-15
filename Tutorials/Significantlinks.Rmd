@@ -31,7 +31,7 @@ adj <- get.adjacency(karate, attr = 'weight', sparse = F)
 
 mod <- scm(adj,directed = F, selfloops = F)
 
-blockModel <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = T)
+blockModel <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = F)
 ```
 
 ## Finding the significance of the links
@@ -41,11 +41,13 @@ We can obtain a high-pass noise filtering choosing a significance level and filt
 
 ```{r}
 # obtain significance matrix
-signmat <- linkSignificance(adj, mod)
+signmat <- linkSignificance(adj, mod, under = TRUE)
 
 # filter adjacency matrix
 adjfiltered <- adj
-adjfiltered[signmat<(1/mod$m)] <- 0
+adjfiltered[signmat>(1/mod$m)] <- 0
+adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+diag(adjfiltered) <- 0
 ```
 
 ### Plot the results
@@ -85,9 +87,13 @@ Hence, we can expect that the significant links will be mainly those between gro
 The results are in accordance with our intuition.
 
 ```{r}
-signmat <- linkSignificance(adj, blockModel)
+signmat <- linkSignificance(adj, blockModel, under=FALSE)
+
+# filter adjacency matrix
 adjfiltered <- adj
-adjfiltered[signmat<(1/mod$m)] <- 0
+adjfiltered[signmat>(1/mod$m)] <- 0
+adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+diag(adjfiltered) <- 0
 ```
 
 ```{r}
