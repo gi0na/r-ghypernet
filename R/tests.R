@@ -283,7 +283,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #' @param graph an adjacency matrix or a igraph object.
 #' @param model a ghype model
 #' @param under boolean, estimate under-represented deviations? Default FALSE.
-#' @log.p boolean, return log values of probabilities
+#' @param log.p boolean, return log values of probabilities
 #'
 #' @return
 #'
@@ -291,7 +291,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #'
 #' @export
 #'
-linkSignificance <- function(graph, model, under=FALSE, log_p=FALSE, binomial_approximation = FALSE){
+linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
@@ -316,30 +316,30 @@ linkSignificance <- function(graph, model, under=FALSE, log_p=FALSE, binomial_ap
   } else{
     id <- is.numeric(graph[idx])
   }
-  probvec <- rep(ifelse(log_p, 0, 1), sum(idx))
+  probvec <- rep(ifelse(log.p, 0, 1), sum(idx))
 
-  if( all(model$omega == model$omega[1]) & (!binomial_approximation) ){
+  if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){
     probvec[id] <- Vectorize(FUN = phyper, vectorize.args = c('q', 'm','n'))(
       q = graph[idx][id], m = model$xi[idx][id], n = xibar[id],
       k = sum(graph[idx]),
-      lower.tail = under, log.p = log_p
+      lower.tail = under, log.p = log.p
     )
   } else{
 
-    if( ((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial_approximation) ){
+    if( requireNamespace("BiasedUrn", quietly = TRUE) && (((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial.approximation)) ){
       probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
         x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
         n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
         lower.tail = under
         )
-      if(log_p) probvec[id] <- log(probvec)
+      if(log.p) probvec[id] <- log(probvec)
     } else{
       probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
         q = graph[idx][id], size = sum(graph[idx]),
         prob = model$xi[idx][id]* model$omega[idx][id]/(
               model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
               ),
-        lower.tail = under, log.p = log_p
+        lower.tail = under, log.p = log.p
         )
     }
   }
