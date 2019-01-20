@@ -316,7 +316,7 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   } else{
     id <- is.numeric(graph[idx])
   }
-  probvec <- rep(1, sum(idx))
+  probvec <- rep(ifelse(log.p, 0, 1), sum(idx))
 
   if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){
     probvec[id] <- Vectorize(FUN = phyper, vectorize.args = c('q', 'm','n'))(
@@ -332,7 +332,7 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
         n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
         lower.tail = under
         )
-      if(log.p) probvec <- log(probvec)
+      if(log.p) probvec[id] <- log(probvec)
     } else{
       probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
         q = graph[idx][id], size = sum(graph[idx]),
