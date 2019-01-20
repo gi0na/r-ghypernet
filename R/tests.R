@@ -316,7 +316,7 @@ linkSignificance <- function(graph, model, under=FALSE, log_p=FALSE, binomial_ap
   } else{
     id <- is.numeric(graph[idx])
   }
-  probvec <- rep(ifelse(log.p, 0, 1), sum(idx))
+  probvec <- rep(ifelse(log_p, 0, 1), sum(idx))
 
   if( all(model$omega == model$omega[1]) & (!binomial_approximation) ){
     probvec[id] <- Vectorize(FUN = phyper, vectorize.args = c('q', 'm','n'))(
