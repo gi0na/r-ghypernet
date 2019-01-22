@@ -191,7 +191,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
 
   # generate and return ensemble
-  model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega)
+  model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular)
 
   # generate block omega matrix for reference
   if( (!homophily) & (!inBlockOnly)){
@@ -209,6 +209,8 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   model$blockOmega <- blockOmega
   model$df <- regular + (1-regular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
   model$directedBlocks <- directedBlocks
+  model$homophily <-  homophily
+  model$inBlockOnly <- inBlockOnly
   ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
   # if(length(zerosid)!=0){
   #   ci[-zerosid,][1,] <- c(1,1,0)

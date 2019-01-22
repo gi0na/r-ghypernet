@@ -45,14 +45,14 @@ logl <- function(adj, xi, omega,
                      selfloops)
     if (requireNamespace("BiasedUrn",
                          quietly = TRUE) && sum(ix) <
-        2000 && (sum(adj[ix])) >
+        2000 && (sum(adj[ix])) <
         200) {
       multinomial <- FALSE
     } else {
       multinomial <- TRUE
     }
   }
-  if (TRUE){ #multinomial) {
+  if (multinomial) {
     return(logl.multinomial(adj,
                             xi, omega, directed,
                             selfloops))

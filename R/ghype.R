@@ -220,7 +220,7 @@ scm <- function(object, directed = NULL, selfloops = NULL, ...){
       }
   }
 
-  model <- ghype(object, directed=directed, selfloops=selfloops, unbiased = TRUE)
+  model <- ghype(object, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE)
   model$df <- nrow(model$xi)*(1+directed)
   return(model)
 }
