@@ -5,6 +5,7 @@ updateModel <- function(model, adj){
   xi <- NULL
 
   newcall <- NULL
+
   if(length(grep('function', callname))>0){
     if(length(grep('block', callname))>0 | length(grep('labels', callname))>0){
       callname <- 'bccm'
@@ -18,21 +19,22 @@ updateModel <- function(model, adj){
   }
   if(length(grep('ghype', callname))>0){
     callname <- 'ghype'
-    newcall <- call(name = callname, object=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, unbiased=all(model$omega==1))
+    newcall <- call(name = callname, object=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, unbiased=all(model$omega==1), regular=model$regular)
   } else{
     if(length(grep('bccm', callname))>0){
       callname <- 'bccm'
-      newcall <- call(name = callname, adj=adj, labels=model$labels, directed=model$directed, selfloops=model$selfloops, xi=xi)
+      newcall <- call(name = callname, adj=adj, labels=model$labels, directed=model$directed, selfloops=model$selfloops, xi=xi, regular=model$regular, directedBlocks=model$directedBlocks, homophily=model$homophily,inBlockOnly=model$inBlockOnly)
     }
     if(length(grep('nrm', callname))>0){
       callname <- 'nrm'
       newcall <- call(name = callname, w=model$predictors, adj=adj, directed=model$directed,
-                      selfloops=model$selfloops, xi=xi, init = c(model$coef[-length(model$coef)],0.01), ci=FALSE)
+                      selfloops=model$selfloops, xi=xi, init = c(model$coef[-length(model$coef)],0.01), ci=FALSE, regular=model$regular)
     }
   }
 
   return(newcall)
 }
+
 lrtohtest <- function(statistic, parameter, p.value, conf.int, alternative, method, data.name){
   val <- list(statistic=statistic, parameter=parameter,
               p.value=p.value, conf.int=conf.int, alternative=alternative,

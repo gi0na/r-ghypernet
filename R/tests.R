@@ -178,6 +178,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
         return(-2*loglratio(empnull,empalt))
       }, mc.cores = ncores, directed = directed, null = nullmodel, alt = altmodel, bip = length(nullmodel$n)>1))
 
+
       mu <- mean(nullllratio)
       va <- var(nullllratio)
 
@@ -255,9 +256,11 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
     xiregular <- ceiling(xiregular)
     fullmod <- ghype(graph, directed, selfloops)
     nullmod <- ghype(object = graph, directed = directed, selfloops = selfloops, xi = xiregular, unbiased = TRUE)
+    nullmod$df <- 1
   } else{
     fullmod <- ghype(graph, directed, selfloops)
     nullmod <- ghype(graph, directed, selfloops, unbiased = TRUE)
+    nullmod$df <- nullmod$n * (1+directed)
   }
   # n <- full$n[1]
   # df <- n*(n-!selfloops)/(1+!directed)

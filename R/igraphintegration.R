@@ -56,6 +56,7 @@ CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
 #' @param omega an optional matrix defining the propensity matrix of the model.
 #' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
+#' @param regular a boolean argument, defaults to FALSE
 #' @param ... additional arguments to be passed to the low level fitting functions.
 #'
 #' @return
@@ -64,23 +65,27 @@ CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
 #' @export
 #'
 #'
-ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, ...){
-
+ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
   if(igraph::is_bipartite(object)){
     adj <- igraph::get.incidence(graph = object, sparse = FALSE)
   } else{
     adj <- igraph::get.adjacency(graph = object, type = "upper", sparse = FALSE)
-    adj <- adj + t(adj)
+    if(!directed)
+      adj <- adj + t(adj)
   }
 
   if(is.null(xi)){
     xi=ComputeXi(adj,directed,selfloops)
   }
 
-  df <- NULL
+  if(nrow(adj)==ncol(adj)){
+    n <- nrow(adj)
+  } else{
+    n <- nrow(adj)+ncol(adj)
+  }
+  df <- regular + (!regular) * (1+directed) * n
 
   if(is.null(omega)){
-    df <- sum(mat2vec.ix(xi,directed,selfloops))
     if(unbiased){
       omega <- matrix(1,nrow(adj), ncol(adj))
     } else{
@@ -89,25 +94,19 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
     }
   }
 
-  if(nrow(adj)==ncol(adj)){
-    n <- nrow(adj)
-  } else{
-    n <- nrow(adj)+ncol(adj)
-  }
-
   m <- sum(adj[mat2vec.ix(adj, directed, selfloops)])
 
   model <- as.ghype(list(call = match.call(),
-                          'adj' = object,
-                          'xi'= xi,
-                          'omega' = omega,
-                          'n' = n,
-                          'm' = m,
-                          'directed' = directed,
-                          'selfloops' = selfloops,
-                          'regular' = regular,
-                          'unbiased' = unbiased,
-                          'df' = df))
+                         'adj' = adj,
+                         'xi'= xi,
+                         'omega' = omega,
+                         'n' = n,
+                         'm' = m,
+                         'directed' = directed,
+                         'selfloops' = selfloops,
+                         'regular' = regular,
+                         'unbiased' = unbiased,
+                         'df' = df))
   return(model)
 }
 
