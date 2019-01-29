@@ -74,16 +74,16 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 
   mm <- -2*m*log(1/sum(ix))
   mu <- mean(nullllratio, na.rm = TRUE)
-  va <- var(nullllratio, na.rm = TRUE)
+  va <- stats::var(nullllratio, na.rm = TRUE)
 
   a <- (mu/(mm*va))*(mu*(mm-mu)-va)
   b <- (mm-mu)*a/mu
 
-  p.value <- pbeta(q = llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+  p.value <- stats::pbeta(q = llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
   names(llratio) <- 'lr'
   parms <- nrow(adj)*(1+directed)-1
   names(parms) <- 'df'
-  conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+  conf.int <- stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
   attributes(conf.int) <- list(conf.level=0.95)
   alternative <- 'one.sided'
   method <- 'LR test -- gnp vs CM'
@@ -130,11 +130,11 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
       b <- Beta[2]
       mm <- Beta[3]
 
-      p.value <- pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+      p.value <- stats::pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
       names(llratio) <- 'lr'
       parms <- altmodel$df-nullmodel$df
       names(parms) <- 'df'
-      conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+      conf.int <- stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
       attributes(conf.int) <- list(conf.level=0.95)
       alternative <- 'one.sided'
       method <- 'LR test'
@@ -180,19 +180,19 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 
 
       mu <- mean(nullllratio)
-      va <- var(nullllratio)
+      va <- stats::var(nullllratio)
 
       a <- (mu/(mm*va))*(mu*(mm-mu)-va)
       b <- (mm-mu)*a/mu
 
       if(returnBeta)
-        return(c(pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F), a,b,mm))
+        return(c(stats::pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F), a,b,mm))
 
-      p.value <- pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
+      p.value <- stats::pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)
       names(llratio) <- 'lr'
       parms <- altmodel$df-nullmodel$df
       names(parms) <- 'df'
-      conf.int <- qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
+      conf.int <- stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
       attributes(conf.int) <- list(conf.level=0.95)
       alternative <- 'one.sided'
       method <- 'LR test'
@@ -212,14 +212,14 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 
   q1 <- 1
   if(williams){
-    ix <- as.matrix(mat2vec.ix(adj,directed,F))
+    ix <- as.matrix(mat2vec.ix(nullmodel$xi,nullmodel$directed,nullmodel$selfloops))
     ps <- nullmodel$omega[ix]*nullmodel$xi[ix]
     ps <- ps[ps!=0]
     k <- df
     q1 <- 1 + ( 6 * nullmodel$m * (k-1) )^(-1) * ( sum( (ps/sum(ps))^(-1) ) - 1 )
   }
 
-  return(pchisq(q = -2*llratio/q1, df = df, lower.tail = FALSE))
+  return(stats::pchisq(q = -2*llratio/q1, df = df, lower.tail = FALSE))
 }
 
 #' Test SCM vs full ghype.
@@ -235,6 +235,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 #' performed not in parallel.
 #' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
 #'
+#' @param Beta boolean, use Beta test?
 #'
 #' @return
 #' p-value of test.
@@ -287,6 +288,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #' @param model a ghype model
 #' @param under boolean, estimate under-represented deviations? Default FALSE.
 #' @param log.p boolean, return log values of probabilities
+#' @param binomial.approximation boolean, force binomial? default FALSE
 #'
 #' @return
 #'
@@ -301,13 +303,12 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
     if(!directed)
       adj <- adj + t(adj)
   }
-  graph <- adj
 
   directed <- model$directed
   selfloops <- model$selfloops
 
   # get relevant indices
-  idx <- mat2vec.ix(graph, directed, selfloops)
+  idx <- mat2vec.ix(adj, directed, selfloops)
 
   # compute parameters for marginal distributions
   xibar <- sum(model$xi[idx])-model$xi[idx]
@@ -315,30 +316,30 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
 
   # compute vector of probabilities using hypergeometric, Wallenius univariate distribution or binomial
   if(!under){
-    id <- graph[idx]!=0
+    id <- adj[idx]!=0
   } else{
-    id <- is.numeric(graph[idx])
+    id <- is.numeric(adj[idx])
   }
   probvec <- rep(ifelse(log.p, 0, 1), sum(idx))
 
   if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){
-    probvec[id] <- Vectorize(FUN = phyper, vectorize.args = c('q', 'm','n'))(
-      q = graph[idx][id], m = model$xi[idx][id], n = xibar[id],
-      k = sum(graph[idx]),
+    probvec[id] <- Vectorize(FUN = stats::phyper, vectorize.args = c('q', 'm','n'))(
+      q = adj[idx][id], m = model$xi[idx][id], n = xibar[id],
+      k = sum(adj[idx]),
       lower.tail = under, log.p = log.p
     )
   } else{
 
-    if( requireNamespace("BiasedUrn", quietly = TRUE) && (((mean(xibar)/sum(graph[idx]))<1e3) & (!binomial.approximation)) ){
+    if( requireNamespace("BiasedUrn", quietly = TRUE) && (((mean(xibar)/sum(adj[idx]))<1e3) & (!binomial.approximation)) ){
       probvec[id] <- Vectorize(FUN = BiasedUrn::pWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
-        x = graph[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
-        n = sum(graph[idx]), odds = model$omega[idx][id]/omegabar[id],
+        x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+        n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id],
         lower.tail = under
         )
       if(log.p) probvec[id] <- log(probvec)
     } else{
       probvec[id] <- Vectorize(FUN = stats::pbinom, vectorize.args = c('q', 'size', 'prob'))(
-        q = graph[idx][id], size = sum(graph[idx]),
+        q = adj[idx][id], size = sum(adj[idx]),
         prob = model$xi[idx][id]* model$omega[idx][id]/(
               model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
               ),
@@ -348,5 +349,5 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   }
 
   # return matrix of significance for each entry of original adjacency
-  return(vec2mat(probvec,directed,selfloops,nrow(graph)))
+  return(vec2mat(probvec,directed,selfloops,nrow(adj)))
 }

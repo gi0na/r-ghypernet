@@ -21,7 +21,9 @@ Depends: R (>= 3.3.1)
 License: AGPL-3
 Imports: parallel,
          plyr,
-         numbers
+         numbers,
+         purrr,
+         extraDistr
 Suggests: BiasedUrn, igraph, knitr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8

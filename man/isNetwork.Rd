@@ -14,6 +14,8 @@ isNetwork(graph, directed, selfloops, Beta = NULL, nempirical = NULL,
 
 \item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
 
+\item{Beta}{boolean, use Beta test?}
+
 \item{nempirical}{optional, number of graphs to sample from null distribution for empirical distribution.}
 
 \item{parallel}{optional, number of cores to use or boolean for parallel computation.

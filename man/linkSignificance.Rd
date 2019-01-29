@@ -15,6 +15,8 @@ linkSignificance(graph, model, under = FALSE, log.p = FALSE,
 \item{under}{boolean, estimate under-represented deviations? Default FALSE.}
 
 \item{log.p}{boolean, return log values of probabilities}
+
+\item{binomial.approximation}{boolean, force binomial? default FALSE}
 }
 \value{
 matrix of probabilities with same size as adjacency matrix.

@@ -2,6 +2,7 @@
 #'
 #' @param x ghype model
 #' @param ... further arguments passed to or from other methods.
+#' @param suppressCall boolean, suppress print of the call
 #'
 #' @export
 #'

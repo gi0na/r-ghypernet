@@ -25,6 +25,7 @@ check_specs.igraph <- function(object, ...){
 #' @param adjlist a list of adjacency matrices
 #' @param directed a boolean argument specifying whether object is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
+#' @param weighted boolean, generate weighted graphs?
 #'
 #' @return
 #'
@@ -110,24 +111,25 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
   return(model)
 }
 
-#' TODO
+
+#' BootstrapProperty compute igraph analytics function on ensemble
 #'
-#' .....
+#' @param graph igraph graph
+#' @param property igraph function that can be applied to a graph
+#' @param directed boolean
+#' @param selfloops boolean
+#' @param nsamples number of samples from ensemble. defaults to 1000
+#' @param xi matrix, default null
+#' @param omega matrix, default null
+#' @param model ghype model from which to extract xi and omega, default to null
+#' @param m int, number of edges to sample from model
+#' @param seed seed
+#' @param ... other parameters to pass to `property`
 #'
-#' @param graph adj
-#' @param property function
-#' @param directed ..
-#' @param selfloops ..
-#' @param nsamples ..
-#' @param xi ..
-#' @param omega ..
-#' @param ... ...
-#' @param m ...
-#' @param seed ..
-#'
-#' @return vector
+#' @return
 #' @export
 #'
+#' @examples
 BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, model=NULL, m=NULL, seed=NULL, ...){
 
   functionslist <- c(

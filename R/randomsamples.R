@@ -60,7 +60,7 @@ rghype <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   }
   if (multinomial) {
     p <- omega*xi/sum(omega*xi)
-    rvec <- rmultinom(n = nsamples, size = m, prob = p)
+    rvec <- stats::rmultinom(n = nsamples, size = m, prob = p)
   } else {
     rvec <- cbind(BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega))
   }

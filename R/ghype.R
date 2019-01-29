@@ -207,7 +207,7 @@ as.ghype.list <- function(object, ...){
 scm <- function(object, directed = NULL, selfloops = NULL, ...){
 
   if(is.null(directed) | is.null(selfloops)){
-    specs <- check_specs(adj)
+    specs <- check_specs(object)
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
   }
@@ -241,7 +241,7 @@ scm <- function(object, directed = NULL, selfloops = NULL, ...){
 regularm <- function(object, directed = NULL, selfloops = NULL, ...){
 
   if(is.null(directed) | is.null(selfloops)){
-    specs <- check_specs(adj)
+    specs <- check_specs(object)
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
   }
