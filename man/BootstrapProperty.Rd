@@ -2,36 +2,35 @@
 % Please edit documentation in R/igraphintegration.R
 \name{BootstrapProperty}
 \alias{BootstrapProperty}
-\title{TODO}
+\title{BootstrapProperty compute igraph analytics function on ensemble}
 \usage{
 BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
   xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL,
   ...)
 }
 \arguments{
-\item{graph}{adj}
+\item{graph}{igraph graph}
 
-\item{property}{function}
+\item{property}{igraph function that can be applied to a graph}
 
-\item{directed}{..}
+\item{directed}{boolean}
 
-\item{selfloops}{..}
+\item{selfloops}{boolean}
 
-\item{nsamples}{..}
+\item{nsamples}{number of samples from ensemble. defaults to 1000}
 
-\item{xi}{..}
+\item{xi}{matrix, default null}
 
-\item{omega}{..}
+\item{omega}{matrix, default null}
 
-\item{m}{...}
+\item{model}{ghype model from which to extract xi and omega, default to null}
 
-\item{seed}{..}
+\item{m}{int, number of edges to sample from model}
 
-\item{...}{...}
-}
-\value{
-vector
+\item{seed}{seed}
+
+\item{...}{other parameters to pass to `property`}
 }
 \description{
-.....
+BootstrapProperty compute igraph analytics function on ensemble
 }

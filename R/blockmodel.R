@@ -261,23 +261,7 @@ JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
 }
 
 
-#' Confidence intervals for block models.
-#'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param nr.m  ~~Describe \code{nr.m} here~~
-#' @param w  ~~Describe \code{w} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param pval  ~~Describe \code{pval} here~~
-#' @return 3-vector
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#'
+# Confidence intervals for block models.
 blockmodel.ci <- function(omegaBlocks, xiBlocks, mBlocks, m,
                   pval=.05) {
   jn <- JnBlock(omegaBlocks, xiBlocks, mBlocks, m)

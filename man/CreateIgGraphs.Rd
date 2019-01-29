@@ -12,6 +12,8 @@ CreateIgGraphs(adjlist, directed, selfloops, weighted = NULL)
 \item{directed}{a boolean argument specifying whether object is directed or not.}
 
 \item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
+
+\item{weighted}{boolean, generate weighted graphs?}
 }
 \value{
 list of igraph graphs.

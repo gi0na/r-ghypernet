@@ -63,27 +63,7 @@ logl <- function(adj, xi, omega,
   }
 }
 
-#' Computes log-likelihood for nrm models with Wallenius Hypergeometric dist.
-#' (BiasedUrn)
-#'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param omega  ~~Describe \code{omega} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @return scalar
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#'
-#'
+# Computes log-likelihood for nrm models with Wallenius Hypergeometric dist.
 logl.wallenius <- function(adj,
                            xi, omega, directed, selfloops) {
   # Returns the log-likelihood of
@@ -106,27 +86,7 @@ logl.wallenius <- function(adj,
 }
 
 
-#' Computes approximated log-likelihood for nrm models with multinomial
-#' distribution.
-#'
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#'
-#'  ~~ If necessary, more details than the description above ~~
-#'
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param omega  ~~Describe \code{omega} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @return scalar
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#'
-#'
+# Computes approximated log-likelihood for nrm models with multinomial
 logl.multinomial <- function(adj,
                              xi, omega, directed, selfloops) {
   # Returns the approximated
@@ -157,45 +117,3 @@ loglratio <- function(mod0, mod1) {
   mod0$loglikelihood - mod1$loglikelihood
 }
 
-
-# #' Akaike's An Information Criterion
-# #'
-# #' Function calculating Akaike's ‘An Information Criterion’
-# #' for a ghype fitted model objects for which a log-likelihood
-# #' value can be obtained, according to the formula -2log-likelihood + knpar,
-# #' where npar represents the number of parameters in the fitted model,
-# #' and k = 2 for the usual AIC, or k = log(n) (n being the number of observations)
-# #' for the so-called BIC or SBC (Schwarz's Bayesian criterion).
-# #'
-# #' @param object ghype object
-# #' @param ... other parameters passed.
-# #' @param k numeric, the penalty per parameter to be used; the default k = 2
-# #'
-# #' @return If just one object is provided,
-# #' a numeric value with the corresponding AIC (or depending on k).
-# #' @export
-# #'
-# AIC.ghype <- function(object, ..., k = 2){
-#   2*object$df - 2*object$loglikelihood
-# }
-
-# #' Akaike's An Information Criterion
-# #'
-# #' Function calculating Akaike's ‘An Information Criterion’
-# #' for a ghype fitted model objects for which a log-likelihood
-# #' value can be obtained, according to the formula -2log-likelihood + knpar,
-# #' where npar represents the number of parameters in the fitted model,
-# #' and k = 2 for the usual AIC, or k = log(n) (n being the number of observations)
-# #' for the so-called BIC or SBC (Schwarz's Bayesian criterion).
-# #'
-# #' @param object ghype object
-# #' @param ... other parameters passed.
-# #'
-# #' @return If just one object is provided,
-# #' a numeric value with the corresponding AIC (or depending on k).
-# #'
-# #' @export
-# #'
-# BIC.ghype <- function(object, ...){
-#   log(object$m)*object$df - 2*object$loglikelihood
-# }

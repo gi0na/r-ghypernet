@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{ghype model}
 
+\item{suppressCall}{boolean, suppress print of the call}
+
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
