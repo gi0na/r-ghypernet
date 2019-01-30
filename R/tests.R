@@ -256,7 +256,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
     # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
     xiregular <- ceiling(xiregular)
     fullmod <- ghype(graph, directed, selfloops)
-    nullmod <- ghype(object = graph, directed = directed, selfloops = selfloops, xi = xiregular, unbiased = TRUE)
+    nullmod <- ghype(graph = graph, directed = directed, selfloops = selfloops, xi = xiregular, unbiased = TRUE)
     nullmod$df <- 1
   } else{
     fullmod <- ghype(graph, directed, selfloops)
@@ -278,6 +278,27 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
   return(lr.test(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta))
 }
 
+#' Perform a goodness-of-fit test
+#'
+#' @param model ghype model to test
+#' @param Beta boolean, whether to use empirical Beta distribution approximation. Default TRUE
+#' @param nempirical optional scalar, number of replicates for empirical beta distribution.
+#' @param parallel optional, number of cores to use or boolean for parallel computation.
+#' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
+#' performed not in parallel.
+#' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
+#' @param seed scalar, seed for the empirical distribution.
+#'
+#' @return
+#'  p-value of test. If returnBeta=TRUE returns the p-value together with the parameters
+#'  of the beta distribution.
+#' @export
+#'
+gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, returnBeta = FALSE, seed = NULL){
+  fullmodel <- ghype(graph = model$adj, directed = model$directed, selfloops = model$selfloops, unbiased = FALSE)
+  return(lr.test(nullmodel = model,altmodel = fullmodel, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta, seed = seed))
+}
+
 
 #' Estimate statistical deviations from ghype model
 #'
@@ -289,6 +310,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #' @param under boolean, estimate under-represented deviations? Default FALSE.
 #' @param log.p boolean, return log values of probabilities
 #' @param binomial.approximation boolean, force binomial? default FALSE
+#' @param give_pvals boolean, return p-values for both under and over significance?
 #'
 #' @return
 #'
@@ -296,7 +318,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #'
 #' @export
 #'
-linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE){
+linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = TRUE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
@@ -348,6 +370,35 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
     }
   }
 
+  if(!under & give_pvals & all(model$omega == model$omega[1]))
+    probvec[id] <- probvec[id] +
+    Vectorize(FUN = stats::dhyper, vectorize.args = c('x', 'm','n'))(
+      x = adj[idx][id], m = model$xi[idx][id], n = xibar[id],
+      k = sum(adj[idx]), log = log.p
+    )
+
+  if(!under & give_pvals & any(model$omega != model$omega[1]) & !binomial.approximation)
+    probvec[id] <- probvec[id] + ifelse(test = log.p, yes =
+                                          log(Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
+                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+                                            n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id]
+                                          )),
+                                        no =
+                                          Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
+                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+                                            n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id]
+                                          ))
+  if(!under & give_pvals & any(model$omega != model$omega[1]) & binomial.approximation)
+    probvec[id] <- probvec[id] + Vectorize(FUN = stats::dbinom, vectorize.args = c('x', 'size', 'prob'))(
+                                                    x = adj[idx][id], size = sum(adj[idx]),
+                                                    prob = model$xi[idx][id]* model$omega[idx][id]/(
+                                                      model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
+                                                    ),
+                                                    log = log.p
+                                                  )
+
   # return matrix of significance for each entry of original adjacency
   return(vec2mat(probvec,directed,selfloops,nrow(adj)))
 }
+
+

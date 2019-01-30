@@ -4,14 +4,14 @@
 \alias{regularm}
 \title{Fit the gnm model}
 \usage{
-regularm(object, directed = NULL, selfloops = NULL, ...)
+regularm(graph, directed = NULL, selfloops = NULL, ...)
 }
 \arguments{
-\item{object}{either an adjacency matrix or an igraph graph}
+\item{graph}{either an adjacency matrix or an igraph graph}
 
-\item{directed}{optional boolean, if not specified detected from object}
+\item{directed}{optional boolean, if not specified detected from graph}
 
-\item{selfloops}{optional boolean, if not specified detected from object}
+\item{selfloops}{optional boolean, if not specified detected from graph}
 
 \item{...}{additional parameters}
 }

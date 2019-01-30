@@ -58,12 +58,17 @@ rghype <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
   if(!is.null(seed)){
     set.seed(seed)
   }
-  if (multinomial) {
-    p <- omega*xi/sum(omega*xi)
-    rvec <- stats::rmultinom(n = nsamples, size = m, prob = p)
-  } else {
-    rvec <- cbind(BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega))
+  if(all(omega == omega[1])){
+    rvec <- t(extraDistr::rmvhyper(nn = nsamples, n = xi, k = m))
+  } else{
+    if (multinomial) {
+      p <- omega*xi/sum(omega*xi)
+      rvec <- stats::rmultinom(n = nsamples, size = m, prob = p)
+    } else {
+      rvec <- cbind(BiasedUrn::rMWNCHypergeo(nran = nsamples, m = xi, n = m, odds = omega))
+    }
   }
+
   graphlist <- lapply(X = 1:ncol(rvec),FUN = function(cls, rvec, directed, selfloops, n){
     vec2mat(vec = rvec[,cls], directed, selfloops,n)},
   rvec=rvec, directed=directed, selfloops=selfloops,n=n)

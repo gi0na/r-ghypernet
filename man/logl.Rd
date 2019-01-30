@@ -2,27 +2,19 @@
 % Please edit documentation in R/logl.R
 \name{logl}
 \alias{logl}
-\title{Computes log-likelihood for ghype models.}
+\title{General method to compute log-likelihood for ghype models.}
 \usage{
-logl(adj, xi, omega, directed, selfloops, multinomial = NULL)
+logl(object, ...)
 }
 \arguments{
-\item{adj}{an adjacency matrix}
-
-\item{xi}{a combinatorial matrix}
-
-\item{omega}{a propensity matrix}
-
-\item{directed}{a boolean argument specifying whether object is directed or not.}
-
-\item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
-
-\item{multinomial}{optional boolean. Force multinomial approximation?
+\item{object}{either an adjacency matrix or ghype model
 If not chosen, multinomial chosen for large graphs.}
+
+\item{...}{extra parameters}
 }
 \value{
 loglikelihood value
 }
 \description{
-Computes log-likelihood for ghype models.
+General method to compute log-likelihood for ghype models.
 }

@@ -31,6 +31,9 @@ BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
 
 \item{...}{other parameters to pass to `property`}
 }
+\value{
+vector of length nsamples
+}
 \description{
 BootstrapProperty compute igraph analytics function on ensemble
 }

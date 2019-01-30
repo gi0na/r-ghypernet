@@ -6,8 +6,8 @@
 #' that the expected graph from the fitted model is the one passed to the
 #' function.
 #'
-#' @param object either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param graph either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether graph is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
 #' @param omega an optional matrix defining the propensity matrix of the model.
@@ -21,7 +21,7 @@
 #' @export
 #'
 #'
-ghype <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
+ghype <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
   UseMethod('ghype')
 }
 
@@ -34,8 +34,8 @@ ghype <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FAL
 #' that the expected graph from the fitted model is the one passed to the
 #' function.
 #'
-#' @param object either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param graph either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether graph is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
 #' @param omega an optional matrix defining the propensity matrix of the model.
@@ -49,34 +49,34 @@ ghype <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FAL
 #' @export
 #'
 #'
-ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
+ghype.matrix <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
 
   df <- NULL
 
   if(is.null(xi)){
-    xi=ComputeXi(object,directed,selfloops, regular = regular)
+    xi=ComputeXi(graph,directed,selfloops, regular = regular)
     df <- regular + (1-regular)*nrow(xi)*(1+directed)
   }
 
   if(is.null(omega)){
     if(unbiased){
-      omega <- matrix(1,nrow(object), ncol(object))
+      omega <- matrix(1,nrow(graph), ncol(graph))
     } else{
-      omega <- FitOmega(adj = object, xi = xi, directed = directed, selfloops = selfloops)
+      omega <- FitOmega(adj = graph, xi = xi, directed = directed, selfloops = selfloops)
       df <- df + sum(mat2vec.ix(omega,directed,selfloops)) - 1
     }
   }
 
-  if(nrow(object)==ncol(object)){
-    n <- nrow(object)
+  if(nrow(graph)==ncol(graph)){
+    n <- nrow(graph)
   } else{
-    n <- c(nrow(object)+ncol(object),nrow(object),ncol(object))
+    n <- c(nrow(graph)+ncol(graph),nrow(graph),ncol(graph))
   }
 
-  m <- sum(object[mat2vec.ix(object, directed, selfloops)])
+  m <- sum(graph[mat2vec.ix(graph, directed, selfloops)])
 
   model <- as.ghype(list(call = match.call(),
-                         'adj' = object,
+                         'adj' = graph,
                          'xi'= xi,
                          'omega' = omega,
                          'n' = n,
@@ -98,8 +98,8 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' that the expected graph from the fitted model is the one passed to the
 #' function.
 #'
-#' @param object either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param graph either an adjacency matrix or an igraph graph.
+#' @param directed a boolean argument specifying whether graph is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
 #' @param omega an optional matrix defining the propensity matrix of the model.
@@ -113,11 +113,11 @@ ghype.matrix <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' @export
 #'
 #'
-ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular = FALSE, ...){
+ghype.default <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular = FALSE, ...){
 
   if(is.null(omega)){
     if(unbiased){
-      omega <- matrix(1,nrow(object), ncol(object))
+      omega <- matrix(1,nrow(graph), ncol(graph))
     }
   }
 
@@ -125,7 +125,7 @@ ghype.default <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbi
   m <- sqrt(sum(xi))
 
   model <- as.ghype(list(call = match.call(),
-                         'adj' = object,
+                         'adj' = graph,
                          'xi'= xi,
                          'omega' = omega,
                          'n' = n,
@@ -184,7 +184,7 @@ as.ghype.list <- function(object, ...){
     'df' = object$df
   )
   if(is.null(model$loglikelihood) & !is.null(model$adj)){
-    model$loglikelihood <- logl(adj=model$adj, xi=model$xi,
+    model$loglikelihood <- logl(object=model$adj, xi=model$xi,
                                 omega=model$omega, directed=model$directed,
                                 selfloops=model$selfloops)
   }
@@ -196,31 +196,31 @@ as.ghype.list <- function(object, ...){
 #'
 #' scm is wrapper for \link{ghype} that allows to specify a soft-configuration model.
 #'
-#' @param object either an adjacency matrix or an igraph graph
-#' @param directed optional boolean, if not specified detected from object
-#' @param selfloops optional boolean, if not specified detected from object
+#' @param graph either an adjacency matrix or an igraph graph
+#' @param directed optional boolean, if not specified detected from graph
+#' @param selfloops optional boolean, if not specified detected from graph
 #' @param ... additional parameters
 #'
 #' @return ghype object
 #' @export
 #'
-scm <- function(object, directed = NULL, selfloops = NULL, ...){
+scm <- function(graph, directed = NULL, selfloops = NULL, ...){
 
   if(is.null(directed) | is.null(selfloops)){
-    specs <- check_specs(object)
+    specs <- check_specs(graph)
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
   }
 
-  if(is.matrix(object)){
-      if(!directed & !isSymmetric(object)){
+  if(is.matrix(graph)){
+      if(!directed & !isSymmetric(graph)){
         warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
               Adjacency matrix symmetrised as adj <- adj + t(adj)')
-        object <- object + t(object)
+        graph <- graph + t(graph)
       }
   }
 
-  model <- ghype(object, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE)
+  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE)
   model$df <- nrow(model$xi)*(1+directed)
   return(model)
 }
@@ -230,31 +230,31 @@ scm <- function(object, directed = NULL, selfloops = NULL, ...){
 #' regularm is wrapper for \link{ghype} that allows to specify a gnm regular model.
 #' i.e. where all entries of the combinatorial matrix Xi are the same.
 #'
-#' @param object either an adjacency matrix or an igraph graph
-#' @param directed optional boolean, if not specified detected from object
-#' @param selfloops optional boolean, if not specified detected from object
+#' @param graph either an adjacency matrix or an igraph graph
+#' @param directed optional boolean, if not specified detected from graph
+#' @param selfloops optional boolean, if not specified detected from graph
 #' @param ... additional parameters
 #'
 #' @return ghype object
 #' @export
 #'
-regularm <- function(object, directed = NULL, selfloops = NULL, ...){
+regularm <- function(graph, directed = NULL, selfloops = NULL, ...){
 
   if(is.null(directed) | is.null(selfloops)){
-    specs <- check_specs(object)
+    specs <- check_specs(graph)
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
   }
 
-  if(is.matrix(object)){
-    if(!directed & !isSymmetric(object)){
+  if(is.matrix(graph)){
+    if(!directed & !isSymmetric(graph)){
       warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
               Adjacency matrix symmetrised as adj <- adj + t(adj)')
-      object <- object + t(object)
+      graph <- graph + t(graph)
     }
   }
 
-  model <- ghype(object, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = TRUE)
+  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = TRUE)
   model$df <- 1
   return(model)
 }

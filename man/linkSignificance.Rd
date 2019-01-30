@@ -5,7 +5,7 @@
 \title{Estimate statistical deviations from ghype model}
 \usage{
 linkSignificance(graph, model, under = FALSE, log.p = FALSE,
-  binomial.approximation = FALSE)
+  binomial.approximation = FALSE, give_pvals = TRUE)
 }
 \arguments{
 \item{graph}{an adjacency matrix or a igraph object.}
@@ -17,6 +17,8 @@ linkSignificance(graph, model, under = FALSE, log.p = FALSE,
 \item{log.p}{boolean, return log values of probabilities}
 
 \item{binomial.approximation}{boolean, force binomial? default FALSE}
+
+\item{give_pvals}{boolean, return p-values for both under and over significance?}
 }
 \value{
 matrix of probabilities with same size as adjacency matrix.

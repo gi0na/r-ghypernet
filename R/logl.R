@@ -15,9 +15,62 @@ logLik.ghype <- function(object, ...){
   return(val)
 }
 
+#' General method to compute log-likelihood for ghype models.
+#'
+#' @param object  either an adjacency matrix or ghype model
+#' If not chosen, multinomial chosen for large graphs.
+#' @param ... extra parameters
+#'
+#' @return
+#' loglikelihood value
+#'
+#' @export
+logl <- function(object, ...){
+  UseMethod('logl')
+}
+
+#' Computes log-likelihood for ghype models from model object
+#'
+#' @param object  a ghype model
+#' @param adj an optional adjacency matrix for which to compute the loglikelihood
+#' @param multinomial  optional boolean. Force multinomial approximation?
+#' If not chosen, multinomial chosen for large graphs.
+#' @param ... extra parametes
+#'
+#' @return
+#' loglikelihood value
+#'
+#' @export
+logl.ghype <- function(object, adj = NULL, multinomial = NULL, ...){
+  return(logl_matrix(
+              ifelse(test = is.null(adj), yes = object$adj, no = adj),
+                     object$xi, object$omega,
+                          object$directed, object$selfloops, multinomial = multinomial))
+}
 
 
-#' Computes log-likelihood for ghype models.
+
+#' Computes log-likelihood for ghype models from adjacency.
+#'
+#' @param object an adjacency matrix
+#' @param xi  a combinatorial matrix
+#' @param omega  a propensity matrix
+#' @param directed  a boolean argument specifying whether object is directed or not.
+#' @param selfloops  a boolean argument specifying whether the model should incorporate selfloops.
+#' @param multinomial  optional boolean. Force multinomial approximation?
+#' If not chosen, multinomial chosen for large graphs.
+#' @param ... extra parameters
+#'
+#' @return
+#' loglikelihood value
+#'
+#' @export
+logl.matrix <- function(object, xi, omega, directed, selfloops, multinomial = NULL, ...){
+  return(logl_matrix(object, xi, omega, directed, selfloops, multinomial = multinomial))
+}
+
+
+#' Computes log-likelihood for ghype models from adjacency.
 #'
 #' @param adj  an adjacency matrix
 #' @param xi  a combinatorial matrix
@@ -30,8 +83,7 @@ logLik.ghype <- function(object, ...){
 #' @return
 #' loglikelihood value
 #'
-#' @export
-logl <- function(adj, xi, omega,
+logl_matrix <- function(adj, xi, omega,
                  directed, selfloops, multinomial = NULL) {
   # compute log-likelihood:
   # chooses between Wallenius
@@ -52,19 +104,25 @@ logl <- function(adj, xi, omega,
       multinomial <- TRUE
     }
   }
+
+  if( all(omega==omega[1]) )
+    return(logl_hypergeom(adj,
+                            xi, directed,
+                            selfloops))
+
   if (multinomial) {
-    return(logl.multinomial(adj,
+    return(logl_multinomial(adj,
                             xi, omega, directed,
                             selfloops))
   } else {
-    return(logl.wallenius(adj,
+    return(logl_wallenius(adj,
                           xi, omega, directed,
                           selfloops))
   }
 }
 
 # Computes log-likelihood for nrm models with Wallenius Hypergeometric dist.
-logl.wallenius <- function(adj,
+logl_wallenius <- function(adj,
                            xi, omega, directed, selfloops) {
   # Returns the log-likelihood of
   # the model given by 'xi' and
@@ -85,9 +143,31 @@ logl.wallenius <- function(adj,
                                odds = omega[ix]))
 }
 
+# Computes log-likelihood for ghype models with Hypergeometric dist.
+logl_hypergeom <- function(adj,
+                           xi, directed, selfloops) {
+  # Returns the log-likelihood of
+  # the model given by 'xi' and
+  # 'omega'.
+  if (!requireNamespace("extraDistr",
+                        quietly = TRUE)) {
+    stop("extraDistr needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  # get indices
+  ix <- mat2vec.ix(adj, directed,
+                   selfloops)
+  # compute likelihood according
+  # to wallenius distribution: it
+  # uses BiasedUrn package
+  extraDistr::dmvhyper(x = adj[ix],
+                       k = sum(adj[ix]), n = xi[ix],
+                       log = TRUE)
+}
 
-# Computes approximated log-likelihood for nrm models with multinomial
-logl.multinomial <- function(adj,
+
+# Computes approximated log-likelihood for ghype models with multinomial
+logl_multinomial <- function(adj,
                              xi, omega, directed, selfloops) {
   # Returns the approximated
   # log-likelihood of the model
@@ -101,7 +181,7 @@ logl.multinomial <- function(adj,
   pp <- sum(xi[ix] * omega[ix])
   p <- as.vector(xi[ix] * omega[ix])/pp
   stats::dmultinom(x = as.vector(adj[ix]),
-                   prob = p, log = T)
+                   prob = p, log = TRUE)
 }
 
 

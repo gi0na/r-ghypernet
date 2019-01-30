@@ -4,14 +4,14 @@
 \alias{scm}
 \title{Fit the Soft-Configuration Model}
 \usage{
-scm(object, directed = NULL, selfloops = NULL, ...)
+scm(graph, directed = NULL, selfloops = NULL, ...)
 }
 \arguments{
-\item{object}{either an adjacency matrix or an igraph graph}
+\item{graph}{either an adjacency matrix or an igraph graph}
 
-\item{directed}{optional boolean, if not specified detected from object}
+\item{directed}{optional boolean, if not specified detected from graph}
 
-\item{selfloops}{optional boolean, if not specified detected from object}
+\item{selfloops}{optional boolean, if not specified detected from graph}
 
 \item{...}{additional parameters}
 }
