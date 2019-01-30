@@ -24,6 +24,7 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 # Contributors
 
 [Giona Casiraghi](http://giona.info) (project lead)
+
 [Vahan Nanumyan](https://www.sg.ethz.ch/team/people/vnanumyan/)
 
 # Copyright
