@@ -41,7 +41,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
-bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = NULL){
+bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE){
   if(is.null(directed) | is.null(selfloops)){
     specs <- check_specs(adj)
     if(is.null(directed)) directed <- specs[1]

@@ -6,7 +6,7 @@
 \usage{
 lr.test(nullmodel, altmodel, df = NULL, williams = FALSE,
   Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE,
-  returnBeta = FALSE)
+  returnBeta = FALSE, method = NULL)
 }
 \arguments{
 \item{nullmodel}{ghype object. The null model}
@@ -28,6 +28,8 @@ If passed TRUE uses all cores-1, else uses the number of cores passed. If none p
 performed not in parallel.}
 
 \item{returnBeta}{boolean, return estimated parameters of Beta distribution? Default FALSE.}
+
+\item{method}{string, for internal use}
 }
 \value{
 p-value of test. If returnBeta=TRUE returns the p-value together with the parameters

@@ -5,7 +5,7 @@
 \title{Test regular (gnp) vs configuration model}
 \usage{
 conf.test(graph, directed, selfloops, nempirical = NULL,
-  parallel = NULL)
+  parallel = NULL, seed = NULL)
 }
 \arguments{
 \item{graph}{adjacency matrix or igraph graph}
@@ -19,6 +19,8 @@ conf.test(graph, directed, selfloops, nempirical = NULL,
 \item{parallel}{optional, number of cores to use or boolean for parallel computation.
 If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
 performed not in parallel.}
+
+\item{seed}{optional integer}
 }
 \value{
 p-value of test.

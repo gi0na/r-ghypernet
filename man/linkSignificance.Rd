@@ -5,7 +5,7 @@
 \title{Estimate statistical deviations from ghype model}
 \usage{
 linkSignificance(graph, model, under = FALSE, log.p = FALSE,
-  binomial.approximation = FALSE, give_pvals = TRUE)
+  binomial.approximation = FALSE, give_pvals = FALSE)
 }
 \arguments{
 \item{graph}{an adjacency matrix or a igraph object.}

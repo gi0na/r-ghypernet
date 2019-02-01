@@ -9,13 +9,19 @@
 #' @param parallel optional, number of cores to use or boolean for parallel computation.
 #' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
 #' performed not in parallel.
+#' @param seed optional integer
 #'
 #' @return
 #' p-value of test.
 #'
 #' @export
 #'
-conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL){
+conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL, seed = NULL){
+  if(is.numeric(seed)){
+    old <- .Random.seed
+    on.exit( { .Random.seed <<- old } )
+    set.seed(seed)
+  }
 
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
@@ -114,14 +120,23 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 #' If passed TRUE uses all cores-1, else uses the number of cores passed. If none passed
 #' performed not in parallel.
 #' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
+#' @param method string, for internal use
 #'
 #' @return
 #'  p-value of test. If returnBeta=TRUE returns the p-value together with the parameters
 #'  of the beta distribution.
 #' @export
 #'
-lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE){
+lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE, method = NULL){
   llratio <- loglratio(nullmodel,altmodel)
+  if(is.numeric(seed)){
+    old <- .Random.seed
+    on.exit( { .Random.seed <<- old } )
+    set.seed(seed)
+  }
+
+  if(is.null(method))
+    method <- 'LR test'
 
   if(!is.null(Beta)){
 
@@ -137,7 +152,6 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
       conf.int <- stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
       attributes(conf.int) <- list(conf.level=0.95)
       alternative <- 'one.sided'
-      method <- 'LR test'
 
       return(
         lrtohtest(
@@ -159,20 +173,13 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
       ps <- nullmodel$omega[ix]*nullmodel$xi[ix]
       mm <- -2*nullmodel$m*log(min(ps[ps!=0])/sum(ps))
 
-      if(is.numeric(seed)) set.seed(seed)
-
       gees <- rghype(nempirical, nullmodel)
 
       ncores <- 1
       if(is.numeric(parallel)) ncores <- parallel
       if(isTRUE(parallel)) ncores <- parallel::detectCores() - 1
 
-      nullllratio <- unlist(parallel::mclapply(X = gees, FUN = function(g, directed, null, alt, bip){
-        if(!directed &!bip){ # && length(nullmodel$n)==1){
-          adj <- g + t(g)
-        } else{
-          adj <- g
-        }
+      nullllratio <- unlist(parallel::mclapply(X = gees, FUN = function(adj, directed, null, alt, bip){
         empnull <- eval(updateModel(nullmodel,adj))
         empalt <- eval(updateModel(altmodel,adj))
         return(-2*loglratio(empnull,empalt))
@@ -195,7 +202,6 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
       conf.int <- stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b)*mm
       attributes(conf.int) <- list(conf.level=0.95)
       alternative <- 'one.sided'
-      method <- 'LR test'
 
       return(
         lrtohtest(
@@ -235,15 +241,17 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 #' performed not in parallel.
 #' @param returnBeta boolean, return estimated parameters of Beta distribution? Default FALSE.
 #'
-#' @param Beta boolean, use Beta test?
+#' @param Beta boolean, use Beta test? default TRUE
+#' @param seed optional integer, seed for empirical lr.test
 #'
 #' @return
 #' p-value of test.
 #'
 #' @export
-isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, parallel = FALSE, returnBeta = FALSE){
-  conftest <- conf.test(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel)
+isNetwork <- function(graph, directed, selfloops, Beta=TRUE, nempirical=NULL, parallel = FALSE, returnBeta = FALSE, seed = NULL){
+  conftest <- conf.test(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel, seed = NULL)
   if(conftest$p.value >= 1e-3){
+    method <- 'LR test -- optimal = gnp vs full model'
     adj <- graph
     if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
       adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
@@ -255,10 +263,11 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
     xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
     # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
     xiregular <- ceiling(xiregular)
-    fullmod <- ghype(graph, directed, selfloops)
+    fullmod <- ghype(graph, directed, selfloops, xi = xiregular)
     nullmod <- ghype(graph = graph, directed = directed, selfloops = selfloops, xi = xiregular, unbiased = TRUE)
     nullmod$df <- 1
   } else{
+    method <- 'LR test -- optimal = CM vs full model'
     fullmod <- ghype(graph, directed, selfloops)
     nullmod <- ghype(graph, directed, selfloops, unbiased = TRUE)
     nullmod$df <- nullmod$n * (1+directed)
@@ -275,7 +284,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
   #     df <- nrow(graph)*ncol(graph)
   #   }
   # }
-  return(lr.test(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta))
+  return(lr.test(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta, method = method, seed = seed))
 }
 
 #' Perform a goodness-of-fit test
@@ -296,7 +305,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=NULL, nempirical=NULL, pa
 #'
 gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, returnBeta = FALSE, seed = NULL){
   fullmodel <- ghype(graph = model$adj, directed = model$directed, selfloops = model$selfloops, unbiased = FALSE)
-  return(lr.test(nullmodel = model,altmodel = fullmodel, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta, seed = seed))
+  return(lr.test(nullmodel = model,altmodel = fullmodel, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta, seed = seed, method = 'LR test -- GOF'))
 }
 
 
@@ -318,7 +327,7 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #'
 #' @export
 #'
-linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = TRUE){
+linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
