@@ -10,7 +10,7 @@ Authors@R: c(
             role = c('aut'))
             )
 URL: https://ghyper.net
-Description: An implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
+Description: The implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
     It provides functions for model fitting and selection of gHypEGs.
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
     1. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. Generalized Hypergeometric 
