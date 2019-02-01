@@ -5,9 +5,9 @@ Version: 0.5
 Date: as.POSIXlt(2019-02-01)
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
-            role = c("aut", "cre")),
+            role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
     person("Vahan", "Nanumyan", email = "vahan@ethz.ch",
-            role = c('aut'))
+            role = c('aut'), comment = c(ORCID = "0000-0001-9054-3217"))
             )
 URL: https://ghyper.net
 Description: The implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
