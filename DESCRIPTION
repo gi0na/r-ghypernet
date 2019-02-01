@@ -1,6 +1,6 @@
 Package: ghypernet
 Type: Package
-Title: An implementation of the Generalised Hypergeometric Ensemble of Random Graphs
+Title: R implementation of the Generalised Hypergeometric Ensemble of Random Graphs
 Version: 0.5
 Date: as.POSIXlt(2019-02-01)
 Authors@R: c(
@@ -10,10 +10,10 @@ Authors@R: c(
             role = c('aut'), comment = c(ORCID = "0000-0001-9054-3217"))
             )
 URL: https://ghyper.net
-Description: The implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
+Description: R implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
     It provides functions for model fitting and selection of gHypEGs.
     To learn how to use it, check the vignettes for a quick tutorial.
-    DOI: 10.5281/zenodo.2555300
+    Please reference its use as DOI: 10.5281/zenodo.2555300
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
     1. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. Generalized Hypergeometric 
         Ensembles: 
