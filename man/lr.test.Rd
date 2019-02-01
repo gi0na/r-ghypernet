@@ -39,3 +39,10 @@ p-value of test. If returnBeta=TRUE returns the p-value together with the parame
 lr.test allows to test between two nested ghype models whether there is
 enough evidence for the alternative (more complex) model compared to the null model.
 }
+\examples{
+data("adj_karate")
+regularmodel <- regularm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+lr.test(nullmodel = regularmodel, altmodel = confmodel, seed = 123)
+
+}

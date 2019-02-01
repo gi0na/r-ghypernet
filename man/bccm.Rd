@@ -34,3 +34,8 @@ bccm returns an object of class 'bccm' and 'ghype'.
 \description{
 bccm is used to fit a block-constrained configuration model.
 }
+\examples{
+data("vertexlabels","adj_karate")
+blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)
+
+}

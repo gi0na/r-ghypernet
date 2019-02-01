@@ -34,3 +34,8 @@ the benchmark 'full-model', where the propensity matrix is fitted such
 that the expected graph from the fitted model is the one passed to the
 function.
 }
+\examples{
+data("adj_karate")
+fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE, unbiased = FALSE)
+
+}

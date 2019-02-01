@@ -2,7 +2,7 @@
 % Please edit documentation in R/tests.R
 \name{isNetwork}
 \alias{isNetwork}
-\title{Test SCM vs full ghype.}
+\title{Test null model vs full ghype.}
 \usage{
 isNetwork(graph, directed, selfloops, Beta = TRUE, nempirical = NULL,
   parallel = FALSE, returnBeta = FALSE, seed = NULL)
@@ -31,4 +31,9 @@ p-value of test.
 }
 \description{
 isNetwork tests a graph for the SCM vs the full ghype model.
+}
+\examples{
+data("adj_karate")
+isNetwork(graph = adj_karate, directed = FALSE, selfloops = FALSE, seed=123)
+
 }

@@ -19,7 +19,10 @@
 #' ghype return an object of class "ghype".
 #'
 #' @export
-#'
+#' 
+#' @examples
+#' data("adj_karate")
+#' fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE, unbiased = FALSE)
 #'
 ghype <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
   UseMethod('ghype')
@@ -203,6 +206,10 @@ as.ghype.list <- function(object, ...){
 #'
 #' @return ghype object
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #'
 scm <- function(graph, directed = NULL, selfloops = NULL, ...){
 
@@ -237,6 +244,10 @@ scm <- function(graph, directed = NULL, selfloops = NULL, ...){
 #'
 #' @return ghype object
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' regularmodel <- regularm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #'
 regularm <- function(graph, directed = NULL, selfloops = NULL, ...){
 

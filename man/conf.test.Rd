@@ -28,3 +28,8 @@ p-value of test.
 \description{
 Likelihood ratio test for gnp vs configuration model.
 }
+\examples{
+data("adj_karate")
+conf.test(graph = adj_karate, directed = FALSE, selfloops = FALSE, seed=123)
+
+}

@@ -41,6 +41,10 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
+#' @examples
+#' data("vertexlabels","adj_karate")
+#' blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)
+#' 
 bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE){
   if(is.null(directed) | is.null(selfloops)){
     specs <- check_specs(adj)
@@ -89,19 +93,6 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
   }
 
-  # # construct xi matrix
-  # if(is.null(xi)){
-  #   if(conf.test(graph = adj, directed = directed, selfloops = selfloops)>1e-4){
-  #     ix <- mat2vec.ix(adj, directed, selfloops)
-  #     m <- sum(adj[ix])
-  #     xiregular <- matrix(m^2/sum(adj[ix]!=0), nrow(adj), ncol(adj))
-  #     # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
-  #     xi <- ceiling(xiregular)
-  #   } else{
-  #     xi <- ComputeXi(adj,directed,selfloops)
-  #   }
-  # }
-
   # construct xi matrix
   if(is.null(xi)){
     if(is.null(regular)){
@@ -135,52 +126,16 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   }
   m <- sum(adj[mat2vec.ix(xi,directed,selfloops)])
 
-  # solve linear system for omega:
-  # build matrix and vector
-
-  # A <- - mb[,2] %*% t(xib[,2]) + diag(m*xib[,2])
-  #
-  # # remove entries = 0 to set omegas=0 there
-  # zerosid <- which(mb[,2]==0)
-  #
-  # if(length(zerosid)!=0){
-  #   A <- A[-zerosid,]
-  #   A <- A[,-zerosid]
-  # }
-  #
-  #
-  # # set one parameter omega to 1
-  # b <- - A[-1,1]
-  #
-  #
-  # # solve system to find omega values
-  # omegab <- rep(0,length(xib[,1]))
-  # if(length(zerosid)!=0){
-  #   omegab[-zerosid] <- c(1,solve(A[-1,-1],b))
-  # } else{
-  #   omegab <- c(1,solve(A[-1,-1],b))
-  # }
-
   # use ensemble for omega:
 
   omega.v <- rep(NA,length(mb[,2]))
   tmp <- MLE_omega_idx(mb[,2],xib[,2])
   idx.zero <- tmp$zero; idx.one <- tmp$one; rm(tmp)
   omega.v[idx.one] <- 1; omega.v[idx.zero] <- 0
-  # print(mb[,2][!idx.one & !idx.zero])
-  # print(xib[,2][!idx.one & !idx.zero])
-  # print(adjframe)
-  # print(xiframe)
-  # print('---')
+
   omega.v[!idx.one & !idx.zero] <- fitted_omega_wallenius(mb[,2][!idx.one & !idx.zero], xib[,2][!idx.one & !idx.zero])
 
-  # omegab <- FitOmega(adj = vec2mat(vec = mb[,2],directed = directedBlocks,selfloops = TRUE,(length(unique(blockids))*(!homophily)+2*homophily)),
-  #          xi = vec2mat(vec = xib[,2],directed = directedBlocks,selfloops = TRUE,(length(unique(blockids))*(!homophily)+2*homophily)),
-  #          directed = directedBlocks, selfloops = TRUE)
-  # omegab <- omegab[mat2vec.ix(mat = omegab, directed = directedBlocks, selfloops = TRUE)]
-  #
-  # if(homophily)
-  #   omegab <- omegab[-3]
+
 
   omegab <- data.frame(block=xib[,1],omegab=omega.v)
 

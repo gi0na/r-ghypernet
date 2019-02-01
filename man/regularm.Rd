@@ -22,3 +22,8 @@ ghype object
 regularm is wrapper for \link{ghype} that allows to specify a gnm regular model.
 i.e. where all entries of the combinatorial matrix Xi are the same.
 }
+\examples{
+data("adj_karate")
+regularmodel <- regularm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+
+}

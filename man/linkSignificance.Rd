@@ -27,3 +27,9 @@ matrix of probabilities with same size as adjacency matrix.
 linkSignificance allows to estimate the statistical deviations of an observed
 graph from a ghype model.
 }
+\examples{
+data("adj_karate")
+fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+linkSignificance(graph = adj_karate, model = fullmodel, under=FALSE)
+
+}

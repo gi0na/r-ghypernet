@@ -21,3 +21,8 @@ ghype object
 \description{
 scm is wrapper for \link{ghype} that allows to specify a soft-configuration model.
 }
+\examples{
+data("adj_karate")
+confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+
+}

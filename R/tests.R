@@ -16,6 +16,10 @@
 #'
 #' @export
 #'
+#' @examples
+#' data("adj_karate")
+#' conf.test(graph = adj_karate, directed = FALSE, selfloops = FALSE, seed=123)
+#' 
 conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL, seed = NULL){
   if(is.numeric(seed)){
     old <- .Random.seed
@@ -126,6 +130,12 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 #'  p-value of test. If returnBeta=TRUE returns the p-value together with the parameters
 #'  of the beta distribution.
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' regularmodel <- regularm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+#' confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+#' lr.test(nullmodel = regularmodel, altmodel = confmodel, seed = 123)
 #'
 lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE, method = NULL){
   llratio <- loglratio(nullmodel,altmodel)
@@ -228,7 +238,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
   return(stats::pchisq(q = -2*llratio/q1, df = df, lower.tail = FALSE))
 }
 
-#' Test SCM vs full ghype.
+#' Test null model vs full ghype.
 #'
 #' isNetwork tests a graph for the SCM vs the full ghype model.
 #'
@@ -248,6 +258,11 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
 #' p-value of test.
 #'
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' isNetwork(graph = adj_karate, directed = FALSE, selfloops = FALSE, seed=123)
+#' 
 isNetwork <- function(graph, directed, selfloops, Beta=TRUE, nempirical=NULL, parallel = FALSE, returnBeta = FALSE, seed = NULL){
   conftest <- conf.test(graph, directed = directed, selfloops = selfloops, nempirical = nempirical, parallel = parallel, seed = NULL)
   if(conftest$p.value >= 1e-3){
@@ -272,18 +287,6 @@ isNetwork <- function(graph, directed, selfloops, Beta=TRUE, nempirical=NULL, pa
     nullmod <- ghype(graph, directed, selfloops, unbiased = TRUE)
     nullmod$df <- nullmod$n * (1+directed)
   }
-  # n <- full$n[1]
-  # df <- n*(n-!selfloops)/(1+!directed)
-  # if(igraph::is.igraph(graph)){
-  #   if(igraph::is.bipartite(graph))
-  #     df <- sum(V(graph)$type)*sum(!V(graph)$type)
-  # }
-  #
-  # if(is.matrix(graph)){
-  #   if(nrow(graph)!=ncol(graph)){
-  #     df <- nrow(graph)*ncol(graph)
-  #   }
-  # }
   return(lr.test(nullmodel = nullmod,altmodel = fullmod, Beta=Beta, nempirical = nempirical, parallel = parallel, returnBeta = returnBeta, method = method, seed = seed))
 }
 
@@ -302,6 +305,11 @@ isNetwork <- function(graph, directed, selfloops, Beta=TRUE, nempirical=NULL, pa
 #'  p-value of test. If returnBeta=TRUE returns the p-value together with the parameters
 #'  of the beta distribution.
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+#' gof.test(model = confmodel, seed = 123)
 #'
 gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, returnBeta = FALSE, seed = NULL){
   fullmodel <- ghype(graph = model$adj, directed = model$directed, selfloops = model$selfloops, unbiased = FALSE)
@@ -326,6 +334,11 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #' matrix of probabilities with same size as adjacency matrix.
 #'
 #' @export
+#' 
+#' @examples
+#' data("adj_karate")
+#' fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+#' linkSignificance(graph = adj_karate, model = fullmodel, under=FALSE)
 #'
 linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
   adj <- graph

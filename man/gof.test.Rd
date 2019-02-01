@@ -29,3 +29,9 @@ p-value of test. If returnBeta=TRUE returns the p-value together with the parame
 \description{
 Perform a goodness-of-fit test
 }
+\examples{
+data("adj_karate")
+confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
+gof.test(model = confmodel, seed = 123)
+
+}
