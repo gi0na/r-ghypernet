@@ -41,7 +41,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
 #' @export
 #'
-bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = NULL){
+bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE){
   if(is.null(directed) | is.null(selfloops)){
     specs <- check_specs(adj)
     if(is.null(directed)) directed <- specs[1]
@@ -191,7 +191,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
 
   # generate and return ensemble
-  model <- ghype(object = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular)
+  model <- ghype(graph = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular)
 
   # generate block omega matrix for reference
   if( (!homophily) & (!inBlockOnly)){

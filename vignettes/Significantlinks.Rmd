@@ -19,10 +19,12 @@ We use the Karate Club as running example.
 ### Load Packages
 
 ```{r}
-library(hypernets)
+library(ghypernet)
 library(igraph)
-library(igraphdata)
-data("karate")
+data("adj_karate")
+data("vertexlabels")
+karate <- graph_from_adjacency_matrix(adjmatrix = adj_karate, mode='undirected', weighted=TRUE)
+V(karate)$color <- vertexlabels
 ```
 
 ### Estimate the ensemble
@@ -31,11 +33,9 @@ First we estimate a soft-configuration model from the data.
 The second model is a block model based on the two 'factions' of members of the club
 
 ```{r}
-adj <- get.adjacency(karate, attr = 'weight', sparse = F)
+mod <- scm(adj_karate,directed = F, selfloops = F)
 
-mod <- scm(adj,directed = F, selfloops = F)
-
-blockModel <- bccm(adj = adj, labels = V(karate)$Faction, directed = F, selfloops = F, homophily = F)
+blockModel <- bccm(adj = adj_karate, labels = vertexlabels, directed = F, selfloops = F, homophily = F)
 ```
 
 ## Finding the significance of the links
@@ -45,12 +45,12 @@ We can obtain a high-pass noise filtering choosing a significance level and filt
 
 ```{r}
 # obtain significance matrix
-signmat <- linkSignificance(adj, mod, under = TRUE)
+signmat <- linkSignificance(adj_karate, mod, under = FALSE)
 
 # filter adjacency matrix
-adjfiltered <- adj
+adjfiltered <- adj_karate
 adjfiltered[signmat>(1/mod$m)] <- 0
-adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+adjfiltered[signmat<(1/mod$m) & adj_karate==0] <- 1
 diag(adjfiltered) <- 0
 ```
 
@@ -63,8 +63,8 @@ Note that the configuration model is not able to predict the strong links within
 The results reflect this showing the two factions separated and only the links due to homophily effect left.
 
 ```{r}
-adjcolor <- adj
-adjcolor[adj>0] <- 2
+adjcolor <- adj_karate
+adjcolor[adj_karate>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
 diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')
@@ -72,7 +72,7 @@ g <-  graph_from_adjacency_matrix(adjcolor, mode = 'upper', weighted = 'color')
 E(g)$color[E(g)$color==1] <- "red"
 E(g)$color[E(g)$color==2] <- "black"
 
-V(gfiltered)$color <- V(g)$color <- V(karate)$color
+V(gfiltered)$color <- V(g)$color <- vertexlabels
 plot(karate)
 plot(g)
 plot(gfiltered)
@@ -91,18 +91,18 @@ Hence, we can expect that the significant links will be mainly those between gro
 The results are in accordance with our intuition.
 
 ```{r}
-signmat <- linkSignificance(adj, blockModel, under=FALSE)
+signmat <- linkSignificance(adj_karate, blockModel, under=FALSE)
 
 # filter adjacency matrix
-adjfiltered <- adj
+adjfiltered <- adj_karate
 adjfiltered[signmat>(1/mod$m)] <- 0
-adjfiltered[signmat<(1/mod$m) & adj==0] <- 1
+adjfiltered[signmat<(1/mod$m) & adj_karate==0] <- 1
 diag(adjfiltered) <- 0
 ```
 
 ```{r}
-adjcolor <- adj
-adjcolor[adj>0] <- 2
+adjcolor <- adj_karate
+adjcolor[adj_karate>0] <- 2
 adjcolor[signmat<(1/mod$m)] <- 1
 diag(adjcolor) <- 0
 gfiltered <- graph_from_adjacency_matrix(adjfiltered, mode = 'upper')

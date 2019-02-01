@@ -19,7 +19,7 @@ updateModel <- function(model, adj){
   }
   if(length(grep('ghype', callname))>0){
     callname <- 'ghype'
-    newcall <- call(name = callname, object=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, unbiased=all(model$omega==1), regular=model$regular)
+    newcall <- call(name = callname, graph=adj, directed=model$directed, selfloops=model$selfloops, xi=xi, unbiased=all(model$omega==1), regular=model$regular)
   } else{
     if(length(grep('bccm', callname))>0){
       callname <- 'bccm'
@@ -73,3 +73,24 @@ check_specs.matrix <- function(object, ...){
   }
   return(c('directed'=directed, 'selfloops'=selfloops))
 }
+
+########
+## documentation for data in Vignette
+
+#' Zachary's Karate Club graph
+#'
+#' The weighted adjacency reparting interactions among
+#' 34 nodes.
+#'
+#' @format a 34x34 matrix
+#' @source package `igraphdata`
+"adj_karate"
+
+#' Zachary's Karate Club vertex faction assignment
+#'
+#' The weighted adjacency reparting interactions among
+#' 34 nodes.
+#'
+#' @format a 34 vector with the assignment of nodes to faction 1 or 2
+#' @source package `igraphdata`
+"vertexlabels"

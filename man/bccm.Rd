@@ -6,7 +6,7 @@
 \usage{
 bccm(adj, labels, directed = NULL, selfloops = NULL,
   directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE,
-  xi = NULL, regular = NULL)
+  xi = NULL, regular = FALSE)
 }
 \arguments{
 \item{adj}{the adjacency matrix of the graph.}

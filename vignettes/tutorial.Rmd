@@ -1,0 +1,189 @@
+---
+title: "ghypernet Tutorial"
+author: "Giona Casiraghi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ghypernet Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is a short tutorial to show how to employ the `ghypernet` R package for the estimation of gHypEG.
+In the following, we use Zachary's Karate Club dataset as baseline.
+The data is provided within this package and can be simply loaded.
+It corresponds to a weighted adjacency matrix whose entries report the number of interactions between individuals.
+The graph specified by the adjacency matrix is _undirected_ and does not have _self-loops_.
+For this reason, we specify the two parameters `directed=FALSE` and `selfloops=FALSE`.
+
+```{r}
+library(ghypernet)
+
+data("adj_karate")
+directed <- FALSE
+selfloops <- FALSE
+print(adj_karate[1:10,1:10])
+```
+
+# Fitting a gHypEG Model
+
+GHypEG Models can be fitted using the general function `ghype`.
+However, we provide some default functions to fit specific models.
+These functions take an adjacency matrix (not sparse) as main argument, or an `igraph` graph object.
+They further allow to specify whether the model should be directed or not, and whether it should have selfloops or not.
+
+The function `regularm` allows to fit the simplest possible model that can be formulated with gHypEGs: gnp-like graph where only the average degree is preserved.
+
+```{r}
+(regularmodel <- regularm(graph = adj_karate, directed = directed, selfloops = selfloops))
+```
+
+The function `scm` allows to fit the soft-configuration model, where all degrees are preserved.
+
+```{r}
+(confmodel <- scm(graph = adj_karate, directed = directed, selfloops = selfloops))
+```
+
+From the models, we can generate random realisations that can be used, e.g., as null-models to test hypothesis about the data.
+This can be achieved by means of the function `rghype`, specifying the number of realisations to take.
+
+```{r}
+random_graphs_rm <- rghype(nsamples = 10, model = regularmodel, seed = 123)
+random_graphs_scm <- rghype(nsamples = 10, model = confmodel, seed = 123)
+```
+
+Finally, we can perform model selection and hypothesis testing by comparing statistics of two models.
+We can follow two different approaches, comparing information scores such as AIC, or performing a likelihood ratio test.
+One simple question we can ask, for example, is whether the degree sequence of the Karate Club can be simply explained by a regular model, or there is the need to use a configuration model.
+AIC scores can be obtained using the standard R function `AIC`.
+Likelihood-ratio tests are performed using the function `lr.test`.
+However, we provide some wrappers for the function `lr.test` for some commonly done tests like the one above.
+
+Comparing AIC scores for the regular model and the configuration model yields the following result:
+```{r}
+AIC(regularmodel)
+AIC(confmodel)
+
+# difference in AICs, high value means more complex model is better
+AIC(regularmodel) - AIC(confmodel)
+```
+This shows that the there is strong evidence for the employing the configuration model, because the degree sequence of the graph strongly deviates from the regular one.
+
+To increase confidence in this result, we can compare the result above with that obtained from random data generated from the regular model.
+
+```{r}
+# Generate regular models and configuration models for random graphs
+regularmodels <- lapply(X = random_graphs_rm, FUN = regularm, directed=directed, selfloops=selfloops)
+confmodels <- lapply(X = random_graphs_rm, FUN = scm, directed=directed, selfloops=selfloops)
+# Compute AICs
+AIC_regularmodels <- sapply(X = regularmodels,FUN = AIC)
+AIC_confmodels <- sapply(X = confmodels,FUN = AIC)
+# differences in AIC, high value means more complex model is better
+AIC_regularmodels - AIC_confmodels
+```
+As can be seen by the experiment above, in the case of random graphs generated from the regular model, the AIC of the configuration model is _higher_ than that of the regular model, confirming that the added complexity is not justified.
+
+The (empirical) likelihood-ratio test gives a similar result, with the benefit of providing a p-value.
+The function `conf.test` provides a simple way to perform the test without the need of computing the models.
+
+```{r}
+conf.test(graph = adj_karate, directed = directed, selfloops = selfloops, seed=123)
+```
+Similarly to what done above, we can perform the test using the random graphs.
+Now we expect large p-values.
+
+```{r}
+tests <- lapply(X = random_graphs_rm, FUN = conf.test, directed = directed, selfloops = selfloops, seed=123)
+sapply(X = tests, FUN = function(x) x$p.value)
+```
+
+# Block-Constrained Configuration Model
+The next model that can be estimated is the block constrained configuration model.
+The Karate Club has a well-known partitioning into two communities that can be loaded from the package.
+We fit a bccm using the `bccm` function, specifying the vertex labels.
+```{r}
+data("vertexlabels")
+(blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = directed, selfloops = selfloops))
+print(blockmodel$blockOmega)
+```
+
+By default, the function fits a 'full' block structure, where every parameter for in- out-blocks relations are different.
+In this case this corresponds to three parameters: one for block 1, one for block 2, one for the edges between the two blocks.
+However, in some cases we see that the parameters of in-blocks relations are similar to each other, as can be seen above looking at the diagonal entries of the block matrix.
+In this case, a full block structure may overfit the data, while a simpler model could be better.
+This can be fitted setting the parameter `homophily=TRUE`. 
+This corresponds to a model where there are only two parameters, one for in-block edges, one for out-block edges, irrespectively of the number of blocks.
+The result is shown below.
+
+```{r}
+(blockmodel_2 <- bccm(adj = adj_karate, labels = vertexlabels, directed = directed, selfloops = selfloops, homophily = TRUE))
+```
+
+The first test we need to perform is whether either of the model just fitted significantly improve the fit to the data.
+We do so by performing a likelihood ratio test between the configuration model and the bccms.
+
+```{r}
+lr.test(nullmodel = confmodel, altmodel = blockmodel, seed = 123)
+lr.test(nullmodel = confmodel, altmodel = blockmodel_2, seed = 123)
+```
+
+Unsurprisingly, the test gives low p-values, confirming the presence of a block structure.
+Again, we can perform a similar analysis using AIC:
+
+```{r}
+AIC(confmodel)
+AIC(blockmodel_2)
+AIC(blockmodel)
+```
+
+From this, we note that while specifying the full bccm gives an improvement in the score compared to the two parameters model, such improvement is relatively small, and appears to not justify the increased complexity.
+We can verify again this with a likelihood-ratio test:
+
+```{r}
+lr.test(nullmodel = blockmodel_2, altmodel = blockmodel, seed=123)
+```
+
+The result shows that the added complexity of the second model is not justified by the data.
+We investigate this further by comparing the results with what obtained from random variations.
+
+```{r}
+# First generate random sample from blockmodel
+random_graphs_bccm2 <- rghype(nsamples = 100, model = blockmodel_2, seed = 123)
+# Generate the two models for random graphs
+blockmodels <- lapply(X = random_graphs_bccm2, FUN = bccm, labels = vertexlabels, directed=directed, selfloops=selfloops)
+blockmodel_2s <- lapply(X = random_graphs_bccm2, FUN = bccm, labels = vertexlabels, directed=directed, selfloops=selfloops, homophily = TRUE)
+# Compute AICs
+AIC_blockmodels <- sapply(X = blockmodels, FUN = AIC)
+AIC_blockmodel_2s <- sapply(X = blockmodel_2s, FUN = AIC)
+# mean difference in AIC, high value means more complex model is better
+summary(AIC_blockmodel_2s - AIC_blockmodels)
+
+```
+
+This confirms the fact that the asymmetry in the two blocks can ascribed to random variations.
+
+# Goodness of Fit
+Finally, our framework allows to evaluate the goodness-of-fit of model to data.
+Similarly to a multinomial goodness-of-fit, we perform a test of the chosen against the _maximally complex model_ that can be formulated.
+This model provides the baseline against which comparing simpler models in terms of their goodness-of-fit.
+The 'full model' is specified such that the observed graph is the expected one.
+It is fitted using the function `ghype` with the flag `unbiased=FALSE`.
+The likelihood ratio test can be performed either manually or using the function `gof.test`.
+
+```{r}
+fullmodel <- ghype(graph = adj_karate, directed = directed, selfloops = selfloops, unbiased = FALSE)
+
+lr.test(nullmodel = blockmodel_2, altmodel = fullmodel, seed = 123)
+gof.test(model = blockmodel_2, seed = 123)
+```
+
+The reason for this result is the fact that, although the bccm is a good fit for the empirical graph, the latter is characterised by some particular structures that are not encoded by the bccm.
+For example, the empirical graph is characterised by few 'bridges' between the two communities, managed by relatively low degree vertices.
+Instead, the bccm assumes that _all_ vertices connect weakly the two communities, with an amount of edges proportional to the degree.

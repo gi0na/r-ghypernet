@@ -50,5 +50,6 @@ vec2mat <- function(vec,directed,selfloops,n){
 
   idx <- mat2vec.ix(mat,directed,selfloops)
   mat[idx] <- vec
+  if(!directed) mat <- mat + t(mat)
   return(mat)
 }

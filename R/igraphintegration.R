@@ -19,7 +19,6 @@ check_specs.igraph <- function(object, ...){
   return(c('directed'=directed, 'selfloops'=selfloops))
 }
 
-
 #' Convert a list of adjacency matrices to a list of igraph graphs.
 #'
 #' @param adjlist a list of adjacency matrices
@@ -51,7 +50,7 @@ CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
 #' that the expected graph from the fitted model is the one passed to the
 #' function.
 #'
-#' @param object either an adjacency matrix or an igraph graph.
+#' @param graph either an adjacency matrix or an igraph graph.
 #' @param directed a boolean argument specifying whether object is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
 #' @param xi an optional matrix defining the combinatorial matrix of the model.
@@ -66,11 +65,11 @@ CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
 #' @export
 #'
 #'
-ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
-  if(igraph::is_bipartite(object)){
-    adj <- igraph::get.incidence(graph = object, sparse = FALSE)
+ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular=FALSE, ...){
+  if(igraph::is_bipartite(graph)){
+    adj <- igraph::get.incidence(graph = graph, sparse = FALSE)
   } else{
-    adj <- igraph::get.adjacency(graph = object, type = "upper", sparse = FALSE)
+    adj <- igraph::get.adjacency(graph = graph, type = "upper", sparse = FALSE)
     if(!directed)
       adj <- adj + t(adj)
   }
@@ -127,9 +126,11 @@ ghype.igraph <- function(object, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' @param ... other parameters to pass to `property`
 #'
 #' @return
+#'
+#' vector of length nsamples
+#'
 #' @export
 #'
-#' @examples
 BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, model=NULL, m=NULL, seed=NULL, ...){
 
   functionslist <- c(
@@ -157,7 +158,7 @@ BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=100
     m <- length(igraph::E(graph))
 
   if(is.null(model))
-    model <- ghype(object = graph, directed, selfloops, xi, omega)
+    model <- ghype(graph = graph, directed, selfloops, xi, omega)
 
   rsamples <- RandomGraph(nsamples, model, m, seed=seed)
   gsamples <- CreateIgGraphs(adjlist = rsamples, directed = directed, selfloops = selfloops)

@@ -4,13 +4,13 @@
 \alias{ghype}
 \title{Fitting gHypEG models}
 \usage{
-ghype(object, directed, selfloops, xi = NULL, omega = NULL,
+ghype(graph, directed, selfloops, xi = NULL, omega = NULL,
   unbiased = FALSE, regular = FALSE, ...)
 }
 \arguments{
-\item{object}{either an adjacency matrix or an igraph graph.}
+\item{graph}{either an adjacency matrix or an igraph graph.}
 
-\item{directed}{a boolean argument specifying whether object is directed or not.}
+\item{directed}{a boolean argument specifying whether graph is directed or not.}
 
 \item{selfloops}{a boolean argument specifying whether the model should incorporate selfloops.}
 

@@ -1,6 +1,8 @@
+inst/doc
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 /ghypner.Rproj
 /.DS_Store
+/vignettes/.gitignore
