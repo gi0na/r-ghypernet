@@ -12,6 +12,8 @@ Authors@R: c(
 URL: https://ghyper.net
 Description: The implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
     It provides functions for model fitting and selection of gHypEGs.
+    To learn how to use it, check the vignettes for a quick tutorial.
+    DOI: 10.5281/zenodo.2555300
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
     1. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. Generalized Hypergeometric 
         Ensembles: 
