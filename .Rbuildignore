@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^.*\.Rhistory$
 ^.*\.gitignore$
+cran-comments.md
+vignettes/.gitignore
+vignettes/.Rhistory

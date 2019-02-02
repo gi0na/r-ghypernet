@@ -1,4 +1,4 @@
-#' Auxilliary function. Computes combinatorial matrix.
+#' Auxiliary function. Computes combinatorial matrix.
 #'
 #' Combinatorial matrix computed according to soft
 #' configuration model or 'regular' gnp model.

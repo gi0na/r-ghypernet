@@ -2,7 +2,7 @@
 % Please edit documentation in R/computexi.R
 \name{ComputeXi}
 \alias{ComputeXi}
-\title{Auxilliary function. Computes combinatorial matrix.}
+\title{Auxiliary function. Computes combinatorial matrix.}
 \usage{
 ComputeXi(adj, directed, selfloops, regular = FALSE)
 }

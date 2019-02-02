@@ -18,7 +18,7 @@ Although this is not required, it is recommended to install the `BiasedUrn` R pa
 It can be easily done modifying the _makevar_ file.
 In case the `BiasedUrn` library cannot be found, all computations will be performed using the multinomial approximation.
 
-# Ackowledgements
+# Acknowledgements
 The research and development behind `ghypernet` is performed at the Chair of Systems Design, ETH Zürich.
 
 # Contributors

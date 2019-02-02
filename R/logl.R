@@ -35,7 +35,7 @@ logl <- function(object, ...){
 #' @param adj an optional adjacency matrix for which to compute the loglikelihood
 #' @param multinomial  optional boolean. Force multinomial approximation?
 #' If not chosen, multinomial chosen for large graphs.
-#' @param ... extra parametes
+#' @param ... extra parameters
 #'
 #' @return
 #' loglikelihood value

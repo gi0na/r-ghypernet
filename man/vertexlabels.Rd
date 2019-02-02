@@ -4,7 +4,7 @@
 \name{vertexlabels}
 \alias{vertexlabels}
 \title{Zachary's Karate Club vertex faction assignment}
-\format{a 34 vector with the assignment of nodes to faction 1 or 2}
+\format{a 34-vector with the assignment of nodes to faction 1 or 2}
 \source{
 package `igraphdata`
 }
@@ -12,7 +12,6 @@ package `igraphdata`
 vertexlabels
 }
 \description{
-The weighted adjacency reparting interactions among
-34 nodes.
+The assignment of nodes to communities.
 }
 \keyword{datasets}

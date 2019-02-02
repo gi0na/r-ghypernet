@@ -1,4 +1,4 @@
-#' Auxilliary function, gives mask for matrix for directed,
+#' Auxiliary function, gives mask for matrix for directed,
 #' undirected etc.
 #'
 #' @param mat  matrix
@@ -28,7 +28,7 @@ mat2vec.ix <- function(mat, directed,
 }
 
 
-#' Auxilliary function, produces matrix from vector
+#' Auxiliary function, produces matrix from vector
 #'
 #'
 #' @param vec  vector to be put in matrix form

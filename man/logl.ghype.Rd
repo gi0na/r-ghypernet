@@ -14,7 +14,7 @@
 \item{multinomial}{optional boolean. Force multinomial approximation?
 If not chosen, multinomial chosen for large graphs.}
 
-\item{...}{extra parametes}
+\item{...}{extra parameters}
 }
 \value{
 loglikelihood value

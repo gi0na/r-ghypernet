@@ -2,7 +2,7 @@
 % Please edit documentation in R/matrixoperations.R
 \name{mat2vec.ix}
 \alias{mat2vec.ix}
-\title{Auxilliary function, gives mask for matrix for directed,
+\title{Auxiliary function, gives mask for matrix for directed,
 undirected etc.}
 \usage{
 mat2vec.ix(mat, directed, selfloops)
@@ -18,6 +18,6 @@ mat2vec.ix(mat, directed, selfloops)
 a boolean matrix that can be used to mask adjacency matrices.
 }
 \description{
-Auxilliary function, gives mask for matrix for directed,
+Auxiliary function, gives mask for matrix for directed,
 undirected etc.
 }

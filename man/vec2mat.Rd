@@ -2,7 +2,7 @@
 % Please edit documentation in R/matrixoperations.R
 \name{vec2mat}
 \alias{vec2mat}
-\title{Auxilliary function, produces matrix from vector}
+\title{Auxiliary function, produces matrix from vector}
 \usage{
 vec2mat(vec, directed, selfloops, n)
 }
@@ -22,5 +22,5 @@ vertices for row and column of bipartite matrix.}
 matrix nxn generated from vector.
 }
 \description{
-Auxilliary function, produces matrix from vector
+Auxiliary function, produces matrix from vector
 }

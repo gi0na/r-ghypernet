@@ -1,8 +1,8 @@
 Package: ghypernet
 Type: Package
 Title: R Implementation of the Generalised Hypergeometric Ensemble of Random Graphs
-Version: 0.5
-Date: as.POSIXlt(2019-02-01)
+Version: 0.5.0
+Date: 2019-02-01
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
@@ -13,17 +13,13 @@ URL: http://ghyper.net
 Description: R implementation of the Generalised Hypergeometric Ensemble of Random Graphs.
     It provides functions for model fitting and selection of gHypEGs.
     To learn how to use it, check the vignettes for a quick tutorial.
-    Please reference its use as DOI: 10.5281/zenodo.2555300
+    Please reference its use as DOI: 10.5281/zenodo.2555300 together with the references 
+    listed below.
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
-    1. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. Generalized Hypergeometric 
-        Ensembles: 
-          Statistical Hypothesis Testing in Complex Networks. arXiv1607.02441 (2016). 
-    2. Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. in 111-120 (Springer Verlag, 
-        (2017). doi:10.1007/978-3-319-67256-4_11
-    3. Casiraghi, G., Nanumyan, V. Generalised hypergeometric ensembles of random graphs: 
-        the configuration model as an urn problem. (2018). arXiv1810.06495
-    4. Casiraghi, G. Analytical Formulation of the Block-Constrained Configuration Model.
-        (2018). arXiv1811.05337
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) (http://arxiv.org/abs/1607.02441)
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) (https://link.springer.com/chapter/10.1007/978-3-319-67256-4_11).
+    Casiraghi, G., Nanumyan, V. (2018) (http://arxiv.org/abs/1810.06495).
+    Casiraghi, G. (2018) (http://arxiv.org/abs/1811.05337).
 Depends: R (>= 3.0)
 License: AGPL-3 | file LICENSE
 Imports: parallel,
@@ -35,3 +31,4 @@ Suggests: BiasedUrn, igraph, knitr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 6.1.0
+Language: en-GB
