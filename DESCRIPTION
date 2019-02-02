@@ -16,10 +16,10 @@ Description: R implementation of the Generalised Hypergeometric Ensemble of Rand
     Please reference its use as DOI: 10.5281/zenodo.2555300 together with the references 
     listed below.
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
-    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) (http://arxiv.org/abs/1607.02441)
-    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) (https://link.springer.com/chapter/10.1007/978-3-319-67256-4_11).
-    Casiraghi, G., Nanumyan, V. (2018) (http://arxiv.org/abs/1810.06495).
-    Casiraghi, G. (2018) (http://arxiv.org/abs/1811.05337).
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) <arXiv:1607.02441>.
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) <https://link.springer.com/chapter/10.1007/978-3-319-67256-4_11>.
+    Casiraghi, G., Nanumyan, V. (2018) <arXiv:1810.06495>.
+    Casiraghi, G. (2018) <arXiv:1811.05337>.
 Depends: R (>= 3.0)
 License: AGPL-3 | file LICENSE
 Imports: parallel,
