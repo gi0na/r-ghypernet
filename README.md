@@ -18,6 +18,17 @@ Although this is not required, it is recommended to install the `BiasedUrn` R pa
 It can be easily done modifying the _makevar_ file.
 In case the `BiasedUrn` library cannot be found, all computations will be performed using the multinomial approximation.
 
+# Installation
+You can install this package directly from GitHub.
+In R, run the following commands to install the package:
+```
+install.packages('devtools')
+devtools::install_github("gi0na/r-ghypernet")
+
+library(ghypernet)
+```
+
+
 # Acknowledgements
 The research and development behind `ghypernet` is performed at the Chair of Systems Design, ETH Zürich.
 
