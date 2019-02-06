@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/118010412.svg)](https://zenodo.org/badge/latestdoi/118010412)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2555300.svg)](https://doi.org/10.5281/zenodo.2555300)
 # Introduction
 `ghypernet` is an OpenSource R package that allows to estimate and work with Generalised Hypergeometric Ensembles of Random Graphs (gHypEG).
 
