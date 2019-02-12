@@ -1,7 +1,7 @@
 Package: ghypernet
 Type: Package
 Title: R Implementation of the Generalised Hypergeometric Ensemble of Random Graphs
-Version: 0.5.0
+Version: 0.5.1000
 Date: 2019-02-01
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
