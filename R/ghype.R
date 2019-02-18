@@ -29,25 +29,7 @@ ghype <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALS
 }
 
 
-#' Fitting gHypEG models
-#'
-#' ghype is used to fit gHypEG models when the propensity matrix is known.
-#' It can be used to estimate a null model (soft configuration model), or
-#' the benchmark 'full-model', where the propensity matrix is fitted such
-#' that the expected graph from the fitted model is the one passed to the
-#' function.
-#'
-#' @param graph either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether graph is directed or not.
-#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
-#' @param xi an optional matrix defining the combinatorial matrix of the model.
-#' @param omega an optional matrix defining the propensity matrix of the model.
-#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
-#' @param regular a boolean argument specifying whether to model the 'gnp' ensemble (no xi), defaults to FALSE.
-#' @param ... additional arguments to be passed to the low level fitting functions.
-#'
-#' @return
-#' ghype return an object of class "ghype".
+#' @describeIn ghype Fitting ghype models from an adjacency matrix
 #'
 #' @export
 #'
@@ -88,40 +70,20 @@ ghype.matrix <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
                          'selfloops' = selfloops,
                          'regular' = regular,
                          'unbiased' = unbiased,
-                         'df' = df))
+                         'df' = df), ...)
   return(model)
 }
 
 
-#' Fitting gHypEG models
-#'
-#' ghype is used to fit gHypEG models when the propensity matrix is known.
-#' It can be used to estimate a null model (soft configuration model), or
-#' the benchmark 'full-model', where the propensity matrix is fitted such
-#' that the expected graph from the fitted model is the one passed to the
-#' function.
-#'
-#' @param graph either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether graph is directed or not.
-#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
-#' @param xi an optional matrix defining the combinatorial matrix of the model.
-#' @param omega an optional matrix defining the propensity matrix of the model.
-#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
-#' @param regular a boolean argument specifying whether to model the 'gnp' ensemble (no xi), defaults to FALSE.
-#' @param ... additional arguments to be passed to the low level fitting functions.
-#'
-#' @return
-#' ghype return an object of class "ghype".
+#' @describeIn ghype Generating a ghype model from given xi and omega
 #'
 #' @export
 #'
 #'
 ghype.default <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbiased=FALSE, regular = FALSE, ...){
 
-  if(is.null(omega)){
-    if(unbiased){
-      omega <- matrix(1,nrow(graph), ncol(graph))
-    }
+  if(is.null(omega) & is.matrix(graph) & unbiased){
+    omega <- matrix(1,nrow(graph), ncol(graph))
   }
 
   n <- nrow(xi)
@@ -147,28 +109,25 @@ ghype.default <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbia
 #' Manually map a list to a ghype object
 #'
 #' @param object list object to map to ghype.
-#' @param ... additional arguments to be passed to the low level functions.
+#' @param ... additional arguments to be passed to logl function.
 #'
 #' @return
 #' an object of class "ghype"
 #'
 #' @export
+#' 
+#' @examples
+#' ll <- list(call = NULL, 'adj' = NULL, 'xi'= matrix(36,4,4), 'omega' = matrix(1,4,4), 
+#'      'n' = 4, 'm' = 12, 'directed' = TRUE, 'selfloops' = TRUE,
+#'      'regular' = TRUE, 'unbiased' = TRUE, 'df' = 1)
+#' model <- as.ghype(ll)
 #'
 as.ghype <- function(object, ...){
   UseMethod('as.ghype')
 }
 
 
-#' Map list to ghype object
-#'
-#' Manually map a list to a ghype object
-#'
-#' @param object list object to map to ghype.
-#' @param ... additional arguments to be passed to the low level functions.
-#'
-#' @return
-#' an object of class "ghype"
-#'
+#' @describeIn as.ghype Map list to ghype
 #' @export
 #'
 as.ghype.list <- function(object, ...){
@@ -186,10 +145,10 @@ as.ghype.list <- function(object, ...){
     'unbiased' = object$unbiased,
     'df' = object$df
   )
-  if(is.null(model$loglikelihood) & !is.null(model$adj)){
+  if(is.null(model$loglikelihood) & !is.null(model$adj) & !is.null(model$xi) & !is.null(model$omega)){
     model$loglikelihood <- logl(object=model$adj, xi=model$xi,
                                 omega=model$omega, directed=model$directed,
-                                selfloops=model$selfloops)
+                                selfloops=model$selfloops, ...)
   }
   class(model) <- 'ghype'
   return(model)
@@ -202,7 +161,7 @@ as.ghype.list <- function(object, ...){
 #' @param graph either an adjacency matrix or an igraph graph
 #' @param directed optional boolean, if not specified detected from graph
 #' @param selfloops optional boolean, if not specified detected from graph
-#' @param ... additional parameters
+#' @param ... additional parameters passed to the ghype function
 #'
 #' @return ghype object
 #' @export
@@ -227,7 +186,7 @@ scm <- function(graph, directed = NULL, selfloops = NULL, ...){
       }
   }
 
-  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE)
+  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE, ...)
   model$df <- nrow(model$xi)*(1+directed)
   return(model)
 }
@@ -240,7 +199,7 @@ scm <- function(graph, directed = NULL, selfloops = NULL, ...){
 #' @param graph either an adjacency matrix or an igraph graph
 #' @param directed optional boolean, if not specified detected from graph
 #' @param selfloops optional boolean, if not specified detected from graph
-#' @param ... additional parameters
+#' @param ... additional parameters passed to the ghype function
 #'
 #' @return ghype object
 #' @export
@@ -265,7 +224,7 @@ regularm <- function(graph, directed = NULL, selfloops = NULL, ...){
     }
   }
 
-  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = TRUE)
+  model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = TRUE, ...)
   model$df <- 1
   return(model)
 }

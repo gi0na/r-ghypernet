@@ -79,7 +79,7 @@ check_specs.matrix <- function(object, ...){
 
 #' Zachary's Karate Club graph
 #'
-#' The weighted adjacency reporting interactions among
+#' Weighted adjacency matrix reporting interactions among
 #' 34 nodes.
 #'
 #' @format a 34x34 matrix
@@ -88,7 +88,7 @@ check_specs.matrix <- function(object, ...){
 
 #' Zachary's Karate Club vertex faction assignment
 #'
-#' The assignment of nodes to communities.
+#' Vector reporting the assignment of nodes to communities.
 #'
 #' @format a 34-vector with the assignment of nodes to faction 1 or 2
 #' @source package `igraphdata`

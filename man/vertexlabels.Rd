@@ -12,6 +12,6 @@ package `igraphdata`
 vertexlabels
 }
 \description{
-The assignment of nodes to communities.
+Vector reporting the assignment of nodes to communities.
 }
 \keyword{datasets}

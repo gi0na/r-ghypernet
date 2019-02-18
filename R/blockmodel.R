@@ -1,26 +1,3 @@
-#' Fitting bccm models (deprecated)
-#'
-#' bccm is used to fit a block-constrained configuration model.
-#'
-#'
-#' @param adj the adjacency matrix of the graph.
-#' @param labels vector, the vertex labels to generate the blocks in the bccm.
-#' @param directed a boolean argument specifying whether object is directed or not.
-#' @param selfloops boolean argument specifying whether the model should incorporate selfloops.
-#' @param directedBlocks boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.
-#' @param homophily boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.
-#' @param inBlockOnly boolean argument specifying whether the model should fit only blocks over the diagonal. Default to FALSE.
-#' @param xi an optional matrix defining the combinatorial matrix of the model.
-#'
-#' @return
-#' bccm returns an object of class 'bccm' and 'ghype'.
-#' 'bccm' objects expand 'ghype' objects incorporating the parameter estimates.
-#' @export
-#'
-fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL){
-  bccm(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi)
-}
-
 #' Fitting bccm models
 #'
 #' bccm is used to fit a block-constrained configuration model.
@@ -28,7 +5,7 @@ fitBlockModel <- function(adj, labels, directed, selfloops, directedBlocks = FAL
 #'
 #' @param adj the adjacency matrix of the graph.
 #' @param labels vector, the vertex labels to generate the blocks in the bccm.
-#' @param directed a boolean argument specifying whether object is directed or not.
+#' @param directed a boolean argument specifying whether the graph is directed or not.
 #' @param selfloops boolean argument specifying whether the model should incorporate selfloops.
 #' @param directedBlocks boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.
 #' @param homophily boolean argument specifying whether the model should fit only homophily blocks. Default to FALSE.
@@ -217,6 +194,7 @@ JnBlock <- function(omegaBlocks, xiBlocks, mBlocks, m) {
 
 
 # Confidence intervals for block models.
+# Based on Fisher information matrix
 blockmodel.ci <- function(omegaBlocks, xiBlocks, mBlocks, m,
                   pval=.05) {
   jn <- JnBlock(omegaBlocks, xiBlocks, mBlocks, m)

@@ -8,6 +8,11 @@
 #' a boolean matrix that can be used to mask adjacency matrices.
 #'
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' mat2vec.ix(adj_karate, FALSE, FALSE)
+#' 
 mat2vec.ix <- function(mat, directed,
                        selfloops) {
   # Returns the indices to
@@ -29,6 +34,10 @@ mat2vec.ix <- function(mat, directed,
 
 
 #' Auxiliary function, produces matrix from vector
+#' 
+#' The number of elements of vec are the number of non-zero elements in the
+#' adjacency matrix.
+#' It performs the opposite operation of `mat2vec.ix`.
 #'
 #'
 #' @param vec  vector to be put in matrix form
@@ -41,6 +50,13 @@ mat2vec.ix <- function(mat, directed,
 #' @return
 #' matrix nxn generated from vector.
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' ix <- mat2vec.ix(adj_karate, FALSE, FALSE)
+#' vec <- adj_karate[ix]
+#' vec2mat(vec, FALSE, FALSE, nrow(adj_karate))
+#' 
 vec2mat <- function(vec,directed,selfloops,n){
   if(length(n)>1){
     mat <- matrix(0,n[2],n[3])

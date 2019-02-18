@@ -17,3 +17,10 @@ scalar, log-likelihood ratio
 \description{
 Compute log-likelihood ratio for ghype models.
 }
+\examples{
+data('adj_karate')
+sc.model <- scm(adj_karate, FALSE, FALSE)
+full.model <- ghype(adj_karate, FALSE, FALSE)
+loglratio(sc.model,full.model)
+
+}

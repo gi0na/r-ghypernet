@@ -2,18 +2,33 @@
 % Please edit documentation in R/ghype.R
 \name{as.ghype}
 \alias{as.ghype}
+\alias{as.ghype.list}
 \title{Map list to ghype object}
 \usage{
 as.ghype(object, ...)
+
+\method{as.ghype}{list}(object, ...)
 }
 \arguments{
 \item{object}{list object to map to ghype.}
 
-\item{...}{additional arguments to be passed to the low level functions.}
+\item{...}{additional arguments to be passed to logl function.}
 }
 \value{
 an object of class "ghype"
 }
 \description{
 Manually map a list to a ghype object
+}
+\section{Methods (by class)}{
+\itemize{
+\item \code{list}: Map list to ghype
+}}
+
+\examples{
+ll <- list(call = NULL, 'adj' = NULL, 'xi'= matrix(36,4,4), 'omega' = matrix(1,4,4), 
+     'n' = 4, 'm' = 12, 'directed' = TRUE, 'selfloops' = TRUE,
+     'regular' = TRUE, 'unbiased' = TRUE, 'df' = 1)
+model <- as.ghype(ll)
+
 }

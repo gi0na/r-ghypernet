@@ -12,6 +12,11 @@
 #'
 #' @export
 #'
+#' @examples 
+#' data(adj_karate)
+#' xi <- ComputeXi(adj_karate, FALSE, FALSE)
+#' FitOmega(adj_karate, xi, FALSE, FALSE)
+#' 
 FitOmega <- function(adj, xi, directed, selfloops){
   return(MLE_omega_wallenius(adj,xi,directed,selfloops))
 }

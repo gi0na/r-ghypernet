@@ -5,6 +5,11 @@
 #' @param suppressCall boolean, suppress print of the call
 #'
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' model <- scm(adj_karate, FALSE, FALSE)
+#' print(model)
 #'
 print.ghype <- function(x, suppressCall = FALSE,
                         ...) {
@@ -35,9 +40,14 @@ print.ghype <- function(x, suppressCall = FALSE,
 #' @param x  object of class \code{'bccm'}
 #' @param suppressCall  logical, indicating whether to print the call that generated x
 #' @param \dots  optional arguments to print or plot methods.
-#' @author  Giona Casiraghi
 #' @seealso  \code{\link{bccm}}
 #' @export
+#' @examples 
+#' data('adj_karate')
+#' data('vertexlabels')
+#' bcc.model <- bccm(adj_karate, labels=vertexlabels, directed=FALSE, selfloops=FALSE)
+#' print(bcc.model)
+#' 
 print.bccm <- function(x, suppressCall = FALSE,
                       ...) {
   # print method for ghypeBlock class

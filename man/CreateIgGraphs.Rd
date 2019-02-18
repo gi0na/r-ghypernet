@@ -21,3 +21,9 @@ list of igraph graphs.
 \description{
 Convert a list of adjacency matrices to a list of igraph graphs.
 }
+\examples{
+data('adj_karate')
+adj_list <- list(adj_karate)
+glist <- CreateIgGraphs(adj_list, FALSE, FALSE)
+
+}

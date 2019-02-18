@@ -12,7 +12,7 @@ package `igraphdata`
 adj_karate
 }
 \description{
-The weighted adjacency reporting interactions among
+Weighted adjacency matrix reporting interactions among
 34 nodes.
 }
 \keyword{datasets}

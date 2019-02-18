@@ -13,7 +13,7 @@ bccm(adj, labels, directed = NULL, selfloops = NULL,
 
 \item{labels}{vector, the vertex labels to generate the blocks in the bccm.}
 
-\item{directed}{a boolean argument specifying whether object is directed or not.}
+\item{directed}{a boolean argument specifying whether the graph is directed or not.}
 
 \item{selfloops}{boolean argument specifying whether the model should incorporate selfloops.}
 

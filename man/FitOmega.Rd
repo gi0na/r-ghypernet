@@ -21,3 +21,9 @@ propensity matrix
 \description{
 (auxiliary function)
 }
+\examples{
+data(adj_karate)
+xi <- ComputeXi(adj_karate, FALSE, FALSE)
+FitOmega(adj_karate, xi, FALSE, FALSE)
+
+}

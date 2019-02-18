@@ -16,9 +16,13 @@
 \description{
 Print method for elements of class \code{'bccm'}.
 }
+\examples{
+data('adj_karate')
+data('vertexlabels')
+bcc.model <- bccm(adj_karate, labels=vertexlabels, directed=FALSE, selfloops=FALSE)
+print(bcc.model)
+
+}
 \seealso{
 \code{\link{bccm}}
-}
-\author{
-Giona Casiraghi
 }

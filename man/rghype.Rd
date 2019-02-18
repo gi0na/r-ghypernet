@@ -23,3 +23,9 @@ list of adjacency matrices.
 \description{
 Generate random realisations from ghype model.
 }
+\examples{
+data('adj_karate')
+model <- scm(adj_karate, FALSE, FALSE)
+rghype(1, model)
+
+}

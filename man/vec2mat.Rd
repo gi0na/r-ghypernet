@@ -22,5 +22,14 @@ vertices for row and column of bipartite matrix.}
 matrix nxn generated from vector.
 }
 \description{
-Auxiliary function, produces matrix from vector
+The number of elements of vec are the number of non-zero elements in the
+adjacency matrix.
+It performs the opposite operation of `mat2vec.ix`.
+}
+\examples{
+data('adj_karate')
+ix <- mat2vec.ix(adj_karate, FALSE, FALSE)
+vec <- adj_karate[ix]
+vec2mat(vec, FALSE, FALSE, nrow(adj_karate))
+
 }
