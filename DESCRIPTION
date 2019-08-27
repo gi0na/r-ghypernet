@@ -25,7 +25,9 @@ Imports: parallel,
          plyr,
          numbers,
          purrr,
-         extraDistr
+         extraDistr,
+         dplyr,
+         reshape2
 Suggests: BiasedUrn, igraph, knitr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
