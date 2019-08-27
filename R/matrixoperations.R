@@ -69,3 +69,38 @@ vec2mat <- function(vec,directed,selfloops,n){
   if(!directed) mat <- mat + t(mat)
   return(mat)
 }
+
+#' Maps adjacency matrix to edgelist
+#'
+#' @param adj the adjacency matrix
+#'
+#' @return a dataframe containing the edgelist
+#' @export
+#' @import dplyr
+#'
+adj2el <- function(adj){
+  reshape2::melt(adj) %>%
+    filter(value!=0) %>%
+    rename(sender='Var1', target='Var2', edgecount='value') %>%
+    mutate_at(c("sender", "target"), as.character) -> el
+  return(el)
+}
+
+
+#' Maps edgelist to adjacency matrix
+#'
+#' @param el dataframe containing a (weighted) edgelist. Column 1 is the sender, column 2 is the receiver, column 3 the number of edges.
+#' @param nodes optional vector containing all node names in case disconnected nodes should be included.
+#'
+#' @return the (weighted) adjacency matrix corresponding the edgelist passed
+#' @export
+#'
+el2adj <- function(el, nodes=NULL){
+  if(is.null(nodes))
+    nodes <- unique(c(el[,1], el[,2]))
+  
+  adj <- matrix(0, nrow = length(nodes), ncol = length(nodes),
+                dimnames = list(nodes,nodes))
+  adj[as.matrix(el[,1:2])] <- el[,3]
+  return(adj)
+}
