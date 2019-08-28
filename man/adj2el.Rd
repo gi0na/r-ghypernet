@@ -4,10 +4,12 @@
 \alias{adj2el}
 \title{Maps adjacency matrix to edgelist}
 \usage{
-adj2el(adj)
+adj2el(adj, directed = TRUE)
 }
 \arguments{
-\item{adj}{the adjacency matrix}
+\item{adj}{matrix, the adjacency matrix}
+
+\item{directed}{boolean, is the graph directed?}
 }
 \value{
 a dataframe containing the edgelist

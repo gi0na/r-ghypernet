@@ -72,13 +72,15 @@ vec2mat <- function(vec,directed,selfloops,n){
 
 #' Maps adjacency matrix to edgelist
 #'
-#' @param adj the adjacency matrix
+#' @param adj matrix, the adjacency matrix
+#' @param directed boolean, is the graph directed?
 #'
 #' @return a dataframe containing the edgelist
 #' @export
 #' @import dplyr
 #'
-adj2el <- function(adj){
+adj2el <- function(adj, directed=TRUE){
+  if(!directed) adj[lower.tri(adj,F)] <- 0
   reshape2::melt(adj) %>%
     filter(value!=0) %>%
     rename(sender='Var1', target='Var2', edgecount='value') %>%
