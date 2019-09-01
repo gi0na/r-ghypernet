@@ -38,6 +38,8 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 
 [Vahan Nanumyan](https://www.sg.ethz.ch/team/people/vnanumyan/)
 
+[Laurence Brandenberger](https://www.sg.ethz.ch/team/people/lbrandenberger/)
+
 # Copyright
 `ghypernet` is licensed under the [GNU Affero General Public License](https://choosealicense.com/licenses/agpl-3.0/).
 

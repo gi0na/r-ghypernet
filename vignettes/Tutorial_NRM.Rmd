@@ -1,0 +1,687 @@
+---
+title: "An introduction to generalized hypergeometric ensembles (gHypEG) regressions."
+author: 
+- name: Giona Casiraghi
+  affiliation: 
+  - &id Chair of Systems Design, ETH Zurich, Switzerland
+  email: gcasiraghi@ethz.ch
+- name: Laurence Brandenberger
+  affiliation: *id
+date: "`r Sys.Date()`"
+package: ghypernet
+bibliography: bibliography.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+The Package \texttt{ghypernet} is used to run inferential models on multi-edge 
+networks. This vignette guides through the data preparation and model 
+estimation and assessment steps needed to perform network regressions on 
+multi-edge networks. 
+This vignette is split into 3 distinct parts
+
+1. Part 1: Data preparation
+2. Part 2: Running gHypEG regressions
+3. Part 3: Model assessment, simulations and goodness-of-fit
+
+The vignette builds on a multi-edge network of Swiss members of Parliament.
+The data set is contained in the package for easy loading.
+The data set records co-sponsorship activities of 163 members of the Swiss
+National Council (in German: Natioanlrat).
+Whenever a member of parliament (MP) drafts a new legislation (or bill), poses a question to 
+the Federal Council (in German: Bundesrat), issues a motion or petition, they
+are allowed to add co-signatories (or co-sponsors) to the proposal.
+These co-sponsorship signatures act as a measure of support and signals the
+relevance of the proposal. 
+As MPs can submit multiple proposals during the course of 
+their service in parliament, each MP can support another MP multiple times, resulting
+in a multi-edge network of support among MPs.
+
+<!-- # gHypEG -->
+<!-- ## math basis -->
+<!-- ## build up of models -->
+<!-- ## using gHypEG for regressions: gHypEG nrm -->
+<!-- ## - the model: introduction (math) -->
+<!-- ## - independent variables: endogenous, exogenous (layers) (math) -->
+<!-- ## - estimation (math) -->
+
+
+# Part 1: Data preparation
+
+## Loading package and data
+
+```{r}
+library(ghypernet)
+library(texreg) # for regression tables
+library(ggplot2) 
+library(GGally) #for network plots using ggplot2
+```
+
+After loading the \texttt{ghypernet} package, the included data set on 
+Swiss MPs can be used (already lazy loaded).
+
+```{r, eval=FALSE, echo=FALSE}
+data("swissParliament_network", package = "ghypernet")
+```
+<!-- ## Cosponsorship data -->
+<!-- #- cosponsorship matrix  -->
+<!-- #- online support similarity (jaccard matrix) -->
+<!-- #- attribute list (party, parliamentary group, gender, age) -->
+<!-- #- committee list -->
+
+The data set contains four objects: 
+
+1. **cospons_mat**: contains the adjacency matrix of 163 x 163 MPs.
+It contains the number of times one MP (rows) supports the submitted proposals of
+another MP (columns).
+2. **dt**: contains different attributes of the 163 MPs, such as their names, 
+their party affiliation (variable: *party*), their parliamentary group
+affiliation (variable: *parlGroup*), the Canton (or state) they represent
+(variable: *canton*), their gender  (variable: *gender*)
+and date of birth  (variable: *birthdate*).
+3. **dtcommittee**: a list of committees each MP was part of during their stay in 
+parliament
+4. **onlinesim_mat**: a similarity matrix of how similar two MPs are in their online
+social media presence (shared supportees).
+
+## Network data manipulations
+
+The above data is coded in an adjacency matrix. However, most often, network 
+data is stored in the more efficient edge list format. Two functions help move
+from one format to another: 
+
+```{r}
+el <- adj2el(cospons_mat, directed = TRUE)
+```
+
+The `adj2el()`-function transforms an adjacency matrix into an edgelist.
+By specifying `directed = FALSE`, only the top triangle of the adjacency matrix
+is stored in the edgelist (making it more efficient to handle,
+especially for large networks).
+
+Edgelists also allow you to check basic statics about your network, such as
+average degree or the degree distribution.
+
+```{r}
+summary(el$edgecount)
+```
+
+The function `el2adj` transforms an edgelist into an adjacency matrix. 
+
+```{r}
+nodes <- colnames(cospons_mat)
+adj_mat <- el2adj(el, nodes = nodes)
+```
+
+Since edgelists (often) do not store isolate nodes in the network, the function
+takes a `nodes`-attribute. By specifying the nodes attribute, all all nodes 
+(including isolate nodes) are included in the adjacency matrix.
+
+```{r}
+identical(cospons_mat, adj_mat)
+```
+
+## Compiling nodal attribute data
+
+<!-- This can be shortened for the vignette. 
+It's good to have it in the tutorial though, I think. -->
+
+When preparing nodal attribute data, particular attention has to be given to the
+ordering of the two data sets (the adjacancy matrix and the attribute data set).
+Testing whether the adjacency matrix and the attribute data are ordered by the
+same identifiers (here by the ID codes of the individual MPs, `dt$idMP`),
+attribute-based independent and control variables will correspond with the
+dependent variable.
+
+```{r}
+identical(rownames(cospons_mat), dt$idMP)
+```
+
+In case, the above test-code yields `FALSE`, the attribute data needs to be 
+ordered. 
+
+Let's assume, our attribute data set `dt_unsorted` is sorted differently: 
+
+```{r}
+dt_unsorted <- dt[order(dt$firstName),]
+identical(rownames(cospons_mat), dt_unsorted$idMP)
+```
+
+The simplest way is to proceed is to create a new data frame with the
+rownames (or colnames) of the adjacency matrix, then merging the attribute data
+in.
+
+```{r}
+dtsorted <- data.frame(idMP = rownames(cospons_mat)) 
+dtsorted <- dplyr::left_join(dtsorted, dt_unsorted, by = "idMP") 
+identical(dt$idMP, dtsorted$idMP)
+```
+
+Learn more about data joins [here](https://www.r-bloggers.com/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/).
+
+## Independent and control variables
+
+To estimate effects of endogenous and exogenous factors (i.e., independent 
+and control variables) on the multi-edge network, covariates have to be fed into 
+the gHypEG regression as matrices with the same dimensions as the multi-edge 
+network (i.e., the dependent variable).
+
+```{r}
+dim(cospons_mat) == dim(onlinesim_mat)
+```
+
+Additionally, it is prudent to make sure that all covariates have the same
+row- and column-names:
+
+```{r}
+table(rownames(cospons_mat) == rownames(onlinesim_mat))
+```
+
+### The role of zero-values in covariates
+
+The gHypEG regression is zero-sensitive. Zero value entries in covariates 
+signify structural zeros and are not considered in the estimation process. 
+Therefore, all zero-values that do not signify structural zeros need to be recoded. 
+To simplify interpretation of coefficient sizes in the regression, a minimum 
+value divided by a factor of 10 is the simplest substitution. 
+
+For instance, if a dummy variable takes 0, 1 values in a matrix, all 0 values 
+should be recoded to 0.1. If endogenous network statics are calculated, these
+zero-values are automatically generated (see below).
+
+### Change statistics to calculate endogenous network statistics
+
+<!-- we move this up to the methods section of the jss-vignette later on. needs to be -->
+<!-- expanded. -->
+
+Change statistics (or change scores) can be used to model endogenous network properties in
+inferential network models [@snijders2006new, @hunter2008goodness, @krivitsky2011adjusting].
+For each dyad in the multi-edge network, the change statistic caputres the 
+(un-)weighted values of additional edges involved in the interested network
+pattern. See Brandenberger et al. [-@brandenberger2019quantifying] for additional
+information on change statistics for multi-edge networks.
+
+### Reciprocity
+
+The `reciprocity_stat()`-function can be used to calculate weighted 
+reciprocity change statistic. Since it's dyad-independent, it can be used as 
+a predictor in the gHypEG regression. 
+
+The function takes either a matrix or an edgelist. If an edgelist is provided, 
+the `nodes`-object can be specified again to ensure that isolates are included
+as well. 
+
+```{r}
+recip_cospons <- reciprocity_stat(cospons_mat)
+recip_cospons[1:5, 1:3]
+```
+
+The resultant matrix measures reciprocity by checking for each dyad $(i, j)$, how many
+edges were drawn from $(j, i)$. If reciprocity is a driving force in the network, 
+taking the transpose of the matrix should correlate strongly with the co-sponsorship
+matrix.
+
+The `zero_values`-argument allows for the specification of minimum values. By
+default, the minimum edgecount in the network divided by a factor of 10 is
+used (here 1/10 = .1). This simplifyies interpretation of coefficient sizes.
+
+### Triadic closure
+
+The `sharedPartner_stat()`-function provides change statistics to check your 
+multi-edge network for meaningful triadic closure effects. 
+Triadic closure refers to the important tendency observed in social networks 
+to form triangles, or triads, between three nodes $i$, $j$ and $i$.
+If dyad $(i, k)$ are connected, and dyad $(j, k)$ are connected, there is a
+strong tendency in some social networks that dyad $(i, j)$ also shares an edge
+(see Figure 1a and 1b).
+
+The `sharedPartner_stat()`-function uses the concept of shared partner statistics
+to calculate the tendencies of nodes in multi-edge networks to re-inforce 
+triangular structures (see Figure 1c).
+
+```{r, out.width='100%', fig.align='center', fig.cap='Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) edge-wise shared partners. Source: Brandenberger et al. [-@brandenberger2019quantifying].', echo=FALSE}
+knitr::include_graphics('images/tikz_nweffects.pdf')
+```
+
+For undirected multi-edge networks, the statistic measures for each dyad 
+$(i, j)$---regardless of whether or not $(i, j)$ share edges or not---how many
+shared partners $k$ both nodes $i$ and $j$ have in common. 
+
+If the option `weighted = FALSE` is specified, the raw number of shared partners $k$
+is reported in the shared partner matrix. For dense multi-edge networks, this 
+statistic is not meaningful enough (since all dyads share at least one
+edge in a complete graph) to examine meaningful triadic closure. The option 
+`weighted = TRUE` therefore calculates a weighted shared partner statistic, where
+edge counts are taken into consideration as well (min(edgecount(i, k), edgecount(j, k))) [see @brandenberger2019quantifying].
+
+```{r}
+shp_cospons_unweighted <- sharedPartner_stat(cospons_mat, directed = TRUE, weighted = FALSE)
+shp_cospons_unweighted[1:5, 1:3]
+shp_cospons_weighted <- sharedPartner_stat(cospons_mat, directed = TRUE)
+shp_cospons_weighted[1:5, 1:3]
+```
+
+For directed multi-edge networks, the option `triad.type` allows for two more
+specialized shared partner statistics: incoming and outgoing shared partners. 
+Assume dyad $(i, j)$ have shared partner $k$ in common. For `triad.type = "incoming"`, 
+it is assumed that $k$ ties to $i$ and $j$ (= edges $(k, i)$ and $(k, j)$ are present).
+In the co-sponsorship example, this measures whether nodes $i$ and $j$ are likely
+to support each other, if they both are supported by the same other node/s $k$.
+For `triad.type = "outgoing"`, it is assumed that $i$ and $j$ both tie to $k$
+(regardless of whether $k$ also ties to $i$ or $j$). In other words, for outgoing-
+shared partners, for dyad $(i, j)$, we check whether edges $(i, k)$ and $(j, k)$
+are present. 
+
+
+```{r}
+shp_cospons_incoming <- sharedPartner_stat(cospons_mat, directed = TRUE,
+                                          triad.type = 'directed.incoming')
+shp_cospons_incoming[1:5, 1:3]
+shp_cospons_outgoing <- sharedPartner_stat(cospons_mat, directed = TRUE,
+                                          triad.type = 'directed.outgoing')
+shp_cospons_outgoing[1:5, 1:3]
+```
+
+### Homophily
+
+The `homophily_stat()`-function can be used to calculate homophily tendencies in
+the multi-edge network. Homophily represents the tendency of nodes with similar
+attributes to cluster together (i.e., nodes interact more with similar other nodes
+than dissimilar ones) [see @mcpherson2001birds].
+The function can be used for categorical and continuous
+attributes. 
+
+If a categorical attribute is provided (in the form of a `character` or `factor`
+variable), `homophily_stat()` creates a homophily matrix, where nodes of the same
+attribute are set to 10 and dyads with nodes of dissimilar attributes are set 1.
+
+```{r}
+canton_homophilymat <- homophily_stat(dt$canton, type = 'categorical', 
+                                      nodes = dt$idMP)
+canton_homophilymat[1:5, 1:3]
+```
+
+The option `these.categories.only` can be used to specify which categories in the
+attribute variable should lead to a match. For instance, if you'd only like to test
+whether parliamentary members from the canton Bern exhibit homophily tendencies, 
+you can specify: 
+
+```{r}
+canton_BE_homophilymat <- homophily_stat(dt$canton, type = 'categorical', 
+                                      nodes = dt$idMP, these.categories.only = 'Bern')
+```
+
+You can also specify multiple matches, e.g.: 
+
+```{r}
+canton_BEZH_homophilymat <- homophily_stat(dt$canton, type = 'categorical', 
+                                      nodes = dt$idMP, 
+                                      these.categories.only = c('Bern', 'Zuerich'))
+```
+
+The matrix `canton_BEZH_homophilymat` now reports homophily values of 10 for dyads of
+MPs who are both from Bern or both from Zurich, compared to all other dyads (set to 1).
+
+Apart from cantonal homophily, party, parliamentary groups, gender and age 
+homophily may play a role in co-sponsorship interactions.
+
+```{r}
+party_homophilymat <- homophily_stat(dt$party, type = 'categorical', nodes = dt$idMP)
+parlgroup_homophilymat <- homophily_stat(dt$parlGroup, type = 'categorical', nodes = dt$idMP)
+gender_homophilymat <- homophily_stat(dt$gender, type = 'categorical', nodes = dt$idMP)
+```
+
+
+If a numeric variable is provided, the `homophily_stat()`-function calculates
+absolute differences for each dyad in the network. 
+
+```{r}
+dt$age <- 2019 - as.numeric(format(as.Date(dt$birthdate, format = '%d.%m.%Y'), "%Y"))
+age_absdiffmat <- homophily_stat(dt$age,  type = 'absdiff', nodes = dt$idMP)
+age_absdiffmat[1:5, 1:3]
+```
+
+For each dyad $(i, j)$, the age of $i$ and $j$ are subtracted and the absolute value
+is used in the resultant homophily matrix. It is important to note that the 
+absolute difference statistic is slightly counter-intuitive, since small differences
+indicate stronger homophily. In the gHypEG regression, this presents as a negative
+coefficient for strong homophily tendencies. 
+
+The `zero_values`-option can again be used to specify your own zero-values replacements.
+
+### Creating custom covariates
+
+Generally, any meaningful matrix with the same dimension as the dependent
+variable (i.e., here the co-sponsorship matrix) can be used as a covariate
+in the gHypEG regression [see @casiraghi2017multiplex].
+
+An example: the data frame `dtcommittee` contains information on which 
+committees each MP served on during their time in office. 
+
+```{r}
+head(dtcommittee)
+```
+
+One potential predictor for co-sponsorship support may be if two MPs
+shared the same committee seat. When preparing your own matrices, make sure
+the row- and columnnames match the depdenent variable (here the co-sponsorship matrix).
+
+```{r}
+## This is just one potential way of accomplishing this! 
+identical(as.character(dtcommittee$idMP), rownames(cospons_mat))
+shared_committee <- matrix(0, nrow = nrow(cospons_mat), ncol = ncol(cospons_mat))
+rownames(shared_committee) <- rownames(cospons_mat)
+colnames(shared_committee) <- colnames(cospons_mat)
+for(i in 1:nrow(shared_committee)){
+  for(j in 1:ncol(shared_committee)){
+    committees_i <- unlist(strsplit(as.character(dtcommittee$committee_names[i]), ";"))
+    committees_j <- unlist(strsplit(as.character(dtcommittee$committee_names[j]), ";"))
+    shared_committee[i, j] <- length(intersect(committees_i, committees_j))
+  }
+}
+shared_committee[shared_committee == 0] <- 0.1 # replace zero-values
+shared_committee[1:5, 1:3]
+```
+
+### (Attribute-based) Degree measures
+
+The gHypEG regression accounts for combinatorial effects, i.e., degree distributions. 
+Compared to other inferential network models, it is therefore not neccessary
+to specify (out/in-)degree variables. 
+The model can be estimated using average expected degrees. In this case it is
+wise to specify a degree control matrix:
+
+```{r}
+dt$degree <- rowSums(cospons_mat) + colSums(cospons_mat)
+degreemat <- cospons_mat
+for(i in 1:nrow(cospons_mat)){
+  for(j in 1:ncol(cospons_mat)){
+    degreemat[i, j] <- sum(dt$degree[i], dt$degree[j])
+  }
+}
+degreemat[degreemat == 0] <- .1
+```
+
+
+It is also not neccessary to control for activity (outdegree) and popularity 
+(indegree) of different node groups in the standard gHypEG regression. 
+However, if you'd like to test for these effects (because they are part of your
+hypothesis), the gHypEG regression can  be estimated with average expected
+degrees (i.e., without the degree correction).
+
+For attribute-based outdegree measures, create custom matrices: 
+
+```{r}
+age_activity_mat <- matrix(rep(dt$age, ncol(cospons_mat)),
+                                nrow = nrow(cospons_mat), byrow = FALSE)
+svp_activity_mat <- matrix(rep(dt$party, ncol(cospons_mat)),
+                           nrow = nrow(cospons_mat), byrow = FALSE)
+svp_activity_mat <- ifelse(svp_activity_mat == 'SVP', 10, 1)
+```
+
+For attribute-based indegree measures, create custom matrices: 
+
+```{r}
+age_popularity_mat <- matrix(rep(dt$age, ncol(cospons_mat)),
+                                nrow = nrow(cospons_mat), byrow = TRUE)
+svp_popularity_mat <- matrix(rep(dt$party, ncol(cospons_mat)),
+                           nrow = nrow(cospons_mat), byrow = TRUE)
+svp_popularity_mat <- ifelse(svp_popularity_mat == 'SVP', 10, 1)
+```
+
+
+# Part 2: Running gHypEG regressions
+
+## Regression set up (how to)
+
+The gHypEG regression can be estimated using the `nrm()`-function. 
+The function takes
+
+```{r, eval=FALSE,echo=TRUE}
+fit <- nrm(adj = cospons_mat, w = list(reciprocity = recip_cospons), 
+           directed = TRUE, selfloops = FALSE, regular = FALSE)
+```
+
+The `adj`-object takes the adjacency matrix of the multi-edge network (i.e., 
+the dependent variable).
+The `w`-object (stands for weights) takes the list of covariates. All 
+covariates can be combined into one list. The list can be named for a better
+overview in the regression output.
+The `directed`-argument can either be `TRUE` or `FALSE`. If set to `TRUE`, the 
+multi-edge network under consideration is directed in nature.
+The `selfloops`-argument  can either be `TRUE` or `FALSE`. If set to `TRUE`, 
+self-loops are considered possible in the network. In the case of co-sponsorship
+support signatures, self-loops are not possible by definition and should therefore
+be excluded from the analysis.
+In the case of a citation network, however, self-loops are possible and meaningful and
+should be included from the analysis.
+The `regular`-argument  can either be `TRUE` or `FALSE`. If set to `TRUE`, the
+gHypEG regression is estimated with estimated average degrees (specified with the
+`xi`-matrix) instead of with the automatic control for combinatorial effects.
+
+### What are initial values?
+
+Initial values for the weights can be specified in the gHypEG regression.
+These initial values help the estimation process to speed up the estimation 
+process even more. 
+Alternatiely, these initial values can be calculated endogenously. The
+`XXTOOD`-function can be used for this purpose. It automatically sets
+the appropriate initial values by going through a stepwise process first. 
+
+## Regression table export (using the texreg package)
+
+The `texreg`-package can be used to export regression tables. 
+Use this code to add the `nrm`-model type to the texreg package. 
+
+```{r}
+## Texreg: does not (yet) support nrm or gyhpe-class
+# use the extract()-function to make this available:
+extract.nrm.cluster <- function(model,sumsum){
+  # calculate SE, tvalues and pvalues
+  coeffic <- as.numeric(model$coef)
+  stderr <- (model$confint[,2] - model$confint[,1])/5.15
+  tvalues = coeffic/stderr
+  pval <- exp(-0.717*tvalues - 0.416*tvalues^2)
+  
+  # then create and return a texreg object (replace NULL with actual values):
+  tr <- createTexreg(
+    coef.names = names(model$coef),    # character vector of coefficient labels
+    coef = coeffic,          # numeric vector with coefficients
+    se = stderr,            # numeric vector with standard error values
+    pvalues = pval,       # numeric vector with p-values
+    gof.names = c("AIC", "McFadden $pseudo-R^2$"),     # character vector with goodness-of-fit labels
+    gof = c(model$AIC, model$R2)           # numeric vector of goodness-of-fit statistics
+    #gof.decimal = NULL    # logical vector: GOF statistic has decimal points?
+  )
+  return(tr)
+}
+setMethod("extract", signature = className("nrm", "ghype"), 
+          definition = extract.nrm.cluster)
+```
+
+## Regression with degree correction (standard version)
+
+Co-sponsorship networks have been shown to be structured by reciprocity [@cranmer2011inferential].
+Several empirical studies have shown that co-sponsorship networks also exhibit
+tendencies towards triadic closure [@tam2010legislative]. 
+However, Brandenberger [-@brandenberger2018trading] shows
+that when estimating co-sponsorship networks as bipartite graphs, the triadic
+closure effect is non-existant.
+@craig2015role show that homophily also plays an important role in co-sponsorship
+networks. 
+We therefore use these predictors to estimate the effect of MPs supporting
+each other's bills in parliament.
+
+```{r}
+nfit1 <- nrm(adj = cospons_mat, 
+                      w = list(same_canton = canton_homophilymat), 
+                      directed = TRUE)
+summary(nfit1)
+```
+To speed things up, the `init`-argument can be specified: 
+
+```{r}
+nfit1 <- nrm(adj = cospons_mat, 
+                      w = list(same_canton = canton_homophilymat), 
+                      directed = TRUE,
+                      init = c(0.09))
+summary(nfit1)
+```
+
+```{r}
+texreg::screenreg(nfit1)
+```
+
+The variable `same_canton` shows a positive coefficient and is significant. 
+The coefficient of $0.09$ can be interpreted as follows: The odds of MP $i$
+co-sponsoring the bill of MP $j$ increase by a factor of $1.23$
+($(10^{0.09})/(1^{0.09}) = 1.23$) if $i$ and $j$ are representatives from the 
+same canton. Since the baseline of the dummy covariate `same_canton` is 1, the
+odds can be calculated by exponating the coefficient over the treatment value (here 10).
+
+```{r}
+nfit2 <- nrm(adj = cospons_mat, 
+             w = list(reciprocity = recip_cospons,
+                      #sharedpartner_in = shp_cospons_incoming,
+                      #sharedpartner_out = shp_cospons_outgoing, 
+                      party = party_homophilymat,
+                      canton = canton_homophilymat, 
+                      gender = gender_homophilymat,
+                      age = age_absdiffmat,
+                      committee = shared_committee,
+                      online_similarity = onlinesim_mat ), 
+             directed = TRUE, 
+             init = c(.1, .5, .1, 0, 0, 0, 0))
+```
+
+```{r}
+screenreg(nfit2, 
+          groups = list('Endogenous' = 1, 
+                     'Homophily' = c(2:5), 
+                     'Exogenous' = c(6:7)))
+```
+
+XXTODO: add the find-init version here. Add the triad-function. Then interpret some coefficients.
+
+
+## Regression without degree correction (and when to use it)
+
+```{r}
+nfit3 <- nrm(adj = cospons_mat, 
+              w = list(degree = degreemat,
+                       reciprocity = recip_cospons,
+                       #sharedpartner_in = shp_cospons_incoming,
+                       #sharedpartner_out = shp_cospons_outgoing, 
+                       party = party_homophilymat,
+                       svp_in = svp_popularity_mat, 
+                       svp_out = svp_activity_mat,
+                       canton = canton_homophilymat, 
+                       gender = gender_homophilymat,
+                       age = age_absdiffmat,
+                       agein = age_popularity_mat,
+                       ageout = age_activity_mat,
+                       committee = shared_committee,
+                       online_similarity = onlinesim_mat), 
+              directed = TRUE, regular = TRUE, 
+              init = c(0, 0.1, 0.5, 0, 0, .1, 0, 0, 0, 0, .1, .01))
+summary(nfit3)
+```
+
+Comparing the two models: 
+
+```{r}
+screenreg(list(nfit2, nfit3), 
+          custom.model.names = c('with degree correction', 'without deg. cor.'))
+```
+
+# Part 3: Model assessment, network simulations, gof 
+
+## Model comparisons
+
+Model comparisons can be done using `AIC`-scores, LR-tests or the R-squared
+measures.
+AIC-scores are the best indicators of model fit. The gHypEG can model also be 
+fit maximally to the data. This perfectly fit model cannot be interpreted (since
+step by step, additional predictive layers are added and these laysers capture
+deviances but would need to be interpreted individually), but the AIC scores
+can be used to check how far away your models are from it. 
+
+```{r}
+##add code for maximally fit model here.
+```
+
+
+## Predicted probabilities
+
+The omega matrix stored in the `nrm`-object holds XXTODO.
+It can be used to calculate marginal effects.
+
+```{r}
+nfit2omega <- data.frame(omega = nfit2$omega, 
+                         cosponsfull = c(cospons_mat), 
+                         age_absdiff = c(age_absdiffmat), 
+                         sameparty = c(party_homophilymat))
+nfit2omega[nfit2omega == 0] <- NA
+nfit2omega <- na.omit(nfit2omega)
+```
+
+```{r, fig.height=4, fig.width=7}
+ggplot(nfit2omega, aes(x = age_absdiff, y = omega, color = factor(sameparty)))+
+  geom_point(alpha = .1) +
+  geom_smooth() + theme(legend.position = 'bottom') + 
+  scale_color_manual("", values = c('#E41A1C', '#377EB8'), labels = c('Between parties', 'Within party'))+
+  xlab("Age difference") + ylab("Tie propensities")+
+  ggtitle('Model (2): Marginal effects of age difference')
+```
+
+
+
+## Network simulations
+
+The `rghype()`-function simulates networks form `nrm`-models. 
+The number of simulations can be specified with the `nsamples` argument.
+
+```{r}
+simnw <- rghype(nsamples = 1, model = nfit2, seed = 1253)
+```
+
+```{r, fig.height=5, fig.width=7}
+ggnet2(simnw, label = FALSE,
+       color = dt$parlGroup, 
+       size = "degree", size.min = 1)+
+  scale_color_manual("", values = c('orange', 'yellow', 'blue', 'green', 'grey',
+                                    'darkblue', 'red', 'darkgreen', 'purple'))+
+  theme(legend.position = 'bottom') +
+  guides(size = FALSE)
+```
+
+
+## Goodness of fit measures
+
+One potential way of performing goodness of fit measures for inferential 
+network models is to simulate new networks based on the regression model and 
+compare structural properties of the simulated networks to the original network
+[@hunter2008goodness]. We are currently working on finding appropriate multi-edge network statistics
+to assess model fit for gHypEGs. We are also looking into alternative ways of
+assessing network model fit. Stay tuned! 
+
+# References
+
+
+
+
+
+
+

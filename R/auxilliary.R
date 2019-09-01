@@ -93,3 +93,85 @@ check_specs.matrix <- function(object, ...){
 #' @format a 34-vector with the assignment of nodes to faction 1 or 2
 #' @source package `igraphdata`
 "vertexlabels"
+
+#' Swiss MPs committee similarity matrix.
+#'
+#' **onlinesim_mat**: a similarity matrix of how similar two MPs are in their online
+#' social media presence (shared supportees).
+#'
+#' @docType data
+#'
+#' @usage data(onlinesim_mat)
+#'
+#' @format 163x163 similarity matrix
+#'
+#' @keywords datasets
+#'
+# #' @references 
+# #' (\href{}{})
+#'
+# #' @source \href{}{}
+#'
+"onlinesim_mat"
+
+#' Swiss MPs committee affiliation data frame.
+#'
+#' **dtcommittee**: a list of committees each MP was part of during their stay in 
+#' parliament
+#'
+#' @docType data
+#'
+#' @usage data(dtcommittee)
+#'
+#' @format 163x2 data.frame
+#'
+#' @keywords datasets
+#'
+# #' @references 
+# #' (\href{}{})
+#'
+# #' @source \href{}{}
+#'
+"dtcommittee"
+
+#' Swiss MPs attribute data frame.
+#'
+#' **dt**: contains different attributes of the 163 MPs, such as their names, 
+#' their party affiliation (variable: *party*), their parliamentary group
+#' affiliation (variable: *parlGroup*), the Canton (or state) they represent
+#' (variable: *canton*), their gender  (variable: *gender*)
+#' and date of birth  (variable: *birthdate*).
+#'
+#' @docType data
+#'
+#' @usage data(dt)
+#'
+#' @format 163x8 data.frame
+#'
+#' @keywords datasets
+#'
+# #' @references 
+# #' (\href{}{})
+#'
+# #' @source \href{}{}
+#'
+"dt"
+
+#' Swiss MPs network adjacency matrix
+#'
+#' **cospons_mat**: contains the adjacency matrix of 163 x 163 MPs.
+#'
+#' @docType data
+#'
+#' @usage data(cospons_mat)
+#'
+#' @format 163x163 adjacency matrix
+#'
+#' @keywords datasets
+#'
+# #' @references 
+# #' (\href{}{})
+#'
+# #' @source \href{}{}
+#'
+"cospons_mat"
