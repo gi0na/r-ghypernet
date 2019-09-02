@@ -2,7 +2,7 @@
 % Please edit documentation in R/igraphintegration.R
 \name{BootstrapProperty}
 \alias{BootstrapProperty}
-\title{BootstrapProperty compute igraph analytics function on ensemble}
+\title{BootstrapProperty computes igraph analytics function on ensemble}
 \usage{
 BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
   xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL,
@@ -35,5 +35,13 @@ BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
 vector of length nsamples
 }
 \description{
-BootstrapProperty compute igraph analytics function on ensemble
+BootstrapProperty computes igraph analytics function on ensemble
+}
+\examples{
+\dontrun{
+library(igraph)
+data('adj_karate')
+result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=100)
+}
+
 }

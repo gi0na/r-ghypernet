@@ -16,3 +16,9 @@
 \description{
 Print method for ghype object.
 }
+\examples{
+data('adj_karate')
+model <- scm(adj_karate, FALSE, FALSE)
+print(model)
+
+}

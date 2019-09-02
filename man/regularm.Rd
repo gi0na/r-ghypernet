@@ -13,7 +13,7 @@ regularm(graph, directed = NULL, selfloops = NULL, ...)
 
 \item{selfloops}{optional boolean, if not specified detected from graph}
 
-\item{...}{additional parameters}
+\item{...}{additional parameters passed to the ghype function}
 }
 \value{
 ghype object

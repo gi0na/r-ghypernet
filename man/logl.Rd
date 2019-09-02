@@ -2,19 +2,67 @@
 % Please edit documentation in R/logl.R
 \name{logl}
 \alias{logl}
+\alias{logl.ghype}
+\alias{logl.matrix}
 \title{General method to compute log-likelihood for ghype models.}
 \usage{
-logl(object, ...)
+logl(object, xi = NULL, omega = NULL, directed = NULL,
+  selfloops = NULL, adj = NULL, multinomial = NULL, ...)
+
+\method{logl}{ghype}(object, xi = NULL, omega = NULL,
+  directed = NULL, selfloops = NULL, adj = NULL,
+  multinomial = NULL, ...)
+
+\method{logl}{matrix}(object, xi = NULL, omega = NULL,
+  directed = NULL, selfloops = NULL, adj = NULL,
+  multinomial = NULL, ...)
 }
 \arguments{
-\item{object}{either an adjacency matrix or ghype model
-If not chosen, multinomial chosen for large graphs.}
+\item{object}{either an adjacency matrix or ghype model If a ghype model is
+passed, then `xi`, `omega`, `directed`, `selfloops` are ignored If an
+adjacency matrix is passed, then `adj` is ignored}
 
-\item{...}{extra parameters}
+\item{xi}{matrix, combinatorial matrix to build ghype model, considered only
+if object is an adjacency matrix}
+
+\item{omega}{matrix, propensity matrix to build ghype model, considered only
+if object is an adjacency matrix}
+
+\item{directed}{boolean, is ghype model directed? considered only if object
+is an adjacency matrix}
+
+\item{selfloops}{boolean, has ghype model selfloops? considered only if
+object is an adjacency matrix}
+
+\item{adj}{optional matrix, adjacency matrix of which to compute
+log-likelihood, cconsidered only if object is ghype model If adj is not
+passed, and object is a ghype model, the log-likelihood is computed for the
+original adjacency matrix stored in object.}
+
+\item{multinomial}{optional boolean. Force multinomial approximation? If not
+chosen, multinomial chosen for large graphs.}
+
+\item{...}{(currently ignored) extra parameters for internal methods}
 }
 \value{
 loglikelihood value
 }
 \description{
 General method to compute log-likelihood for ghype models.
+}
+\section{Methods (by class)}{
+\itemize{
+\item \code{ghype}: Computes log-likelihood for ghype models from model object
+
+\item \code{matrix}: Computes log-likelihood for ghype models from adjacency.
+}}
+
+\examples{
+data('adj_karate')
+model <- scm(adj_karate, FALSE, FALSE)
+logl(object = model)
+new_adj <- adj_karate
+new_adj[3,4] <- 10
+logl(object=model, adj=new_adj)
+
 }

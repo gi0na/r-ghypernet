@@ -4,14 +4,18 @@
 #' configuration model or 'regular' gnp model.
 #'
 #' @param adj adjacency matrix
-#' @param directed boolean
-#' @param selfloops boolean
+#' @param directed boolean, whether the model is for a directed network
+#' @param selfloops boolean, whether the model contains selfloops
 #' @param regular boolean. Is the combinatorial matrix computed for configuration model or for regular gnp model? default FALSE.
 #'
 #' @return
 #' combinatorial matrix
 #'
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' xi = ComputeXi(adj_karate, directed = FALSE, selfloops = FALSE)
 #'
 ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   # returns the matrix xi according to the nodes degrees
@@ -54,6 +58,7 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
       if(!directed){
         xi <- xi + t(xi) - diag(diag(xi))
         if(!selfloops){
+          # Temporary workaround
           ix <- mat2vec.ix(adj, directed, selfloops)
           sdiag <- sum(diag(xi))
           toadd <- ceiling(sdiag/sum(Kin)*Kin/(nrow(adj)-1))
@@ -70,6 +75,8 @@ ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
   }
 
 
+# auxilliary function: redistribute selfloops
+# temporary workaround
 vxi <- function(idx, diagxir, vbas, xi, adj){
   v <- rep(0, ncol(adj)-1)
   v[sample(ncol(adj)-1, diagxir[idx])] <- 1

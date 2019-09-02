@@ -9,9 +9,9 @@ ComputeXi(adj, directed, selfloops, regular = FALSE)
 \arguments{
 \item{adj}{adjacency matrix}
 
-\item{directed}{boolean}
+\item{directed}{boolean, whether the model is for a directed network}
 
-\item{selfloops}{boolean}
+\item{selfloops}{boolean, whether the model contains selfloops}
 
 \item{regular}{boolean. Is the combinatorial matrix computed for configuration model or for regular gnp model? default FALSE.}
 }
@@ -21,4 +21,9 @@ combinatorial matrix
 \description{
 Combinatorial matrix computed according to soft
 configuration model or 'regular' gnp model.
+}
+\examples{
+data('adj_karate')
+xi = ComputeXi(adj_karate, directed = FALSE, selfloops = FALSE)
+
 }

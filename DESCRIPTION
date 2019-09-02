@@ -1,23 +1,24 @@
 Package: ghypernet
 Type: Package
-Title: Generalised Hypergeometric Ensemble of Random Graphs
-Version: 0.5.0
-Date: 2019-02-01
+Title: R Implementation of the Generalised Hypergeometric Ensemble of Random Graphs
+Version: 0.8.999
+Date: 2019-09-1
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
     person("Vahan", "Nanumyan", email = "vahan@ethz.ch",
+            role = c('aut'), comment = c(ORCID = "0000-0001-9054-3217")),
+    person("Laurence", "Brandenberger", email = "lbrandenberger@ethz.ch",
             role = c('aut'), comment = c(ORCID = "0000-0001-9054-3217"))
             )
 URL: http://ghyper.net
-Description: Generalised Hypergeometric Ensemble of Random Graphs.
-    It provides functions for model fitting and selection of gHypEGs.
+Description: Provides functions for model fitting and selection of gHypEGs.
     To learn how to use it, check the vignettes for a quick tutorial.
-    Please reference its use as DOI: 10.5281/zenodo.2555300 together with the references 
-    listed below.
+    Please reference its use as Casiraghi, G., Nanumyan, V. (2019) <doi:10.5281/zenodo.2555300>
+    together with those relevant references from the one listed below.
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
     Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) <arXiv:1607.02441>.
-    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) <https://link.springer.com/chapter/10.1007/978-3-319-67256-4_11>.
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) <doi:10.1007/978-3-319-67256-4_11>.
     Casiraghi, G., Nanumyan, V. (2018) <arXiv:1810.06495>.
     Casiraghi, G. (2018) <arXiv:1811.05337>.
 Depends: R (>= 3.0)
@@ -26,9 +27,13 @@ Imports: parallel,
          plyr,
          numbers,
          purrr,
-         extraDistr
-Suggests: BiasedUrn, igraph, knitr, rmarkdown
+         extraDistr,
+         dplyr,
+         reshape2,
+         rootSolve
+Suggests: BiasedUrn, igraph, knitr, rmarkdown, GGally, ggplot2, texreg
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Language: en-GB
+LazyData: true

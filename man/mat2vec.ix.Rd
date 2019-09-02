@@ -21,3 +21,8 @@ a boolean matrix that can be used to mask adjacency matrices.
 Auxiliary function, gives mask for matrix for directed,
 undirected etc.
 }
+\examples{
+data('adj_karate')
+mat2vec.ix(adj_karate, FALSE, FALSE)
+
+}

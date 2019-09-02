@@ -8,6 +8,11 @@
 #' a boolean matrix that can be used to mask adjacency matrices.
 #'
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' mat2vec.ix(adj_karate, FALSE, FALSE)
+#' 
 mat2vec.ix <- function(mat, directed,
                        selfloops) {
   # Returns the indices to
@@ -29,6 +34,10 @@ mat2vec.ix <- function(mat, directed,
 
 
 #' Auxiliary function, produces matrix from vector
+#' 
+#' The number of elements of vec are the number of non-zero elements in the
+#' adjacency matrix.
+#' It performs the opposite operation of `mat2vec.ix`.
 #'
 #'
 #' @param vec  vector to be put in matrix form
@@ -41,6 +50,13 @@ mat2vec.ix <- function(mat, directed,
 #' @return
 #' matrix nxn generated from vector.
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' ix <- mat2vec.ix(adj_karate, FALSE, FALSE)
+#' vec <- adj_karate[ix]
+#' vec2mat(vec, FALSE, FALSE, nrow(adj_karate))
+#' 
 vec2mat <- function(vec,directed,selfloops,n){
   if(length(n)>1){
     mat <- matrix(0,n[2],n[3])
@@ -52,4 +68,41 @@ vec2mat <- function(vec,directed,selfloops,n){
   mat[idx] <- vec
   if(!directed) mat <- mat + t(mat)
   return(mat)
+}
+
+#' Maps adjacency matrix to edgelist
+#'
+#' @param adj matrix, the adjacency matrix
+#' @param directed boolean, is the graph directed?
+#'
+#' @return a dataframe containing the edgelist
+#' @export
+#' @import dplyr
+#'
+adj2el <- function(adj, directed=TRUE){
+  if(!directed) adj[lower.tri(adj,F)] <- 0
+  reshape2::melt(adj) %>%
+    filter(value!=0) %>%
+    rename(sender='Var1', target='Var2', edgecount='value') %>%
+    mutate_at(c("sender", "target"), as.character) -> el
+  return(el)
+}
+
+
+#' Maps edgelist to adjacency matrix
+#'
+#' @param el dataframe containing a (weighted) edgelist. Column 1 is the sender, column 2 is the receiver, column 3 the number of edges.
+#' @param nodes optional vector containing all node names in case disconnected nodes should be included.
+#'
+#' @return the (weighted) adjacency matrix corresponding the edgelist passed
+#' @export
+#'
+el2adj <- function(el, nodes=NULL){
+  if(is.null(nodes))
+    nodes <- unique(c(el[,1], el[,2]))
+  
+  adj <- matrix(0, nrow = length(nodes), ncol = length(nodes),
+                dimnames = list(nodes,nodes))
+  adj[as.matrix(el[,1:2])] <- el[,3]
+  return(adj)
 }

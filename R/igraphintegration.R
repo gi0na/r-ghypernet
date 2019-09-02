@@ -1,3 +1,4 @@
+# auxiliary function for to extract igraph properties
 check_specs.igraph <- function(object, ...){
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(object)){
     if(is.null(directed)){
@@ -31,6 +32,11 @@ check_specs.igraph <- function(object, ...){
 #' list of igraph graphs.
 #'
 #' @export
+#' 
+#' @examples
+#' data('adj_karate')
+#' adj_list <- list(adj_karate)
+#' glist <- CreateIgGraphs(adj_list, FALSE, FALSE)
 #'
 CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
   if(directed)
@@ -42,25 +48,7 @@ CreateIgGraphs <- function(adjlist, directed, selfloops, weighted=NULL){
 }
 
 
-#' Fitting gHypEG models
-#'
-#' ghype is used to fit gHypEG models when the propensity matrix is known.
-#' It can be used to estimate a null model (soft configuration model), or
-#' the benchmark 'full-model', where the propensity matrix is fitted such
-#' that the expected graph from the fitted model is the one passed to the
-#' function.
-#'
-#' @param graph either an adjacency matrix or an igraph graph.
-#' @param directed a boolean argument specifying whether object is directed or not.
-#' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
-#' @param xi an optional matrix defining the combinatorial matrix of the model.
-#' @param omega an optional matrix defining the propensity matrix of the model.
-#' @param unbiased a boolean argument specifying whether to model the hypergeometric ensemble (no propensity), defaults to FALSE.
-#' @param regular a boolean argument, defaults to FALSE
-#' @param ... additional arguments to be passed to the low level fitting functions.
-#'
-#' @return
-#' ghype return an object of class "ghype".
+#' @describeIn ghype Fitting ghype models from an igraph graph
 #'
 #' @export
 #'
@@ -106,12 +94,12 @@ ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
                          'selfloops' = selfloops,
                          'regular' = regular,
                          'unbiased' = unbiased,
-                         'df' = df))
+                         'df' = df), ...)
   return(model)
 }
 
 
-#' BootstrapProperty compute igraph analytics function on ensemble
+#' BootstrapProperty computes igraph analytics function on ensemble
 #'
 #' @param graph igraph graph
 #' @param property igraph function that can be applied to a graph
@@ -130,8 +118,17 @@ ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
 #' vector of length nsamples
 #'
 #' @export
+#' 
+#' @examples
+#' \dontrun{
+#' library(igraph)
+#' data('adj_karate')
+#' result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=100)
+#' }
 #'
-BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=1000, xi=NULL, omega=NULL, model=NULL, m=NULL, seed=NULL, ...){
+BootstrapProperty <- function(graph, property, directed, 
+            selfloops, nsamples=1000, xi=NULL, omega=NULL, 
+            model=NULL, m=NULL, seed=NULL, ...){
 
   functionslist <- c(
     'page_rank',
@@ -160,7 +157,7 @@ BootstrapProperty <- function(graph, property, directed, selfloops, nsamples=100
   if(is.null(model))
     model <- ghype(graph = graph, directed, selfloops, xi, omega)
 
-  rsamples <- RandomGraph(nsamples, model, m, seed=seed)
+  rsamples <- rghype(nsamples, model, m, seed=seed)
   gsamples <- CreateIgGraphs(adjlist = rsamples, directed = directed, selfloops = selfloops)
   if(as.character(substitute(property)) %in% functionslist){
     dproperty <- sapply(X = gsamples, FUN = function(graph, directed, ...){match.fun(FUN = property)(graph, directed=directed, ...)$vector}, directed=directed, ...)
