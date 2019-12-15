@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' 
-#' #' data("adj_karate")
+#' data("adj_karate")
 #' model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' (phi <- phi_matrix(graph = adj_karate, model = model))
 #' plot(phi)
