@@ -60,8 +60,8 @@ phi_matrix <- function(graph, model, lightMemory=FALSE){
 #' print(phi)
 #' 
 print.phi_matrix <- function(x, ...){
-  rownames(phi$matrix) <- colnames(phi$matrix) <- rownames(phi$graph)
-  print(phi$matrix)
+  rownames(x$matrix) <- colnames(x$matrix) <- rownames(x$graph)
+  print(x$matrix)
 }
 
 #' Plot method for objects of class phi_matrix
