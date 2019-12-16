@@ -4,7 +4,7 @@
 \alias{phi_matrix}
 \title{Compute Phi Matrix}
 \usage{
-phi_matrix(graph, model, lightMemory = FALSE)
+phi_matrix(graph, model, lightMemory = FALSE, useBinomial = FALSE)
 }
 \arguments{
 \item{graph}{n x n adjacency matrix of the graph of which computing the phi matrix}
