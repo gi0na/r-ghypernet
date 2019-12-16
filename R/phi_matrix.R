@@ -1,3 +1,18 @@
+#' Compute Phi Elementwise
+#'
+#' @param edgecount 
+#' @param xi 
+#' @param sum_xi 
+#' @param m 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+phi_element <- function(edgecount, xi, sum_xi, m){
+  2 * phyper(q = edgecount, m = xi, n = sum_xi-xi, k = m) - dhyper(x = edgecount, m = xi, n = sum_xi-xi, k = m) - 1
+}
+
 #' Compute Phi Matrix
 #'
 #' @param graph n x n adjacency matrix of the graph of which computing the phi matrix
@@ -12,15 +27,13 @@
 #' data("adj_karate")
 #' model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' (phi <- phi_matrix(graph = adj_karate, model = model))
-#' plot(phi)
 #' 
 phi_matrix <- function(graph, model, lightMemory=FALSE){
   # compute under and over represented dyads
-  over <- linkSignificance(graph = graph, model=model, under=FALSE)
-  under <- linkSignificance(graph = graph, model=model, under=TRUE)
-  
-  #compute phi
-  phi_mat <- under - over
+  idx <- mat2vec.ix(graph, model$directed, model$selfloops)
+  phi_vals <- Vectorize(phi_element, vectorize.args = c('edgecount', 'xi'))(
+    edgecount = graph[idx], xi = model$xi[idx], sum_xi = sum(model$xi[idx]), m = model$m)
+  phi_mat <- vec2mat(phi_vals, model$directed, model$selfloops, n = model$n)
   
   if(lightMemory){
     phi <- list(matrix=phi_mat, graph=NULL, model=NULL)
@@ -61,10 +74,10 @@ print.phi_matrix <- function(x, ...){
 #' data("adj_karate")
 #' model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' phi <- phi_matrix(graph = adj_karate, model = model)
-#' plot(phi)
+#' hmcol<-RColorBrewer::brewer.pal(11,"RdBu")
+#' plot(phi, col=hmcol, legend="col")
 #' 
 plot.phi_matrix <- function(x, ...){
   rownames(phi$matrix) <- colnames(phi$matrix) <- rownames(phi$graph)
-  hmcol<-RColorBrewer::brewer.pal(11,"RdBu")
-  heatmap(phi$matrix, symm = TRUE, col=hmcol, ...)
+  heatmap(phi$matrix, symm = TRUE, ...)
 }
