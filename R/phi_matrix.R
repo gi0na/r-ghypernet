@@ -20,7 +20,7 @@ phi_matrix <- function(graph, model, lightMemory=FALSE){
   under <- linkSignificance(graph = graph, model=model, under=TRUE)
   
   #compute phi
-  phi_mat <- over - under
+  phi_mat <- under - over
   
   if(lightMemory){
     phi <- list(matrix=phi_mat, graph=NULL, model=NULL)
@@ -68,28 +68,3 @@ plot.phi_matrix <- function(x, ...){
   hmcol<-RColorBrewer::brewer.pal(11,"RdBu")
   heatmap(phi$matrix, symm = TRUE, col=hmcol, ...)
 }
-
-
-# rownames(adj_karate)
-# labels <- c(1,1,1,1,2,2,2,1,3,3,2,1,1,1,3,3,2,1,3,1,3,1,3,3,3,3,3,3,3,3,3,3,3,3)
-# AIC(bccm(adj_karate,labels,F,F))
-# data("vertexlabels")
-# AIC(bccm(adj_karate,vertexlabels,F,F))
-# newmod <- bccm(adj_karate,labels,F,F)
-# 
-# library(ggraph)
-# 
-# ggraph(igraph::graph_from_adjacency_matrix(phi$matrix, mode = 'undir', weighted = T), 
-#        layout=create_layout(adj_karate, layout = 'auto')[,c('x','y')]) +
-#   geom_edge_link(aes(alpha=abs(weight), colour=weight)) +
-#   scale_edge_colour_distiller(palette = 'RdBu') +
-#   geom_node_point(aes(colour=as.factor(labels), size=apply(adj_karate,2,sum)))
-# 
-# phi <- phi_matrix(graph = adj_karate, model = newmod)
-# plot(phi)
-# 
-# ggraph(igraph::graph_from_adjacency_matrix(phi$matrix, mode = 'undir', weighted = T), 
-#        layout=create_layout(adj_karate, layout = 'auto')[,c('x','y')]) +
-#   geom_edge_link(aes(alpha=abs(weight), colour=weight)) +
-#   scale_edge_colour_distiller(palette = 'RdBu') +
-#   geom_node_point(aes(colour=as.factor(labels), size=apply(adj_karate,2,sum)))
