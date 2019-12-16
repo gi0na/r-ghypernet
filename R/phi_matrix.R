@@ -70,7 +70,7 @@ print.phi_matrix <- function(x, ...){
 #' @param ... arguments to be passed to methods, such as graphical parameters
 #'
 #' @export
-#' @example 
+#' @examples
 #' data("adj_karate")
 #' model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' phi <- phi_matrix(graph = adj_karate, model = model)
