@@ -20,9 +20,9 @@ n x n phi matrix
 Compute Phi Matrix
 }
 \examples{
-
 data("adj_karate")
 model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 (phi <- phi_matrix(graph = adj_karate, model = model))
-
+hmcol<-RColorBrewer::brewer.pal(11,"RdBu")
+plot(phi, col=hmcol, legend="col")
 }
