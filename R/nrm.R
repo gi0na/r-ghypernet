@@ -8,6 +8,8 @@
 #' @param adj matrix. The adjacency matrix of the response network (dependent
 #' variable).
 #' @param xi optional matrix. Passes a non-standard \eqn{\Xi} matrix.
+#' @param pval the significance level used to compute confidence intervals of
+#' the parameters. Per default, set to 0.01.
 #' @param directed logical. If \code{TRUE} the response variable is considered
 #' the adjacency matrix of directed graph.  If \code{FALSE} only the upper
 #' triangular of \code{adj} is considered. Default set to FALSE.
@@ -49,15 +51,17 @@
 #' 
 #' 
 #' @export
-nrm <- function(w, adj, xi = NULL, directed = TRUE, 
+nrm <- function(w, adj, xi = NULL, 
+    pval = 0.01, directed = TRUE, 
     selfloops = TRUE, regular = FALSE,
     ...) UseMethod("nrm")
 
 #' @describeIn nrm Default method for nrm
 #' @export
 #'
-nrm.default <- function(w, adj, xi = NULL, directed = TRUE, 
-                         selfloops = TRUE, regular = FALSE, ci = TRUE, significance = TRUE, 
+nrm.default <- function(w, adj, 
+                        xi = NULL, pval = 0.01, directed = TRUE, 
+                        selfloops = TRUE, regular = FALSE, ci = TRUE, significance = TRUE, 
                         null = FALSE, init = NULL, ...) {
   # Estimate the multivariate
   # network regression model
@@ -129,7 +133,7 @@ nrm.default <- function(w, adj, xi = NULL, directed = TRUE,
               omega = omega, xi = xi, 
               loglikelihood = ll, AIC = AIC, DL = DL,
               R2 = R2, csR2 = 0, directed = directed, 
-              selfloops = selfloops, 
+              selfloops = selfloops, pvalue = pval, 
               significance = NULL,
               adj = adj, predictors = w, df=length(b) + k.xi,
               m = sum(adj[mat2vec.ix(adj, directed, selfloops)]), n = nrow(xi),
@@ -142,7 +146,7 @@ nrm.default <- function(w, adj, xi = NULL, directed = TRUE,
   }
   if (ci) {
     mod$confint <- nr.ci(nr.m = mod, 
-                         w = w, adj = adj)
+                         w = w, adj = adj, pval = pval)
   } else{
     mod$confint <- matrix(NA,1,3)
   }

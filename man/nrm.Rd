@@ -5,11 +5,11 @@
 \alias{nrm.default}
 \title{Fitting gHypEG regression models for multi-edge networks.}
 \usage{
-nrm(w, adj, xi = NULL, pval = 0.01, directed = FALSE,
-  selfloops = FALSE, regular = FALSE, ...)
+nrm(w, adj, xi = NULL, pval = 0.01, directed = TRUE,
+  selfloops = TRUE, regular = FALSE, ...)
 
 \method{nrm}{default}(w, adj, xi = NULL, pval = 0.01,
-  directed = FALSE, selfloops = FALSE, regular = FALSE, ci = TRUE,
+  directed = TRUE, selfloops = TRUE, regular = FALSE, ci = TRUE,
   significance = TRUE, null = FALSE, init = NULL, ...)
 }
 \arguments{
