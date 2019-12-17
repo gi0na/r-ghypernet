@@ -52,7 +52,7 @@ phi_element_wallenius <- function(edgecount, xi, sum_xi, oddsratio, m){
 #' model <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' (phi <- phi_matrix(graph = adj_karate, model = model))
 #' hmcol<-RColorBrewer::brewer.pal(11,"RdBu")
-#' plot(phi, col=hmcol, legend="col")
+#' plot(phi, col=hmcol)
 phi_matrix <- function(graph, model, lightMemory=FALSE, useBinomial=FALSE){
   
   idx <- mat2vec.ix(graph, model$directed, model$selfloops)
