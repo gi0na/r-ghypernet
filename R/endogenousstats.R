@@ -297,10 +297,10 @@ homophily_stat <- function(variable = variable,
         }
       }
       # check length/number of categories
-      if (length(unique(variable)) > 50) {
+      # if (length(unique(variable)) > 1356) {
 	      ##TODO LB: wait, I think I got this wrong here?
-        stop("Please recode your homophily variable. It cannot have more than 20 categories.")
-      }
+        # stop("Please recode your homophily variable. It cannot have more than 1356 categories.")
+      # }
     }
   }
   if (is.null(nodes)) {
@@ -320,7 +320,7 @@ homophily_stat <- function(variable = variable,
     blockids <- as.numeric(plyr::mapvalues(
       variable,
       from = labels,
-      to = c(1, numbers::Primes(length(variable) * 50))[1:(length(unique(variable)))]
+      to = c(1, numbers::Primes(length(variable) * 200))[1:(length(unique(variable)))]
     ))
     #TODO: package dependence here!!
     #verbose = TRUE:
