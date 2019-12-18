@@ -146,6 +146,6 @@ print.phi_matrix <- function(x, ...){
 #' plot(phi, col=hmcol)
 #' 
 plot.phi_matrix <- function(x, ...){
-  rownames(phi$matrix) <- colnames(phi$matrix) <- rownames(phi$graph)
-  heatmap(phi$matrix, symm = TRUE, ...)
+  rownames(x$matrix) <- colnames(x$matrix) <- rownames(x$graph)
+  heatmap(x$matrix, symm = TRUE, ...)
 }
