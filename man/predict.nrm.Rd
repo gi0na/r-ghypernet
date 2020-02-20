@@ -12,14 +12,20 @@
 
 \item{m}{integer, the number of edges to be used}
 
-\item{adj}{optional matrix, the adjacency matrix from which to get the number of edges}
+\item{adj}{optional matrix, the adjacency matrix from which to get the number
+of edges}
 
 \item{null}{optional boolean, is it a null model? default FALSE}
+
+\item{multinomial}{logical. Optional argument. Whether to use multinomial
+approximation. If left blank it is selected automatically based on network
+size.}
 
 \item{...}{other arguments}
 }
 \value{
-numeric, predicted values from nrm model. (If model is undirected, only upper.tri of adjacency matrix is returned.)
+numeric, predicted values from nrm model. (If model is undirected,
+  only upper.tri of adjacency matrix is returned.)
 }
 \description{
 Method to predict the expected values of a nrm model

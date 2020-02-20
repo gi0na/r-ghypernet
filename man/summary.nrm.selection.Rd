@@ -14,6 +14,3 @@
 \description{
 Summary method for elements of class \code{'nrm.selection'}.
 }
-\examples{
-
-}

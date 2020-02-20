@@ -7,11 +7,11 @@
 RMSE(model, adj, null = FALSE)
 }
 \arguments{
-\item{model}{}
+\item{model}{nrm model estimate}
 
-\item{adj}{}
+\item{adj}{original adjacency matrix}
 
-\item{null}{}
+\item{null}{logical, whether to compute using null model}
 }
 \value{
 numeric, root mean squared error of residuals of nrm model fit

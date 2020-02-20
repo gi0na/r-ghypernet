@@ -11,9 +11,6 @@
 
 \item{\dots}{optional arguments to print or plot methods.}
 }
-\value{
-
-}
 \description{
 Print method for elements of class \code{'nrm.selection'}.
 }

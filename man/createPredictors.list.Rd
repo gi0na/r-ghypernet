@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{predictors}{the dataframe or list of predictors for to apply nrm model selection}
+
+\item{...}{additional parameters used to creating the predictor object (currently disabled)}
 }
 \value{
 nested list of nrmpredictor class

@@ -1,6 +1,7 @@
 #' Create a nrmpredictor object from passed argument
 #'
 #' @param predictors the dataframe or list of predictors for to apply nrm model selection
+#' @param ... additional parameters passed to the different methods (currently disabled)
 #'
 #' @return nested list of nrmpredictor class
 #' @export
@@ -18,6 +19,7 @@ createPredictors <- function(predictors,
 #' Create a nrmpredictor object from list
 #'
 #' @param predictors the dataframe or list of predictors for to apply nrm model selection
+#' @param ... additional parameters used to creating the predictor object (currently disabled)
 #'
 #' @return nested list of nrmpredictor class
 #' @export

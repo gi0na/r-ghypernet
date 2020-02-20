@@ -8,45 +8,31 @@ nrmChoose(adj, w.list, xi = NULL, directed, selfloops, pval = 0.05,
   init = NULL, ncores = NULL)
 }
 \arguments{
-\item{adj}{~~Describe \code{adj} here~~}
+\item{adj}{adjacency matrix}
 
-\item{w.list}{~~Describe \code{w.list} here~~}
+\item{w.list}{nrmPredictor object. Nested list of predictors to be selected.}
 
-\item{xi}{~~Describe \code{xi} here~~}
+\item{xi}{Xi matrix (optional). defaults to scm Xi matrix.}
 
-\item{directed}{~~Describe \code{directed} here~~}
+\item{directed}{logical. Is the network directed?}
 
-\item{selfloops}{~~Describe \code{selfloops} here~~}
+\item{selfloops}{logical. Does the network contain selfloops?}
 
-\item{pval}{~~Describe \code{pval} here~~}
+\item{pval}{numeric. the significance at which computing confidence
+intervals. defaults to 0.05}
 
-\item{init}{~~Describe \code{init} here~~}
+\item{init}{initial values for the MLE numerical maximisation. (See
+\code{nrm}.)}
 
-\item{ncores}{~~Describe \code{init} here~~}
+\item{ncores}{Number of cores for parallelisation of selection process.
+(optional) Defaults to number of available cores - 1.}
 }
 \value{
-
+list containing the best model according to AIC and id of the
+  corresponding predictors in the list
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Computes all the models defined by a list of groups of predictors Returns the
+best model according to AIC and id of the corresponding predictors in the
+list The different models are computed in parallel
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

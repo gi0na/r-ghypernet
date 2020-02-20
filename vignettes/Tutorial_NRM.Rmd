@@ -7,9 +7,10 @@ author:
   email: gcasiraghi@ethz.ch
 - name: Laurence Brandenberger
   affiliation: *id
+  email: lbrandenberger@ethz.ch
 date: "`r Sys.Date()`"
 package: ghypernet
-bibliography: bibliography.bib
+# bibliography: bibliography.bib
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -64,9 +65,9 @@ in a multi-edge network of support among MPs.
 
 ```{r}
 library(ghypernet)
-library(texreg) # for regression tables
-library(ggplot2) 
-library(GGally) #for network plots using ggplot2
+library(texreg, quietly = TRUE) # for regression tables
+library(ggplot2) # for plotting
+library(ggraph) #for network plots using ggplot2
 ```
 
 After loading the \texttt{ghypernet} package, the included data set on 
@@ -612,14 +613,14 @@ screenreg(list(nfit2, nfit3),
 
 Model comparisons can be done using `AIC`-scores, LR-tests or the R-squared
 measures.
-AIC-scores are the best indicators of model fit. The gHypEG can model also be 
+AIC-scores are the best indicators of model fit. The gHypEG model can also be 
 fit maximally to the data. This perfectly fit model cannot be interpreted (since
 step by step, additional predictive layers are added and these laysers capture
 deviances but would need to be interpreted individually), but the AIC scores
 can be used to check how far away your models are from it. 
 
 ```{r}
-##add code for maximally fit model here.
+fullfit <- ghype(graph = cospons_mat, directed = TRUE, selfloops = FALSE)
 ```
 
 
@@ -657,14 +658,13 @@ The number of simulations can be specified with the `nsamples` argument.
 simnw <- rghype(nsamples = 1, model = nfit2, seed = 1253)
 ```
 
-```{r, fig.height=5, fig.width=7}
-ggnet2(simnw, label = FALSE,
-       color = dt$parlGroup, 
-       size = "degree", size.min = 1)+
-  scale_color_manual("", values = c('orange', 'yellow', 'blue', 'green', 'grey',
-                                    'darkblue', 'red', 'darkgreen', 'purple'))+
-  theme(legend.position = 'bottom') +
-  guides(size = FALSE)
+```{r, fig.height=5, fig.width=5}
+ggraph(graph = simnw, layout = 'stress') +
+  geom_edge_link(aes(filter = weight>5, alpha=weight)) +
+  geom_node_point(aes(colour = dt$parlGroup), size=10*apply(simnw,1,sum)/max(apply(simnw,1,sum))) +
+  scale_colour_manual("", values = c('orange', 'yellow', 'blue', 'green', 'grey',
+                                    'darkblue', 'red', 'darkgreen', 'purple')) +
+  theme(legend.position = 'bottom') + coord_fixed() + theme_graph()
 ```
 
 
@@ -676,8 +676,6 @@ compare structural properties of the simulated networks to the original network
 [@hunter2008goodness]. We are currently working on finding appropriate multi-edge network statistics
 to assess model fit for gHypEGs. We are also looking into alternative ways of
 assessing network model fit. Stay tuned! 
-
-# References
 
 
 

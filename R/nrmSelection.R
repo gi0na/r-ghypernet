@@ -139,27 +139,25 @@ nrmSelection.nrmpredictor <- function(adj,
 
 
 #' Selects the best set of predictors among the given sets by means of AIC.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param w.list  ~~Describe \code{w.list} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @param pval  ~~Describe \code{pval} here~~
-#' @param init  ~~Describe \code{init} here~~
-#' @param ncores  ~~Describe \code{init} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
+#'
+#' Computes all the models defined by a list of groups of predictors Returns the
+#' best model according to AIC and id of the corresponding predictors in the
+#' list The different models are computed in parallel
+#'
+#' @param adj  adjacency matrix
+#' @param w.list  nrmPredictor object. Nested list of predictors to be selected.
+#' @param xi  Xi matrix (optional). defaults to scm Xi matrix.
+#' @param directed  logical. Is the network directed?
+#' @param selfloops  logical. Does the network contain selfloops?
+#' @param pval  numeric. the significance at which computing confidence
+#'   intervals. defaults to 0.05
+#' @param init  initial values for the MLE numerical maximisation. (See
+#'   \code{nrm}.)
+#' @param ncores  Number of cores for parallelisation of selection process.
+#'   (optional) Defaults to number of available cores - 1.
+#' @return list containing the best model according to AIC and id of the
+#'   corresponding predictors in the list
+#'
 #' @export
 nrmChoose <- function(adj, w.list, 
                       xi = NULL, directed, selfloops, 
@@ -195,22 +193,22 @@ nrmChoose <- function(adj, w.list,
 }
 
 
-#' Auxilliary function, finds mininum AIC among different nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param nr.ms  ~~Describe \code{nr.ms} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
-#' 
+# ' Auxilliary function, finds mininum AIC among different nrm models.
+# ' 
+# '  ~~ A concise (1-5 lines) description of what the function does. ~~
+# ' 
+# '  ~~ If necessary, more details than the description above ~~
+# ' 
+# ' @param nr.ms  ~~Describe \code{nr.ms} here~~
+# ' @return  
+# ' @note  ~~further notes~~
+# ' @author  ~~who you are~~
+# ' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+# ' @references  ~put references to the literature/web site here ~
+# ' @keywords ~kwd1 ~kwd2
+# ' @examples
+# ' 
+# ' 
 minAIC <- function(nr.ms) {
   # Returns the id of the model
   # with minimal AIC among a
@@ -226,22 +224,22 @@ minAIC <- function(nr.ms) {
   return(id)
 }
 
-#' Auxilliary function, finds mininum AIC among different nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param nr.ms  ~~Describe \code{nr.ms} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
-#' 
+# ' Auxilliary function, finds mininum AIC among different nrm models.
+# ' 
+# '  ~~ A concise (1-5 lines) description of what the function does. ~~
+# ' 
+# '  ~~ If necessary, more details than the description above ~~
+# ' 
+# ' @param nr.ms  ~~Describe \code{nr.ms} here~~
+# ' @return  
+# ' @note  ~~further notes~~
+# ' @author  ~~who you are~~
+# ' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+# ' @references  ~put references to the literature/web site here ~
+# ' @keywords ~kwd1 ~kwd2
+# ' @examples
+# ' 
+# ' 
 findMDL <- function(nr.ms) {
   # Returns the id of the model
   # with minimal AIC among a

@@ -1,7 +1,7 @@
 #' Extract Log-Likelihood
 #'
 #' @param object ghype model.
-#' @param ... (ignored) some methods for this generic function require additional arguments.
+#' @param ... additional arguments passed to and from internal methods.
 #'
 #' @return Returns an object of class logLik. This is a number with at least one
 #' attribute, "df" (degrees of freedom), giving the number of (estimated) parameters
@@ -34,7 +34,7 @@ logLik.ghype <- function(object, ...){
 #'   original adjacency matrix stored in object.
 #' @param multinomial  optional boolean. Force multinomial approximation? If not
 #'   chosen, multinomial chosen for large graphs.
-#' @param ... (currently ignored) extra parameters for internal methods
+#' @param ... additional parameters passed to and from internal methods
 #'   
 #' @return
 #' loglikelihood value

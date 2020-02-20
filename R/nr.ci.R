@@ -1,20 +1,12 @@
 #' Confidence intervals for nrm models.
 #' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
+#'  Internal function to compute confidence intervals for estimated parameters of nrm model
 #' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param nr.m  ~~Describe \code{nr.m} here~~
-#' @param w  ~~Describe \code{w} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param pval  ~~Describe \code{pval} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
+#' @param nr.m  nrm model from which getting coefficients
+#' @param w  list of predictors
+#' @param adj  adjacency matrix 
+#' @param pval  numeric. confidence level
+#' @return  matrix reporting values of predictors and confidence bounds
 #' 
 #' @export
 nr.ci <- function(nr.m, w, adj, 

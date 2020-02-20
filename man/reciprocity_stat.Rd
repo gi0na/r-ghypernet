@@ -31,9 +31,6 @@ The function takes either an edgelist or an adjacency matrix and returns an
 adjacency matrix with the reciprocity change statistic. This reciprocity
 matrix can then be used as a predictor in the gHypEG regression.
 }
-\examples{
-
-}
 \seealso{
 \code{\link{sharedPartner_stat}} or \code{\link{homophily_stat}}
 }

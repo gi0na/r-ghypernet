@@ -1,11 +1,4 @@
-#' rmle
-#'
-#' @param hatadj 
-#' @param adj 
-#'
-#' @return
-#' 
-#'
+# rmle
 err <- function(hatadj, adj){
   sqrt(mean((log(hatadj + 1) - 
                log(adj + 1))^2))
@@ -14,9 +7,9 @@ err <- function(hatadj, adj){
 
 #' Computes the Root Mean Squared Error
 #'
-#' @param model 
-#' @param adj 
-#' @param null 
+#' @param model nrm model estimate
+#' @param adj original adjacency matrix 
+#' @param null logical, whether to compute using null model
 #'
 #' @return numeric, root mean squared error of residuals of nrm model fit
 #' @export

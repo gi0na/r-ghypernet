@@ -42,7 +42,7 @@ original adjacency matrix stored in object.}
 \item{multinomial}{optional boolean. Force multinomial approximation? If not
 chosen, multinomial chosen for large graphs.}
 
-\item{...}{(currently ignored) extra parameters for internal methods}
+\item{...}{additional parameters passed to and from internal methods}
 }
 \value{
 loglikelihood value

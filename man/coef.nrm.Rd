@@ -12,7 +12,7 @@
 \item{\dots}{optional arguments to print methods.}
 }
 \value{
-
+coefficients of nrm model.
 }
 \description{
 Print method for coeffiients of models of class \code{'nrm'}.

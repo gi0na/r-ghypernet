@@ -117,7 +117,6 @@ print.nrm <- function(x, suppressCall = FALSE,
 #' 
 #' @param x  object of class \code{'nrm.selection'}.
 #' @param \dots  optional arguments to print or plot methods.
-#' @return  
 #' @author  Giona Casiraghi
 #' @seealso  \code{nrm.selection}
 #' @export
@@ -153,8 +152,6 @@ print.nrm.selection <- function(x,
 #'
 #' @export
 #'
-#' @examples
-#'
 summary.nrm.selection <- function(object, 
                                   ...) {
   # summmary method for nrm class
@@ -183,8 +180,6 @@ summary.nrm.selection <- function(object,
 #'
 #' @export
 #'
-#' @examples
-#'
 summary.nrm <- function(object, 
                         ...) {
   # summmary method for nrm class
@@ -196,7 +191,7 @@ summary.nrm <- function(object,
 #' 
 #' @param object  object of class \code{'nrm'}.
 #' @param \dots  optional arguments to print methods.
-#' @return  
+#' @return coefficients of nrm model.
 #' @author  Giona Casiraghi
 #' @seealso  \code{\link{nrm}}
 #' @export

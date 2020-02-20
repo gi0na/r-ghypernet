@@ -1,8 +1,8 @@
 Package: ghypernet
 Type: Package
 Title: R Implementation of the Generalised Hypergeometric Ensemble of Random Graphs
-Version: 0.8.999
-Date: 2019-09-1
+Version: 0.9.0
+Date: 2020-02-20
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
@@ -29,9 +29,10 @@ Imports: parallel,
          purrr,
          extraDistr,
          dplyr,
+         rlang,
          reshape2,
          rootSolve
-Suggests: BiasedUrn, igraph, knitr, rmarkdown, GGally, ggplot2, texreg
+Suggests: BiasedUrn, igraph, knitr, rmarkdown, ggplot2, texreg, ggraph
 VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 6.1.1
