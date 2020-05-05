@@ -4,8 +4,14 @@
 \alias{gof.test}
 \title{Perform a goodness-of-fit test}
 \usage{
-gof.test(model, Beta = TRUE, nempirical = NULL, parallel = NULL,
-  returnBeta = FALSE, seed = NULL)
+gof.test(
+  model,
+  Beta = TRUE,
+  nempirical = NULL,
+  parallel = NULL,
+  returnBeta = FALSE,
+  seed = NULL
+)
 }
 \arguments{
 \item{model}{ghype model to test}

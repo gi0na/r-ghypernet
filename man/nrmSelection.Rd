@@ -6,14 +6,41 @@
 \alias{nrmSelection.nrmpredictor}
 \title{Perform AIC forward selection for nrm.}
 \usage{
-nrmSelection(adj, predictors, directed, selfloops, pval = 0.05,
-  xi = NULL, init = NULL, ncores = NULL, ...)
+nrmSelection(
+  adj,
+  predictors,
+  directed,
+  selfloops,
+  pval = 0.05,
+  xi = NULL,
+  init = NULL,
+  ncores = NULL,
+  ...
+)
 
-\method{nrmSelection}{default}(adj, predictors, directed, selfloops,
-  pval = 0.05, xi = NULL, init = NULL, ncores = NULL, ...)
+\method{nrmSelection}{default}(
+  adj,
+  predictors,
+  directed,
+  selfloops,
+  pval = 0.05,
+  xi = NULL,
+  init = NULL,
+  ncores = NULL,
+  ...
+)
 
-\method{nrmSelection}{nrmpredictor}(adj, predictors, directed, selfloops,
-  pval = 0.05, xi = NULL, init = NULL, ncores = NULL, ...)
+\method{nrmSelection}{nrmpredictor}(
+  adj,
+  predictors,
+  directed,
+  selfloops,
+  pval = 0.05,
+  xi = NULL,
+  init = NULL,
+  ncores = NULL,
+  ...
+)
 }
 \arguments{
 \item{adj}{the adjacency matrix of the response network}

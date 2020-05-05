@@ -52,13 +52,14 @@
 #' @examples
 #'
 #' ## For a complete example see the vignette
+#' \donttest{
 #' data('highschool.predictors')
 #'
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE,
 #'   selfloops=FALSE)
 #'
 #' highschool.m
-#'
+#'}
 #'
 #' @export
 nrm <- function(w, adj, xi = NULL, 
@@ -238,10 +239,11 @@ fnM <- function(x, w, xi, adj, directed,
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 #' predict(highschool.m, contacts.adj)
-
+#' }
 predict.nrm <- function(object, 
                         m = NULL, adj = NULL, null = FALSE, 
                         multinomial = NULL, ...) {

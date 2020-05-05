@@ -20,7 +20,9 @@ numeric, root mean squared logged error of residuals of nrm model fit
 Computes the Root Mean Squared Logged Error
 }
 \examples{
+\donttest{
 data('highschool.predictors')
 highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 RMSLE(highschool.m, contacts.adj)
+}
 }

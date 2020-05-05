@@ -6,16 +6,38 @@
 \alias{logl.matrix}
 \title{General method to compute log-likelihood for ghype models.}
 \usage{
-logl(object, xi = NULL, omega = NULL, directed = NULL,
-  selfloops = NULL, adj = NULL, multinomial = NULL, ...)
+logl(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 
-\method{logl}{ghype}(object, xi = NULL, omega = NULL,
-  directed = NULL, selfloops = NULL, adj = NULL,
-  multinomial = NULL, ...)
+\method{logl}{ghype}(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 
-\method{logl}{matrix}(object, xi = NULL, omega = NULL,
-  directed = NULL, selfloops = NULL, adj = NULL,
-  multinomial = NULL, ...)
+\method{logl}{matrix}(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{either an adjacency matrix or ghype model If a ghype model is

@@ -4,8 +4,17 @@
 \alias{mcfaddenR2}
 \title{Computes Mc Fadden pseudo R-squared.}
 \usage{
-mcfaddenR2(adj = NULL, xi = NULL, omega0 = NULL, omega1 = NULL,
-  directed, selfloops, mod0 = NULL, mod1 = NULL, nparam)
+mcfaddenR2(
+  adj = NULL,
+  xi = NULL,
+  omega0 = NULL,
+  omega1 = NULL,
+  directed,
+  selfloops,
+  mod0 = NULL,
+  mod1 = NULL,
+  nparam
+)
 }
 \arguments{
 \item{adj}{optinal adjacency matrix}

@@ -4,8 +4,16 @@
 \alias{nrmChoose}
 \title{Selects the best set of predictors among the given sets by means of AIC.}
 \usage{
-nrmChoose(adj, w.list, xi = NULL, directed, selfloops, pval = 0.05,
-  init = NULL, ncores = NULL)
+nrmChoose(
+  adj,
+  w.list,
+  xi = NULL,
+  directed,
+  selfloops,
+  pval = 0.05,
+  init = NULL,
+  ncores = NULL
+)
 }
 \arguments{
 \item{adj}{adjacency matrix}

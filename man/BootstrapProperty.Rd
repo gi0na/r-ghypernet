@@ -4,9 +4,19 @@
 \alias{BootstrapProperty}
 \title{BootstrapProperty computes igraph analytics function on ensemble}
 \usage{
-BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
-  xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL,
-  ...)
+BootstrapProperty(
+  graph,
+  property,
+  directed,
+  selfloops,
+  nsamples = 1000,
+  xi = NULL,
+  omega = NULL,
+  model = NULL,
+  m = NULL,
+  seed = NULL,
+  ...
+)
 }
 \arguments{
 \item{graph}{igraph graph}

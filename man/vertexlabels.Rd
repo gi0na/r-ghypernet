@@ -4,7 +4,9 @@
 \name{vertexlabels}
 \alias{vertexlabels}
 \title{Zachary's Karate Club vertex faction assignment}
-\format{a 34-vector with the assignment of nodes to faction 1 or 2}
+\format{
+a 34-vector with the assignment of nodes to faction 1 or 2
+}
 \source{
 package `igraphdata`
 }

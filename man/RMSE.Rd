@@ -20,7 +20,9 @@ numeric, root mean squared error of residuals of nrm model fit
 Computes the Root Mean Squared Error
 }
 \examples{
+\donttest{
 data('highschool.predictors')
 highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 RMSE(highschool.m, contacts.adj)
+}
 }

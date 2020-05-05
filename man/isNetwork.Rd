@@ -4,8 +4,16 @@
 \alias{isNetwork}
 \title{Test null model vs full ghype.}
 \usage{
-isNetwork(graph, directed, selfloops, Beta = TRUE, nempirical = NULL,
-  parallel = FALSE, returnBeta = FALSE, seed = NULL)
+isNetwork(
+  graph,
+  directed,
+  selfloops,
+  Beta = TRUE,
+  nempirical = NULL,
+  parallel = FALSE,
+  returnBeta = FALSE,
+  seed = NULL
+)
 }
 \arguments{
 \item{graph}{adjacency matrix or igraph graph}

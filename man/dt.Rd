@@ -4,7 +4,9 @@
 \name{dt}
 \alias{dt}
 \title{Swiss MPs attribute data frame.}
-\format{163x8 data.frame}
+\format{
+163x8 data.frame
+}
 \usage{
 data(dt)
 }

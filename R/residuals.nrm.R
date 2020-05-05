@@ -10,10 +10,11 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 #' residuals(highschool.m, contacts.adj)
-#' 
+#' }
 residuals.nrm <- function(object, 
                           adj, RMSLE = FALSE, null = FALSE, 
                           ...) {

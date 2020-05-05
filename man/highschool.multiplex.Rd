@@ -4,7 +4,9 @@
 \name{highschool.multiplex}
 \alias{highschool.multiplex}
 \title{Highschool contact network multiplex representation}
-\format{6x327x327 list of adjacency matrices}
+\format{
+6x327x327 list of adjacency matrices
+}
 \source{
 \href{sociopatterns.org}{sociopatters.org}
 }

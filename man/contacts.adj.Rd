@@ -4,7 +4,9 @@
 \name{contacts.adj}
 \alias{contacts.adj}
 \title{Highschool contact network adjacency matrix}
-\format{327x327 adjacency matrix}
+\format{
+327x327 adjacency matrix
+}
 \source{
 \href{sociopatterns.org}{sociopatters.org}
 }

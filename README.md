@@ -36,11 +36,11 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 
 [Giona Casiraghi](http://giona.info) (project lead)
 
-[Vahan Nanumyan](https://www.sg.ethz.ch/team/people/vnanumyan/)
+[Vahan Nanumyan](https://www.sg.ethz.ch/)
 
-[Laurence Brandenberger](https://www.sg.ethz.ch/team/people/lbrandenberger/)
+[Laurence Brandenberger](https://www.sg.ethz.ch/team/people/brandenberger-laurence/)
 
 # Copyright
 `ghypernet` is licensed under the [GNU Affero General Public License](https://choosealicense.com/licenses/agpl-3.0/).
 
-(c) Copyright ETH Zürich, 2016-2019
+(c) Copyright ETH Zürich, 2016-2020

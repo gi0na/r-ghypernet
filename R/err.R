@@ -15,9 +15,11 @@ err <- function(hatadj, adj){
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 #' RMSE(highschool.m, contacts.adj)
+#' }
 
 RMSE <- function(model, adj, null = FALSE) {
   return(sqrt(mean(residuals(model, 
@@ -35,9 +37,11 @@ RMSE <- function(model, adj, null = FALSE) {
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 #' RMSLE(highschool.m, contacts.adj)
+#' }
 
 RMSLE <- function(model, adj, null = FALSE) {
   return(sqrt(mean(residuals(model, 

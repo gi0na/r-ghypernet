@@ -4,7 +4,9 @@
 \name{onlinesim_mat}
 \alias{onlinesim_mat}
 \title{Swiss MPs committee similarity matrix.}
-\format{163x163 similarity matrix}
+\format{
+163x163 similarity matrix
+}
 \usage{
 data(onlinesim_mat)
 }

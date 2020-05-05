@@ -4,7 +4,9 @@
 \name{adj_karate}
 \alias{adj_karate}
 \title{Zachary's Karate Club graph}
-\format{a 34x34 matrix}
+\format{
+a 34x34 matrix
+}
 \source{
 package `igraphdata`
 }

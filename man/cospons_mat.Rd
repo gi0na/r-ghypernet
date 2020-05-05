@@ -4,7 +4,9 @@
 \name{cospons_mat}
 \alias{cospons_mat}
 \title{Swiss MPs network adjacency matrix}
-\format{163x163 adjacency matrix}
+\format{
+163x163 adjacency matrix
+}
 \usage{
 data(cospons_mat)
 }

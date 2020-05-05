@@ -5,12 +5,31 @@
 \alias{nrm.default}
 \title{Fitting gHypEG regression models for multi-edge networks.}
 \usage{
-nrm(w, adj, xi = NULL, pval = 0.01, directed = FALSE,
-  selfloops = FALSE, regular = FALSE, ...)
+nrm(
+  w,
+  adj,
+  xi = NULL,
+  pval = 0.01,
+  directed = FALSE,
+  selfloops = FALSE,
+  regular = FALSE,
+  ...
+)
 
-\method{nrm}{default}(w, adj, xi = NULL, pval = 0.01,
-  directed = FALSE, selfloops = FALSE, regular = FALSE, ci = TRUE,
-  significance = FALSE, null = FALSE, init = NULL, ...)
+\method{nrm}{default}(
+  w,
+  adj,
+  xi = NULL,
+  pval = 0.01,
+  directed = FALSE,
+  selfloops = FALSE,
+  regular = FALSE,
+  ci = TRUE,
+  significance = FALSE,
+  null = FALSE,
+  init = NULL,
+  ...
+)
 }
 \arguments{
 \item{w}{an object of class \code{'list'} containing the predictors layers
@@ -81,13 +100,14 @@ nrm is used to fit multi-edge network regression models.
 \examples{
 
 ## For a complete example see the vignette
+\donttest{
 data('highschool.predictors')
 
 highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE,
   selfloops=FALSE)
 
 highschool.m
-
+}
 
 }
 \references{

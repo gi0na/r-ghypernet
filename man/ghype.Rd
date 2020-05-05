@@ -7,17 +7,49 @@
 \alias{ghype.igraph}
 \title{Fitting gHypEG models}
 \usage{
-ghype(graph, directed, selfloops, xi = NULL, omega = NULL,
-  unbiased = FALSE, regular = FALSE, ...)
+ghype(
+  graph,
+  directed,
+  selfloops,
+  xi = NULL,
+  omega = NULL,
+  unbiased = FALSE,
+  regular = FALSE,
+  ...
+)
 
-\method{ghype}{matrix}(graph, directed, selfloops, xi = NULL,
-  omega = NULL, unbiased = FALSE, regular = FALSE, ...)
+\method{ghype}{matrix}(
+  graph,
+  directed,
+  selfloops,
+  xi = NULL,
+  omega = NULL,
+  unbiased = FALSE,
+  regular = FALSE,
+  ...
+)
 
-\method{ghype}{default}(graph, directed, selfloops, xi = NULL,
-  omega = NULL, unbiased = FALSE, regular = FALSE, ...)
+\method{ghype}{default}(
+  graph,
+  directed,
+  selfloops,
+  xi = NULL,
+  omega = NULL,
+  unbiased = FALSE,
+  regular = FALSE,
+  ...
+)
 
-\method{ghype}{igraph}(graph, directed, selfloops, xi = NULL,
-  omega = NULL, unbiased = FALSE, regular = FALSE, ...)
+\method{ghype}{igraph}(
+  graph,
+  directed,
+  selfloops,
+  xi = NULL,
+  omega = NULL,
+  unbiased = FALSE,
+  regular = FALSE,
+  ...
+)
 }
 \arguments{
 \item{graph}{either an adjacency matrix or an igraph graph.}

@@ -13,7 +13,7 @@ package: ghypernet
 # bibliography: bibliography.bib
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{An introduction to generalized hypergeometric ensembles (gHypEG) regressions.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

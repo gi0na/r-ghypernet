@@ -4,7 +4,9 @@
 \name{dtcommittee}
 \alias{dtcommittee}
 \title{Swiss MPs committee affiliation data frame.}
-\format{163x2 data.frame}
+\format{
+163x2 data.frame
+}
 \usage{
 data(dtcommittee)
 }

@@ -4,8 +4,7 @@
 \alias{predict.nrm}
 \title{Method to predict the expected values of a nrm model}
 \usage{
-\method{predict}{nrm}(object, m = NULL, adj = NULL, null = FALSE,
-  multinomial = NULL, ...)
+\method{predict}{nrm}(object, m = NULL, adj = NULL, null = FALSE, multinomial = NULL, ...)
 }
 \arguments{
 \item{object}{nrm object from which to predict}
@@ -31,7 +30,9 @@ numeric, predicted values from nrm model. (If model is undirected,
 Method to predict the expected values of a nrm model
 }
 \examples{
+\donttest{
 data('highschool.predictors')
 highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 predict(highschool.m, contacts.adj)
+}
 }

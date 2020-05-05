@@ -4,9 +4,17 @@
 \alias{bccm}
 \title{Fitting bccm models}
 \usage{
-bccm(adj, labels, directed = NULL, selfloops = NULL,
-  directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE,
-  xi = NULL, regular = FALSE)
+bccm(
+  adj,
+  labels,
+  directed = NULL,
+  selfloops = NULL,
+  directedBlocks = FALSE,
+  homophily = FALSE,
+  inBlockOnly = FALSE,
+  xi = NULL,
+  regular = FALSE
+)
 }
 \arguments{
 \item{adj}{the adjacency matrix of the graph.}

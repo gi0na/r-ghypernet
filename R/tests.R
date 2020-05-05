@@ -116,7 +116,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 #' @param nullmodel ghype object. The null model
 #' @param altmodel ghype object. The alternative model
 #' @param df optional scalar. the number of degrees of freedom.
-#' @param williams (deprecated keep FALSE)
+# @param williams (deprecated keep FALSE)
 #' @param Beta boolean, whether to use empirical Beta distribution approximation. Default TRUE
 #' @param seed scalar, seed for the empirical distribution.
 #' @param nempirical optional scalar, number of replicates for empirical beta distribution.
@@ -137,7 +137,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 #' confmodel <- scm(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' lr.test(nullmodel = regularmodel, altmodel = confmodel, seed = 123)
 #'
-lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE, method = NULL){
+lr.test <- function(nullmodel, altmodel, df=NULL, Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE, returnBeta = FALSE, method = NULL){
   llratio <- loglratio(nullmodel,altmodel)
   if(is.numeric(seed)){
     old <- .Random.seed
@@ -227,7 +227,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, williams = FALSE, Beta = TRUE,
   }
 
   q1 <- 1
-  if(williams){
+  if(FALSE){
     ix <- as.matrix(mat2vec.ix(nullmodel$xi,nullmodel$directed,nullmodel$selfloops))
     ps <- nullmodel$omega[ix]*nullmodel$xi[ix]
     ps <- ps[ps!=0]

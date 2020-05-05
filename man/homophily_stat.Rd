@@ -4,8 +4,13 @@
 \alias{homophily_stat}
 \title{Calculate homophily in multi-edge graphs.}
 \usage{
-homophily_stat(variable = variable, type = "categorical",
-  nodes = nodes, these.categories.only = NULL, zero_values = NULL)
+homophily_stat(
+  variable = variable,
+  type = "categorical",
+  nodes = nodes,
+  these.categories.only = NULL,
+  zero_values = NULL
+)
 }
 \arguments{
 \item{variable}{A attribute variable. Can be categorical (attribute matches)
