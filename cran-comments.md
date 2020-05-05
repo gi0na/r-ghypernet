@@ -20,11 +20,3 @@ Possibly mis-spelled words in DESCRIPTION:
   Scholtes (21:34, 22:34)
   arxiv (23:28)
   gHypEGs (16:68)
-
-Found the following (possibly) invalid file URIs:
-  URI: sociopatterns.org
-    From: man/contacts.adj.Rd
-  URI: sociopatterns.org
-    From: man/highschool.multiplex.Rd
-  URI: sociopatterns.org
-    From: man/highschool.predictors.Rd
