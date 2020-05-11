@@ -4,7 +4,7 @@
     # Acronyms/Abbreviations can be used on their own in the title 
     # as long as they are explained in the description field.
   
-  -> Title shortened to 59 characters.
+  -> Title shortened to 63 characters.
 
     # Please do not ship the full license but only additional restrictions,
     # otherwise omit the file and its reference entirely. 
