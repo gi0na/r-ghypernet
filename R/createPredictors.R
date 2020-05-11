@@ -31,7 +31,7 @@ createPredictors <- function(predictors,
 
 createPredictors.list <- function(predictors, 
                                   ...) {
-  cat("Creating predictors list...")
+  message("Creating predictors list...")
   predictors <- lapply(X = predictors, 
                        FUN = list)
   for (i in 1:length(predictors)) names(predictors[[i]]) <- names(predictors)[i]

@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{coef.nrm}
 \alias{coef.nrm}
-\title{Print method for coeffiients of models of class \code{'nrm'}.}
+\title{Extraction method for coefficients of models of class \code{'nrm'}.}
 \usage{
 \method{coef}{nrm}(object, ...)
 }
@@ -15,7 +15,7 @@
 coefficients of nrm model.
 }
 \description{
-Print method for coeffiients of models of class \code{'nrm'}.
+Extraction method for coefficients of models of class \code{'nrm'}.
 }
 \seealso{
 \code{\link{nrm}}

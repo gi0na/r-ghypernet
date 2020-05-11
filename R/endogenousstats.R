@@ -269,6 +269,7 @@ findPartners_all <- function(node, el){
 #'   instead.
 #' @param these.categories.only optional vector specifying the categories to be
 #'   used, if only a subset of factor(variable) is needed.
+#' @return Homophily change statistic matrix.
 #' @author LB, GC
 #' @seealso \code{\link{reciprocity_stat}} or \code{\link{sharedPartner_stat}}
 #' @export
@@ -371,6 +372,6 @@ homophily_stat <- function(variable = variable,
     homophily_mat[homophily_mat == 0] <- zero_values
   }
   
-  ## return matrix with 0.1/1 or absolute difference
+  ## return matrix with 1/10 or absolute difference
   return(homophily_mat)
 }

@@ -1,18 +1,20 @@
 Package: ghypernet
 Type: Package
-Title: R Implementation of the Generalised Hypergeometric Ensemble of Random Graphs
+Title: R Implementation of the Generalised Hypergeometric Ensemble
 Version: 1.0.0
-Date: 2020-05-05
+Date: 2020-05-11
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
     person("Vahan", "Nanumyan", email = "vahan@ethz.ch",
             role = c('aut'), comment = c(ORCID = "0000-0001-9054-3217")),
     person("Laurence", "Brandenberger", email = "lbrandenberger@ethz.ch",
-            role = c('aut'))
+            role = c('aut')),
+    person("Giacomo", "Vaccario", email = "gvaccario@ethz.ch",
+            role = c('ctb'))
             )
 URL: http://ghyper.net
-Description: Provides functions for model fitting and selection of gHypEGs.
+Description: Provides functions for model fitting and selection of generalised hypergeometric ensembles of random graphs (gHypEG).
     To learn how to use it, check the vignettes for a quick tutorial.
     Please reference its use as Casiraghi, G., Nanumyan, V. (2019) <doi:10.5281/zenodo.2555300>
     together with those relevant references from the one listed below.
@@ -24,7 +26,7 @@ Description: Provides functions for model fitting and selection of gHypEGs.
     Brandenberger, L., Casiraghi, G., Nanumyan, V., Schweitzer, F. (2019) <doi:10.1145/3341161.3342926>
     Casiraghi, G. (2019) <doi:10.1007/s41109-019-0241-1>.
 Depends: R (>= 3.0)
-License: AGPL-3 | file LICENSE
+License: AGPL-3
 Imports: parallel,
          plyr,
          numbers,

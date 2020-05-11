@@ -39,6 +39,9 @@ does not happen, please recode your zero-values in all your predictors. If
 \code{zero_values} is not specified, the minmal value divided by 10 is used
 instead.}
 }
+\value{
+Homophily change statistic matrix.
+}
 \description{
 The function calculates homophily matrices. If you supply a categorical
 variable (factor, character), the function returns attribute matches for

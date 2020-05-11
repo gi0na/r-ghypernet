@@ -13,32 +13,34 @@
 #' @author  Giona Casiraghi
 #' @seealso \code{\link{nrm}}
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
-#' nrmSelection(adj=contacts.adj,predictors=highschool.predictors,
+#' nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
 #'   ncores=1,directed=FALSE,selfloops=FALSE)
+#'  }
 #' @export
-nrmSelection <- function(adj, predictors, 
+nrm_selection <- function(adj, predictors, 
     directed, selfloops, pval = 0.05, 
     xi = NULL, init = NULL, ncores = NULL, 
-    ...) UseMethod("nrmSelection", 
+    ...) UseMethod("nrm_selection", 
     predictors)
 
 
-#' @describeIn nrmSelection Default method for the nrm stepwise selection.
+#' @describeIn nrm_selection Default method for the nrm stepwise selection.
 #' @export
 #'
-nrmSelection.default <- function(adj, 
+nrm_selection.default <- function(adj, 
                                  predictors, directed, selfloops, 
                                  pval = 0.05, xi = NULL, init = NULL, 
                                  ncores = NULL, ...) {
-  cat("Wrong format of predictors: Use createPredictors()")
+  stop("Wrong format of predictors: Use createPredictors()")
 }
 
 
-#' @describeIn nrmSelection Method for the nrm stepwise selection when nrmpredictors are passed.
+#' @describeIn nrm_selection Method for the nrm stepwise selection when nrmpredictors are passed.
 #' @export
 #'
-nrmSelection.nrmpredictor <- function(adj, 
+nrm_selection.nrmpredictor <- function(adj, 
                                       predictors, directed, selfloops, 
                                       pval = 0.05, xi = NULL, init = NULL, 
                                       ncores = NULL, ...) {
@@ -55,7 +57,7 @@ nrmSelection.nrmpredictor <- function(adj,
   ix <- mat2vec.ix(adj, directed = directed, 
                    selfloops = selfloops)
   M <- sum(adj[ix])
-  cat("\nEstimating Null model...")
+  message("\nEstimating Null model...")
   null.m <- nrm.default(w = list(matrix(1, 
                                         nrow(adj), ncol(adj))), 
                         adj = adj, directed = directed, 
@@ -68,12 +70,12 @@ nrmSelection.nrmpredictor <- function(adj,
     log(sum(adj[mat2vec.ix(adj,directed,selfloops)]), base = 2)
   mod0 <- null.m
   csR2 <- csR2step <- 0
-  cat("\nPerforming forward stepwise selection:")
+  message("\nPerforming forward stepwise selection:")
   ## cycle trough all predictors at
   ## each steps choosing the best
   ## one according to AIC
   for (i in 1:length(predictors)) {
-    cat("\nStep ", i, "...")
+    message("\nStep ", i, "...")
     ## select the best predictor
     ## among those in ww and store it
     ## in w
@@ -122,7 +124,7 @@ nrmSelection.nrmpredictor <- function(adj,
   ## significance: discard all
   ## predictors with significance
   ## below pval
-  cat("\nModel estimation concluded.\n")
+  message("\nModel estimation concluded.\n")
   AICS <- c(null.m$AIC, sapply(models, 
                                FUN = function(mod) mod$AIC))
   R2S <- c(0, sapply(models, FUN = function(mod) mod$R2))
@@ -133,7 +135,7 @@ nrmSelection.nrmpredictor <- function(adj,
                  mcR2 = R2S, csR2 = csR2, 
                  AIC = AICS, directed = directed, 
                  selfloops = selfloops)
-  class(selmod) <- "nrm.selection"
+  class(selmod) <- "nrm_selection"
   return(selmod)
 }
 
@@ -188,27 +190,12 @@ nrmChoose <- function(adj, w.list,
   to.add <- findMDL(nr.ms)
   selected <- list(model = nr.ms[[to.add]], 
                    predictor = to.add, xi = xi)
-  class(selected) <- "nrm.selection"
+  class(selected) <- "nrm_selection"
   return(selected)
 }
 
 
 # ' Auxilliary function, finds mininum AIC among different nrm models.
-# ' 
-# '  ~~ A concise (1-5 lines) description of what the function does. ~~
-# ' 
-# '  ~~ If necessary, more details than the description above ~~
-# ' 
-# ' @param nr.ms  ~~Describe \code{nr.ms} here~~
-# ' @return  
-# ' @note  ~~further notes~~
-# ' @author  ~~who you are~~
-# ' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-# ' @references  ~put references to the literature/web site here ~
-# ' @keywords ~kwd1 ~kwd2
-# ' @examples
-# ' 
-# ' 
 minAIC <- function(nr.ms) {
   # Returns the id of the model
   # with minimal AIC among a
