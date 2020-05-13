@@ -30,6 +30,9 @@ numeric, predicted values from nrm model. (If model is undirected,
 Method to predict the expected values of a nrm model
 }
 \examples{
+data('highschool.predictors')
+highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE, selfloops=FALSE)
+predict(highschool.m, contacts.adj)
 \donttest{
 data('highschool.predictors')
 highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)

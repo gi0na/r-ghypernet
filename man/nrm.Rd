@@ -108,6 +108,14 @@ nrm is used to fit multi-edge network regression models.
 \examples{
 
 ## For a complete example see the vignette
+
+data('highschool.predictors')
+
+highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE,
+  selfloops=FALSE)
+
+highschool.m
+
 \donttest{
 data('highschool.predictors')
 

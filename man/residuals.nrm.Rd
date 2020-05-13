@@ -24,9 +24,9 @@ numeric vector, residuals of nrm model fit against the original data
 Method to compute residuals of nrm models
 }
 \examples{
-\donttest{
+
 data('highschool.predictors')
-highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
+highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 residuals(highschool.m, contacts.adj)
-}
+
 }

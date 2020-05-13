@@ -120,10 +120,10 @@ ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
 #' @export
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(igraph)
 #' data('adj_karate')
-#' result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=100)
+#' result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=10)
 #' }
 #'
 BootstrapProperty <- function(graph, property, directed, 

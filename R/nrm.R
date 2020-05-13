@@ -52,6 +52,14 @@
 #' @examples
 #'
 #' ## For a complete example see the vignette
+#' 
+#' data('highschool.predictors')
+#'
+#' highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE,
+#'   selfloops=FALSE)
+#'
+#' highschool.m
+#' 
 #' \donttest{
 #' data('highschool.predictors')
 #'
@@ -239,6 +247,9 @@ fnM <- function(x, w, xi, adj, directed,
 #' @export
 #'
 #' @examples
+#' data('highschool.predictors')
+#' highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE, selfloops=FALSE)
+#' predict(highschool.m, contacts.adj)
 #' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
