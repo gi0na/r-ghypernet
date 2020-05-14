@@ -96,11 +96,12 @@ logl_matrix <- function(adj, xi, omega,
   # distribution or multinomial
   # depending on size of the
   # network
+  
+  # number of colors and number of
+  # links
+  ix <- mat2vec.ix(adj, directed, selfloops)
+  
   if (is.null(multinomial)) {
-    # number of colors and number of
-    # links
-    ix <- mat2vec.ix(adj, directed,
-                     selfloops)
     if (requireNamespace("BiasedUrn",
                          quietly = TRUE) && sum(ix) <
         2000 && (sum(adj[ix])) <
@@ -111,7 +112,7 @@ logl_matrix <- function(adj, xi, omega,
     }
   }
 
-  if( all(omega==omega[1]) )
+  if( all(omega[ix]==omega[ix][1]) )
     return(logl_hypergeom(adj,
                             xi, directed,
                             selfloops))
