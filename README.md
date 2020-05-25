@@ -1,6 +1,8 @@
-[![Generic badge](https://www.r-pkg.org/badges/version-last-release/ghypernet)]()
+[![Generic badge](https://www.r-pkg.org/badges/version-last-release/ghypernet)](https://cran.r-project.org/package=ghypernet)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2555300.svg)](https://doi.org/10.5281/zenodo.2555300)
-[![Generic badge](https://cranlogs.r-pkg.org/badges/last-month/ghypernet)]()
+[![Generic badge](https://cranlogs.r-pkg.org/badges/last-month/ghypernet)](https://cran.r-project.org/package=ghypernet)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 # Introduction
 `ghypernet` is an OpenSource R package that allows to estimate and work with Generalised Hypergeometric Ensembles of Random Graphs (gHypEG).
 
