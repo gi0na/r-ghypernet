@@ -49,27 +49,27 @@ check_specs <- function(object, ...){
 
 check_specs.matrix <- function(object, ...){
   if(is.matrix(object)){
-    if(is.null(directed)){
+    # if(is.null(directed)){
       if(isSymmetric(object)){
         directed <- FALSE
       } else{
         directed <- TRUE
       }
-    } else{
-      if(!directed & !isSymmetric(object)){
-        warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
-              Adjacency matrix symmetrised as adj <- adj + t(adj)')
-        object <- object + t(object)
-      }
-    }
+    # } else{
+    #    if(!directed & !isSymmetric(object)){
+    #     warning('Trying to compute undirected ensemble for asymmetric adjacency matrix.
+    #           Adjacency matrix symmetrised as adj <- adj + t(adj)')
+    #     object <- object + t(object)
+    #   }
+    # }
 
-    if(is.null(selfloops)){
+    # if(is.null(selfloops)){
       if(all(diag(object)==0)){
         selfloops <- FALSE
       } else{
         selfloops <- TRUE
       }
-    }
+    # }
   }
   return(c('directed'=directed, 'selfloops'=selfloops))
 }
