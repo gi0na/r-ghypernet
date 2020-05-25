@@ -29,10 +29,15 @@ In case the `BiasedUrn` library cannot be found, all computations will be perfor
 The theoretical foundation of the generalised hypergeometric ensemble, gHypEGs, has been developed in the following works:
 
 Casiraghi, G., Nanumyan, V., Scholtes, I., & Schweitzer, F. (2016). [Generalized Hypergeometric Ensembles: Statistical Hypothesis Testing in Complex Networks.](http://arxiv.org/abs/1607.02441) ArXiv Preprint ArXiv:1607.02441.
+
 Casiraghi, G. (2017). [Multiplex Network Regression: How do relations drive interactions?](http://arxiv.org/abs/1702.02048). ArXiv Preprint ArXiv:1702.02048, 15.
+
 Casiraghi, G., Nanumyan, V., Scholtes, I., & Schweitzer, F. (2017). [From Relational Data to Graphs: Inferring Significant Links Using Generalized Hypergeometric Ensembles](https://doi.org/10.1007/978-3-319-67256-4_11) (Vol. 10540, pp. 111–120). Springer Verlag.
+
 Casiraghi, G., & Nanumyan, V. (2018). [Generalised hypergeometric ensembles of random graphs: the configuration model as an urn problem.](http://arxiv.org/abs/1810.06495) ArXiv Preprint ArXiv:1810.06495.
+
 Casiraghi, G. (2019). [The block-constrained configuration model.](https://doi.org/10.1007/s41109-019-0241-1) Applied Network Science, 4(1), 123. 
+
 Brandenberger, L., Casiraghi, G., Nanumyan, V., & Schweitzer, F. (2019). [Quantifying triadic closure in multi-edge social networks.](https://doi.org/10.1145/3341161.3342926) Proceedings of the 2019 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining, 307–310.
 
 # Acknowledgements
