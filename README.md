@@ -3,7 +3,7 @@
 [![Generic badge](https://cranlogs.r-pkg.org/badges/last-month/ghypernet)](https://cran.r-project.org/package=ghypernet)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-\ 
+ 
 
 ![](logo.svg)
 
