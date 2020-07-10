@@ -93,9 +93,10 @@ nrm_selection.nrmpredictor <- function(adj,
                       nr.significance(mod0 = mod0, 
                                       mod1 = sel$model))
     csR2step <- c(csR2step, 
-                  coxsnellR2(mod0 = mod0, 
-                             mod1 = sel$model, 
-                             m = M))
+                  mcfaddenR2(directed = directed, selfloops=selfloops,
+                             mod0 = mod0, 
+                             mod1 = sel$model, nparam = sel$model$df-mod0$df
+                            ))
     csR2 <- c(csR2, coxsnellR2(mod0 = null.m, 
                                mod1 = sel$model, m = M))
     DLs <- c(DLs, sel$model$DL)
@@ -116,9 +117,12 @@ nrm_selection.nrmpredictor <- function(adj,
     models <- c(models, list(sel$model))
     ## initial values for parameter
     ## estimation in next step
-    init <- sel$model$coef
-    if (!is.null(default.init)) 
-      init <- c(init, default.init)
+    ### TODO: fix init
+    default.init[[sel$predictor]] <- NULL
+    init <- lapply(X = default.init, 
+                   FUN = function(w.new) {
+                     c(sel$model$coef, w.new)
+                   })
   }
   ## find best model according to
   ## significance: discard all
@@ -181,11 +185,23 @@ nrmChoose <- function(adj, w.list,
                   parallel::detectCores() - 
                     1)
   }
-  nr.ms <- parallel::mclapply(X = w.list, 
-                              FUN = nrm, adj = adj, xi = xi, 
+  # if(TRUE){
+  if (is.null(init) | length(init)!=length(w.list)){
+    init <- NULL
+      nr.ms <- lapply(FUN = nrm, X=w.list, 
+                              adj = adj, xi = xi, 
                               directed = directed, selfloops = selfloops, 
-                              pval = pval, significance = FALSE, 
-                              init = init, mc.cores = ncores)
+                              pval = pval, significance = FALSE, init=init, 
+                              mc.cores = ncores)
+  } else{
+    nr.ms <- mapply(FUN = nrm, w=w.list, init=init, 
+                    MoreArgs = list(
+                      adj = adj, xi = xi, 
+                      directed = directed, selfloops = selfloops, 
+                      pval = pval, significance = FALSE
+                    ), SIMPLIFY = FALSE,
+                    mc.cores = ncores)
+  }
   # to.add <- minAIC(nr.ms)
   to.add <- findMDL(nr.ms)
   selected <- list(model = nr.ms[[to.add]], 
