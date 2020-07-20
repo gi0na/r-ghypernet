@@ -242,3 +242,37 @@ coef.nrm <- function(object, ...) {
   # coef method for nrm class
   object$coef
 }
+
+## texreg package
+## Texreg: does not (yet) support nrm or gyhpe-class
+# use the extract()-function to make this available
+#' Extract details from statistical models for table construction. The function has methods for a range of statistical models.
+#'
+#' @param model A statistical model object.
+#' @param ... Custom parameters, which are handed over to subroutines. The arguments are usually passed to the summary function, but in some cases to other functions.
+#'
+#' @return The function returns a texreg object.
+#' @export
+#' @importFrom texreg extract screenreg texreg htmlreg
+#' @author L. Brandenberger, G. Casiraghi
+extract.nrm.cluster <- function(model, ...){
+  # calculate SE, tvalues and pvalues
+  coeffic <- as.numeric(model$coef)
+  stderr <- model$confint[,3]
+  tvalues = abs(coeffic/stderr)
+  pval <- 2 * stats::pnorm(-tvalues)
+  
+  # then create and return a texreg object (replace NULL with actual values):
+  tr <- createTexreg(
+    coef.names = names(model$coef),    # character vector of coefficient labels
+    coef = coeffic,          # numeric vector with coefficients
+    se = stderr,            # numeric vector with standard error values
+    pvalues = pval,       # numeric vector with p-values
+    gof.names = c("AIC", "McFadden $R^2$"),     # character vector with goodness-of-fit labels
+    gof = c(model$AIC, model$R2)           # numeric vector of goodness-of-fit statistics
+    #gof.decimal = NULL    # logical vector: GOF statistic has decimal points?
+  )
+  return(tr)
+}
+setMethod(texreg::extract, signature = className("nrm", "ghype"), 
+          definition = extract.nrm.cluster)

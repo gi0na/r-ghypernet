@@ -15,8 +15,9 @@
 #' @examples
 #' \donttest{
 #' data('highschool.predictors')
-#' nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
+#' models <- nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
 #'   ncores=1,directed=FALSE,selfloops=FALSE)
+#' screenreg(models$models, digits=3)
 #'  }
 #' @export
 nrm_selection <- function(adj, predictors, 
@@ -79,7 +80,7 @@ nrm_selection.nrmpredictor <- function(adj,
     ## select the best predictor
     ## among those in ww and store it
     ## in w
-    sel <- nrmChoose(adj = adj, 
+    sel <- nrm_choose(adj = adj, 
                      w.list = ww, xi = xi, 
                      directed = directed, 
                      selfloops = selfloops, 
@@ -165,7 +166,7 @@ nrm_selection.nrmpredictor <- function(adj,
 #'   corresponding predictors in the list
 #'
 #' @export
-nrmChoose <- function(adj, w.list, 
+nrm_choose <- function(adj, w.list, 
                       xi = NULL, directed, selfloops, 
                       pval = 0.05, init = NULL, ncores = NULL) {
   # Computes all the models
@@ -202,8 +203,8 @@ nrmChoose <- function(adj, w.list,
                     ), SIMPLIFY = FALSE,
                     mc.cores = ncores)
   }
-  # to.add <- minAIC(nr.ms)
-  to.add <- findMDL(nr.ms)
+  to.add <- minAIC(nr.ms)
+  # to.add <- findMDL(nr.ms)
   selected <- list(model = nr.ms[[to.add]], 
                    predictor = to.add, xi = xi)
   class(selected) <- "nrm_selection"

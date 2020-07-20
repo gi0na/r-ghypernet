@@ -35,10 +35,11 @@ Imports: parallel,
          dplyr,
          rlang,
          reshape2,
-         rootSolve
+         rootSolve,
+         texreg
 Suggests: BiasedUrn, igraph, knitr, rmarkdown, ggplot2, texreg, ggraph
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Language: en-GB
 LazyData: true

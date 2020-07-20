@@ -84,8 +84,9 @@ Perform AIC forward selection for nrm.
 \examples{
 \donttest{
 data('highschool.predictors')
-nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
+models <- nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
   ncores=1,directed=FALSE,selfloops=FALSE)
+screenreg(models$models, digits=3)
  }
 }
 \seealso{

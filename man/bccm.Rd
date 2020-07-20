@@ -14,7 +14,8 @@ bccm(
   homophily = FALSE,
   inBlockOnly = FALSE,
   xi = NULL,
-  regular = FALSE
+  regular = FALSE,
+  ...
 )
 
 \method{print}{bccm}(x, suppressCall = FALSE, ...)
@@ -38,11 +39,11 @@ bccm(
 
 \item{regular}{optional boolean, fit regular gnp model? if not specified chosen through lr.test.}
 
+\item{\dots}{optional arguments to print or plot methods.}
+
 \item{x}{object of class \code{'bccm'}}
 
 \item{suppressCall}{logical, indicating whether to print the call that generated x}
-
-\item{\dots}{optional arguments to print or plot methods.}
 }
 \value{
 bccm returns an object of class 'bccm' and 'ghype'.
