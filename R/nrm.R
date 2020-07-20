@@ -120,7 +120,7 @@ nrm.default <- function(w, adj,
                               xi = xi, adj = adj, 
                               directed = directed, 
                               selfloops = selfloops, 
-                              start = init, rtol = 1e-10)$root
+                              start = unlist(init), rtol = 1e-10)$root
   }
   # omega matrix
   omega <- apply(sapply(X = 1:length(b), 

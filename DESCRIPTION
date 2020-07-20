@@ -27,7 +27,7 @@ Description: Provides functions for model fitting and selection of generalised h
     Casiraghi, G. (2019) <doi:10.1007/s41109-019-0241-1>.
 Depends: R (>= 3.0)
 License: AGPL-3
-Imports: parallel,
+Imports: pbmcapply,
          plyr,
          numbers,
          purrr,

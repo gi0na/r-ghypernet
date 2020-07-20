@@ -65,6 +65,7 @@ nrm_selection.nrmpredictor <- function(adj,
                         selfloops = selfloops, ci = FALSE)
   xi <- null.m$xi
   ww <- predictors
+  totpred <- length(predictors)
   nms <- c()
   significance <- models <- list()
   DLs <- -null.m$loglikelihood/log(2) + nrow(xi)*(1+directed)/2*
@@ -76,7 +77,7 @@ nrm_selection.nrmpredictor <- function(adj,
   ## each steps choosing the best
   ## one according to AIC
   for (i in 1:length(predictors)) {
-    message("\nStep ", i, "...")
+    message("\nStep ", i, " of ", totpred, "...")
     ## select the best predictor
     ## among those in ww and store it
     ## in w
