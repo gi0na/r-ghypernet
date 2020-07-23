@@ -263,7 +263,7 @@ extract.nrm.cluster <- function(model, ...){
   pval <- 2 * stats::pnorm(-tvalues)
   
   # then create and return a texreg object (replace NULL with actual values):
-  tr <- createTexreg(
+  tr <- texreg::createTexreg(
     coef.names = names(model$coef),    # character vector of coefficient labels
     coef = coeffic,          # numeric vector with coefficients
     se = stderr,            # numeric vector with standard error values

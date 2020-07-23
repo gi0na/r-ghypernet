@@ -36,8 +36,9 @@ Imports: pbmcapply,
          rlang,
          reshape2,
          rootSolve,
+         methods,
          texreg
-Suggests: BiasedUrn, igraph, knitr, rmarkdown, ggplot2, texreg, ggraph
+Suggests: BiasedUrn, igraph, knitr, rmarkdown, ggplot2, ggraph
 VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.1

@@ -28,6 +28,6 @@ nr.ci <- function(nr.m, w, adj,
             jn, jn)
     colnames(ci) <- c(paste(1 - 
         pval, "% ci"), paste(1 - 
-        pval, "% ci"), "jn")
+        pval, "% ci"), "st_err")
     ci
 }

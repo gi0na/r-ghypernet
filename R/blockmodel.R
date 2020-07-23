@@ -94,8 +94,8 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   adjframe <- data.frame(adj=adj[mat2vec.ix(xi,directed,selfloops)], block=blocks[mat2vec.ix(xi,directed,selfloops)])
 
   # compute xi-blocks and adj-blocks
-  xib <- xiframe %>% group_by(block) %>% summarise(xi=sum(xi))
-  mb <- adjframe %>% group_by(block) %>% summarise(adj=sum(adj))
+  xib <- xiframe %>% group_by(.data$block) %>% summarise(xi=sum(xi))
+  mb <- adjframe %>% group_by(.data$block) %>% summarise(adj=sum(adj))
 
   ## BUG: if one node singleton in community and selfloops not allowed there is no entry in omegab for it, set manually to 0
   if(!selfloops){

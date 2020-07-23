@@ -17,7 +17,7 @@
 #' data('highschool.predictors')
 #' models <- nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
 #'   ncores=1,directed=FALSE,selfloops=FALSE)
-#' screenreg(models$models, digits=3)
+#' texreg::screenreg(models$models, digits=3)
 #'  }
 #' @export
 nrm_selection <- function(adj, predictors, 
@@ -190,13 +190,13 @@ nrm_choose <- function(adj, w.list,
   # if(TRUE){
   if (is.null(init) | length(init)!=length(w.list)){
     init <- NULL
-      nr.ms <- lapply(FUN = nrm, X=w.list, 
+      nr.ms <- pbmcapply::pbmclapply(FUN = nrm, X=w.list, 
                               adj = adj, xi = xi, 
                               directed = directed, selfloops = selfloops, 
                               pval = pval, significance = FALSE, init=init, 
                               mc.cores = ncores)
   } else{
-    nr.ms <- mapply(FUN = nrm, w=w.list, init=init, 
+    nr.ms <- pbmcapply::pbmcmapply(FUN = nrm, w=w.list, init=init, 
                     MoreArgs = list(
                       adj = adj, xi = xi, 
                       directed = directed, selfloops = selfloops, 
