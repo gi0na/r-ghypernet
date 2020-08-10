@@ -8,3 +8,4 @@ logo.svg
 vignettes/.gitignore
 vignettes/.Rhistory
 LICENSE
+^\.travis\.yml$
