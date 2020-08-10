@@ -12,3 +12,4 @@ LICENSE
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\.github$
