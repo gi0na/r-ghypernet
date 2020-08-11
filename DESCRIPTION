@@ -13,7 +13,7 @@ Authors@R: c(
     person("Giacomo", "Vaccario", email = "gvaccario@ethz.ch",
             role = c('ctb'))
             )
-URL: http://ghyper.net
+URL: https://ghyper.net
 Description: Provides functions for model fitting and selection of generalised hypergeometric ensembles of random graphs (gHypEG).
     To learn how to use it, check the vignettes for a quick tutorial.
     Please reference its use as Casiraghi, G., Nanumyan, V. (2019) <doi:10.5281/zenodo.2555300>
