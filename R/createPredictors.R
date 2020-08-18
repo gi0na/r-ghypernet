@@ -8,11 +8,11 @@
 #'
 #' @examples
 #' data('highschool.predictors')
-#' predictors <- createPredictors(highschool.predictors)
+#' predictors <- create_predictors(highschool.predictors)
 #' 
-createPredictors <- function(predictors, 
+create_predictors <- function(predictors, 
     ...) {
-    UseMethod("createPredictors")
+    UseMethod("create_predictors")
 }
 
 
@@ -26,10 +26,10 @@ createPredictors <- function(predictors,
 #'
 #' @examples
 #' data('highschool.predictors')
-#' predictors <- createPredictors(highschool.predictors)
+#' predictors <- create_predictors(highschool.predictors)
 #'
 
-createPredictors.list <- function(predictors, 
+create_predictors.list <- function(predictors, 
                                   ...) {
   message("Creating predictors list...")
   predictors <- lapply(X = predictors, 
@@ -39,10 +39,10 @@ createPredictors.list <- function(predictors,
   return(predictors)
 }
 
-# createPredictors.data.frame <-
+# create_predictors.data.frame <-
 # function(predictor, ...){
 # ##TODO }
 
-# createPredictors.matrix <-
+# create_predictors.matrix <-
 # function(predictor, ...){
 # ##TODO }

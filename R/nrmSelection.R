@@ -15,7 +15,7 @@
 #' @examples
 #' \donttest{
 #' data('highschool.predictors')
-#' models <- nrm_selection(adj=contacts.adj,predictors=createPredictors(highschool.predictors),
+#' models <- nrm_selection(adj=contacts.adj,predictors=create_predictors(highschool.predictors),
 #'   ncores=1,directed=FALSE,selfloops=FALSE)
 #' texreg::screenreg(models$models, digits=3)
 #'  }
@@ -34,7 +34,7 @@ nrm_selection.default <- function(adj,
                                  predictors, directed, selfloops, 
                                  pval = 0.05, xi = NULL, init = NULL, 
                                  ncores = NULL, ...) {
-  stop("Wrong format of predictors: Use createPredictors()")
+  stop("Wrong format of predictors: Use create_predictors()")
 }
 
 
