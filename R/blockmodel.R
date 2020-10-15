@@ -23,7 +23,9 @@
 #' blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)
 #' 
 bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE, ...){
-  .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, xi = xi, regular = regular, ...)
+  model <- .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, xi = xi, regular = regular, ...)
+  model$call <- match.call()
+  return(model)
 }
 
 .bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE){

@@ -202,7 +202,7 @@ lr.test <- function(nullmodel, altmodel, df=NULL, Beta = TRUE, seed = NULL, nemp
       a <- (mu/(mm*va))*(mu*(mm-mu)-va)
       b <- (mm-mu)*a/mu
 
-      if(returnBeta)
+      if(isTRUE(returnBeta))
         return(c(stats::pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F), a,b,mm))
 
       p.value <- stats::pbeta(q = -2*llratio/mm, shape1 = a, shape2 = b, lower.tail = F)

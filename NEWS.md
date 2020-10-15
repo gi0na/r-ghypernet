@@ -5,5 +5,5 @@
 * Modified `bccm()` to improve its speed when passing a large number of labels.
 * Renamed `nrmSelection()`, `createPredictors`, and `nrmChoose()` to `nrm_selection()`, `create_predictors`, and `nrm_choose()` respectively, to standardise functions' names.
 * Updated `nrm_selection()` and `nrm_choose()` to use 'pbmclapply' and show a progress bar.
-* Added compatibility to 'texreg' to visualise the output a table of parameters.
+* Added compatibility to 'texreg' to visualise the output of nrm as a table of parameters.
 
