@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -82,13 +85,13 @@
 
       
 
-      </header><script src="tutorial_files/header-attrs-2.3/header-attrs.js"></script><script src="tutorial_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="tutorial_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ghypernet Tutorial</h1>
                         <h4 class="author">Giona Casiraghi</h4>
             
-            <h4 class="date">2020-08-10</h4>
+            <h4 class="date">2020-10-15</h4>
       
       
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -199,9 +202,8 @@
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"vertexlabels"</span>)
 (<span class="no">blockmodel</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span>(<span class="kw">adj</span> <span class="kw">=</span> <span class="no">adj_karate</span>, <span class="kw">labels</span> <span class="kw">=</span> <span class="no">vertexlabels</span>, <span class="kw">directed</span> <span class="kw">=</span> <span class="no">directed</span>, <span class="kw">selfloops</span> <span class="kw">=</span> <span class="no">selfloops</span>))
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, </span>
-<span class="co">#&gt;     directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, </span>
-<span class="co">#&gt;     xi = xi, regular = regular)</span>
+<span class="co">#&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = directed, </span>
+<span class="co">#&gt;     selfloops = selfloops)</span>
 <span class="co">#&gt; block ghype undirected , no selfloops </span>
 <span class="co">#&gt; 34 vertices, 231 edges </span>
 <span class="co">#&gt; Loglikelihood:</span>
@@ -222,9 +224,8 @@
 <p>By default, the function fits a ‘full’ block structure, where every parameter for in- out-blocks relations are different. In this case this corresponds to three parameters: one for block 1, one for block 2, one for the edges between the two blocks. However, in some cases we see that the parameters of in-blocks relations are similar to each other, as can be seen above looking at the diagonal entries of the block matrix. In this case, a full block structure may overfit the data, while a simpler model could be better. This can be fitted setting the parameter <code>homophily=TRUE</code>. This corresponds to a model where there are only two parameters, one for in-block edges, one for out-block edges, irrespectively of the number of blocks. The result is shown below.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r">(<span class="no">blockmodel_2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span>(<span class="kw">adj</span> <span class="kw">=</span> <span class="no">adj_karate</span>, <span class="kw">labels</span> <span class="kw">=</span> <span class="no">vertexlabels</span>, <span class="kw">directed</span> <span class="kw">=</span> <span class="no">directed</span>, <span class="kw">selfloops</span> <span class="kw">=</span> <span class="no">selfloops</span>, <span class="kw">homophily</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, </span>
-<span class="co">#&gt;     directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, </span>
-<span class="co">#&gt;     xi = xi, regular = regular)</span>
+<span class="co">#&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = directed, </span>
+<span class="co">#&gt;     selfloops = selfloops, homophily = TRUE)</span>
 <span class="co">#&gt; block ghype undirected , no selfloops </span>
 <span class="co">#&gt; 34 vertices, 231 edges </span>
 <span class="co">#&gt; Loglikelihood:</span>
@@ -239,32 +240,23 @@
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></pre></body></html></div>
 <p>The first test we need to perform is whether either of the model just fitted significantly improve the fit to the data. We do so by performing a likelihood ratio test between the configuration model and the bccms.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/lr.test.html">lr.test</a></span>(<span class="kw">nullmodel</span> <span class="kw">=</span> <span class="no">confmodel</span>, <span class="kw">altmodel</span> <span class="kw">=</span> <span class="no">blockmodel</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">123</span>)
-<span class="co">#&gt; Warning in stats::pbeta(q = -2 * llratio/mm, shape1 = a, shape2 = b, lower.tail</span>
-<span class="co">#&gt; = F): NaNs produced</span>
-<span class="co">#&gt; Warning in stats::qbeta(p = c(0.025, 0.975), shape1 = a, shape2 = b): NaNs</span>
-<span class="co">#&gt; produced</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  </span>
-<span class="co">#&gt; lr = 195.41, df = 2, p-value = NA</span>
+<span class="co">#&gt; lr = 195.41, df = 2, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  NaN NaN</span>
+<span class="co">#&gt;  1.306644e-08 8.230181e+00</span>
 <span class="fu"><a href="../reference/lr.test.html">lr.test</a></span>(<span class="kw">nullmodel</span> <span class="kw">=</span> <span class="no">confmodel</span>, <span class="kw">altmodel</span> <span class="kw">=</span> <span class="no">blockmodel_2</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">123</span>)
-<span class="co">#&gt; Warning in stats::pbeta(q = -2 * llratio/mm, shape1 = a, shape2 = b, lower.tail</span>
-<span class="co">#&gt; = F): NaNs produced</span>
-
-<span class="co">#&gt; Warning in stats::pbeta(q = -2 * llratio/mm, shape1 = a, shape2 = b, lower.tail</span>
-<span class="co">#&gt; = F): NaNs produced</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  </span>
-<span class="co">#&gt; lr = 194.96, df = 1, p-value = NA</span>
+<span class="co">#&gt; lr = 194.96, df = 1, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  NaN NaN</span></pre></body></html></div>
+<span class="co">#&gt;  1.474561e-08 8.031860e+00</span></pre></body></html></div>
 <p>Unsurprisingly, the test gives low p-values, confirming the presence of a block structure. Again, we can perform a similar analysis using AIC:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span>(<span class="no">confmodel</span>)
 <span class="co">#&gt; [1] 937.0897</span>
@@ -278,10 +270,10 @@
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  </span>
-<span class="co">#&gt; lr = 0.45622, df = 1, p-value = 0.4784</span>
+<span class="co">#&gt; lr = 0.45622, df = 1, p-value = 0.7645</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  0.001077758 4.375384945</span></pre></body></html></div>
+<span class="co">#&gt;  0.03722328 6.94467855</span></pre></body></html></div>
 <p>The result shows that the added complexity of the second model is not justified by the data. We investigate this further by comparing the results with what obtained from random variations.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># First generate random sample from blockmodel</span>
 <span class="no">random_graphs_bccm2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span>(<span class="kw">nsamples</span> <span class="kw">=</span> <span class="fl">100</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">blockmodel_2</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">123</span>)
@@ -308,19 +300,19 @@
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  </span>
-<span class="co">#&gt; lr = 454.89, df = 559, p-value = 3.802e-09</span>
+<span class="co">#&gt; lr = 454.89, df = 559, p-value = 7.719e-14</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  295.5513 371.0829</span>
+<span class="co">#&gt;  270.4443 340.7790</span>
 <span class="fu"><a href="../reference/gof.test.html">gof.test</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">blockmodel_2</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">123</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test -- GOF</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  </span>
-<span class="co">#&gt; lr = 454.89, df = 559, p-value = 3.802e-09</span>
+<span class="co">#&gt; lr = 454.89, df = 559, p-value = 7.719e-14</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  295.5513 371.0829</span></pre></body></html></div>
+<span class="co">#&gt;  270.4443 340.7790</span></pre></body></html></div>
 <p>The reason for this result is the fact that, although the bccm is a good fit for the empirical graph, the latter is characterised by some particular structures that are not encoded by the bccm. For example, the empirical graph is characterised by few ‘bridges’ between the two communities, managed by relatively low degree vertices. Instead, the bccm assumes that <em>all</em> vertices connect weakly the two communities, with an amount of edges proportional to the degree.</p>
 </div>
   </div>

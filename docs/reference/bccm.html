@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -112,6 +112,9 @@
       <a href="../articles/tutorial.html">ghypernet Tutorial</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -229,9 +232,8 @@
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'vertexlabels'</span>)
 <span class='no'>bcc.model</span> <span class='kw'>&lt;-</span> <span class='fu'>bccm</span>(<span class='no'>adj_karate</span>, <span class='kw'>labels</span><span class='kw'>=</span><span class='no'>vertexlabels</span>, <span class='kw'>directed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>selfloops</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>bcc.model</span>)</div><div class='output co'>#&gt; Call:
-#&gt; .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, 
-#&gt;     directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, 
-#&gt;     xi = xi, regular = regular)
+#&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, 
+#&gt;     selfloops = FALSE)
 #&gt; block ghype undirected , no selfloops 
 #&gt; 34 vertices, 231 edges 
 #&gt; Loglikelihood:

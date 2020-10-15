@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Swiss MPs committee affiliation data frame. — dtcommittee • ghypernet</title>
+<title>Create a nrmpredictor object from list — create_predictors.list • ghypernet</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,8 @@
 
 
 
-<meta property="og:title" content="Swiss MPs committee affiliation data frame. — dtcommittee" />
-<meta property="og:description" content="**dtcommittee**: a list of committees each MP was part of during their stay in 
-parliament" />
+<meta property="og:title" content="Create a nrmpredictor object from list — create_predictors.list" />
+<meta property="og:description" content="Create a nrmpredictor object from list" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -133,23 +132,39 @@ parliament" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Swiss MPs committee affiliation data frame.</h1>
+    <h1>Create a nrmpredictor object from list</h1>
     
-    <div class="hidden name"><code>dtcommittee.Rd</code></div>
+    <div class="hidden name"><code>create_predictors.list.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>**dtcommittee**: a list of committees each MP was part of during their stay in 
-parliament</p>
+    <p>Create a nrmpredictor object from list</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dtcommittee</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for list</span>
+<span class='fu'><a href='create_predictors.html'>create_predictors</a></span>(<span class='no'>predictors</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>predictors</th>
+      <td><p>the dataframe or list of predictors for to apply nrm model selection</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional parameters used to creating the predictor object (currently disabled)</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>163x2 data.frame</p>
+    <p>nested list of nrmpredictor class</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'highschool.predictors'</span>)
+<span class='no'>predictors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_predictors.html'>create_predictors</a></span>(<span class='no'>highschool.predictors</span>)</div><div class='output co'>#&gt; <span class='message'>Creating predictors list...</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

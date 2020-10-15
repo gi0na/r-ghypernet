@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Swiss MPs committee affiliation data frame. — dtcommittee • ghypernet</title>
+<title>Changelog • ghypernet</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,7 @@
 
 
 
-<meta property="og:title" content="Swiss MPs committee affiliation data frame. — dtcommittee" />
-<meta property="og:description" content="**dtcommittee**: a list of committees each MP was part of during their stay in 
-parliament" />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -68,7 +66,7 @@ parliament" />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -133,29 +131,31 @@ parliament" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Swiss MPs committee affiliation data frame.</h1>
-    
-    <div class="hidden name"><code>dtcommittee.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>**dtcommittee**: a list of committees each MP was part of during their stay in 
-parliament</p>
-    </div>
-
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dtcommittee</span>)</pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>163x2 data.frame</p>
-
+    <div id="ghypernet-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#ghypernet-101" class="anchor"></a>ghypernet 1.0.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Fixed a bug in <code>check_specs()</code> that threw an error when the function was called without additional parameters.</li>
+<li>Modified <code><a href="../reference/bccm.html">bccm()</a></code> to improve its speed when passing a large number of labels.</li>
+<li>Renamed <code><a href="../reference/nrm_selection.html">nrmSelection()</a></code>, <code>createPredictors</code>, and <code><a href="../reference/nrm_choose.html">nrmChoose()</a></code> to <code><a href="../reference/nrm_selection.html">nrm_selection()</a></code>, <code>create_predictors</code>, and <code><a href="../reference/nrm_choose.html">nrm_choose()</a></code> respectively, to standardise functions’ names.</li>
+<li>Updated <code><a href="../reference/nrm_selection.html">nrm_selection()</a></code> and <code><a href="../reference/nrm_choose.html">nrm_choose()</a></code> to use ‘pbmclapply’ and show a progress bar.</li>
+<li>Added compatibility to ‘texreg’ to visualise the output of nrm as a table of parameters.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

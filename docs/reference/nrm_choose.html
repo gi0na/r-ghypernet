@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Selects the best set of predictors among the given sets by means of AIC. — nrm_choose • ghypernet</title>
+<title>Selects the best set of predictors among the given sets by means of AIC. — nrmChoose • ghypernet</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Selects the best set of predictors among the given sets by means of AIC. — nrm_choose" />
+<meta property="og:title" content="Selects the best set of predictors among the given sets by means of AIC. — nrmChoose" />
 <meta property="og:description" content="Computes all the models defined by a list of groups of predictors Returns the
 best model according to AIC and id of the corresponding predictors in the
 list The different models are computed in parallel" />
@@ -82,7 +82,7 @@ list The different models are computed in parallel" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -115,6 +115,9 @@ list The different models are computed in parallel" />
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -142,7 +145,18 @@ best model according to AIC and id of the corresponding predictors in the
 list The different models are computed in parallel</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nrm_choose</span>(
+    <pre class="usage"><span class='fu'>nrmChoose</span>(
+  <span class='no'>adj</span>,
+  <span class='no'>w.list</span>,
+  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>directed</span>,
+  <span class='no'>selfloops</span>,
+  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='fu'>nrm_choose</span>(
   <span class='no'>adj</span>,
   <span class='no'>w.list</span>,
   <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,

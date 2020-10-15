@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -82,7 +85,7 @@
 
       
 
-      </header><script src="Tutorial_NRM_files/header-attrs-2.3/header-attrs.js"></script><script src="Tutorial_NRM_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Tutorial_NRM_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to generalized hypergeometric ensembles (gHypEG) regressions.</h1>
@@ -95,7 +98,7 @@
       Chair of Systems Design, ETH Zurich, Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 class="date">2020-08-10</h4>
+            <h4 class="date">2020-10-15</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -1452,7 +1455,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797164  0.006735981</span></pre></body></html></div>
+<span class="co">#&gt; -0.005797168  0.006735970</span></pre></body></html></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">nfit1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span>(<span class="kw">adj</span> <span class="kw">=</span> <span class="no">cospons_mat</span>,
                       <span class="kw">w</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">same_canton</span> <span class="kw">=</span> <span class="no">canton_homophilymat</span>),
@@ -1471,7 +1474,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797171  0.006735961</span></pre></body></html></div>
+<span class="co">#&gt; -0.005797169  0.006735968</span></pre></body></html></div>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="kw pkg">texreg</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span>(<span class="no">nfit1</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ============================</span>
@@ -1526,7 +1529,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt;     online_similarity      0.03 ***</span>
 <span class="co">#&gt;                           (0.00)   </span>
 <span class="co">#&gt; -----------------------------------</span>
-<span class="co">#&gt; AIC                    55374.68    </span>
+<span class="co">#&gt; AIC                    55374.63    </span>
 <span class="co">#&gt; McFadden $R^2$             0.32    </span>
 <span class="co">#&gt; ===================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></body></html></div>
@@ -1615,7 +1618,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; ageout                                         0.07         </span>
 <span class="co">#&gt;                                               (0.04)        </span>
 <span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; AIC                55374.68                59565.77         </span>
+<span class="co">#&gt; AIC                55374.63                59565.77         </span>
 <span class="co">#&gt; McFadden $R^2$         0.32                    0.50         </span>
 <span class="co">#&gt; ============================================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></body></html></div>
