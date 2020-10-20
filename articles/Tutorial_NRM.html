@@ -19,7 +19,6 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="An introduction to generalized hypergeometric ensembles (gHypEG) regressions.">
 <meta property="og:description" content="ghypernet">
-<meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -98,7 +97,7 @@
       Chair of Systems Design, ETH Zurich, Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 class="date">2020-10-15</h4>
+            <h4 class="date">2020-10-20</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -1472,13 +1471,13 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;              Estimate   Std.Err t value    Pr(&gt;t)    </span>
-<span class="co">#&gt; same_canton 0.0906920 0.0066777  13.581 &lt; 2.2e-16 ***</span>
+<span class="co">#&gt; same_canton 0.0906921 0.0066777  13.581 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797171  0.006735967</span></pre></div>
+<span class="co">#&gt; -0.005797166  0.006735974</span></pre></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit">
 <span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
@@ -1492,13 +1491,13 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;              Estimate   Std.Err t value    Pr(&gt;t)    </span>
-<span class="co">#&gt; same_canton 0.0906921 0.0066777  13.581 &lt; 2.2e-16 ***</span>
+<span class="co">#&gt; same_canton 0.0906922 0.0066777  13.581 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797168  0.006735980</span></pre></div>
+<span class="co">#&gt; -0.005797160  0.006735989</span></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -1508,7 +1507,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; same_canton         0.09 ***</span>
 <span class="co">#&gt;                    (0.01)   </span>
 <span class="co">#&gt; ----------------------------</span>
-<span class="co">#&gt; AIC             82323.75    </span>
+<span class="co">#&gt; AIC             82323.81    </span>
 <span class="co">#&gt; McFadden $R^2$     -0.01    </span>
 <span class="co">#&gt; ============================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
@@ -1556,7 +1555,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt;     online_similarity      0.03 ***</span>
 <span class="co">#&gt;                           (0.00)   </span>
 <span class="co">#&gt; -----------------------------------</span>
-<span class="co">#&gt; AIC                    55374.64    </span>
+<span class="co">#&gt; AIC                    55374.63    </span>
 <span class="co">#&gt; McFadden $R^2$             0.32    </span>
 <span class="co">#&gt; ===================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
@@ -1647,7 +1646,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; ageout                                         0.07         </span>
 <span class="co">#&gt;                                               (0.04)        </span>
 <span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; AIC                55374.64                59565.77         </span>
+<span class="co">#&gt; AIC                55374.63                59565.77         </span>
 <span class="co">#&gt; McFadden $R^2$         0.32                    0.50         </span>
 <span class="co">#&gt; ============================================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
