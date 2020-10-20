@@ -7,7 +7,7 @@
   <!-- badges: end -->
  
 
-![](inst/logos/logo.svg)
+![](man/figures/logo.svg)
 
 # Introduction
 `ghypernet` is an OpenSource R package that allows to estimate and work with Generalised Hypergeometric Ensembles of Random Graphs (gHypEG).
