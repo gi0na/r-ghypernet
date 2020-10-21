@@ -170,7 +170,7 @@ dtsorted <- dplyr::left_join(dtsorted, dt_unsorted, by = "idMP")
 identical(dt$idMP, dtsorted$idMP)
 ```
 
-Learn more about data joins [here](https://www.r-bloggers.com/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/).
+Learn more about data joins [here](https://www.r-bloggers.com/2018/10/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/).
 
 ## Independent and control variables
 
