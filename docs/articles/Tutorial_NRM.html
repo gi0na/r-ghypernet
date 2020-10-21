@@ -98,7 +98,7 @@
       Chair of Systems Design, ETH Zurich, Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 class="date">2020-10-20</h4>
+            <h4 class="date">2020-10-21</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -1449,13 +1449,13 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;              Estimate   Std.Err t value    Pr(&gt;t)    </span>
-<span class="co">#&gt; same_canton 0.0906920 0.0066777  13.581 &lt; 2.2e-16 ***</span>
+<span class="co">#&gt; same_canton 0.0906921 0.0066777  13.581 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797175  0.006735962</span></pre></body></html></div>
+<span class="co">#&gt; -0.005797168  0.006735979</span></pre></body></html></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">nfit1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span>(<span class="kw">adj</span> <span class="kw">=</span> <span class="no">cospons_mat</span>,
                       <span class="kw">w</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">same_canton</span> <span class="kw">=</span> <span class="no">canton_homophilymat</span>),
@@ -1468,13 +1468,13 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;              Estimate   Std.Err t value    Pr(&gt;t)    </span>
-<span class="co">#&gt; same_canton 0.0906919 0.0066777  13.581 &lt; 2.2e-16 ***</span>
+<span class="co">#&gt; same_canton 0.0906921 0.0066777  13.581 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797180  0.006735943</span></pre></body></html></div>
+<span class="co">#&gt; -0.005797168  0.006735977</span></pre></body></html></div>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="kw pkg">texreg</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span>(<span class="no">nfit1</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ============================</span>
@@ -1483,7 +1483,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; same_canton         0.09 ***</span>
 <span class="co">#&gt;                    (0.01)   </span>
 <span class="co">#&gt; ----------------------------</span>
-<span class="co">#&gt; AIC             82323.75    </span>
+<span class="co">#&gt; AIC             82323.76    </span>
 <span class="co">#&gt; McFadden $R^2$     -0.01    </span>
 <span class="co">#&gt; ============================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></body></html></div>
@@ -1529,7 +1529,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt;     online_similarity      0.03 ***</span>
 <span class="co">#&gt;                           (0.00)   </span>
 <span class="co">#&gt; -----------------------------------</span>
-<span class="co">#&gt; AIC                    55374.64    </span>
+<span class="co">#&gt; AIC                    55374.65    </span>
 <span class="co">#&gt; McFadden $R^2$             0.32    </span>
 <span class="co">#&gt; ===================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></body></html></div>
@@ -1618,7 +1618,7 @@ shp_cospons_outgoing[1:5, 1:3]
 <span class="co">#&gt; ageout                                         0.07         </span>
 <span class="co">#&gt;                                               (0.04)        </span>
 <span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; AIC                55374.64                59565.77         </span>
+<span class="co">#&gt; AIC                55374.65                59565.77         </span>
 <span class="co">#&gt; McFadden $R^2$         0.32                    0.50         </span>
 <span class="co">#&gt; ============================================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></body></html></div>
@@ -1643,12 +1643,12 @@ shp_cospons_outgoing[1:5, 1:3]
                          <span class="kw">sameparty</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">party_homophilymat</span>))
 <span class="no">nfit2omega</span>[<span class="no">nfit2omega</span> <span class="kw">==</span> <span class="fl">0</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
 <span class="no">nfit2omega</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="no">nfit2omega</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">nfit2omega</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">age_absdiff</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">omega</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">sameparty</span>)))+
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.1</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>() + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span>(<span class="st">""</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#E41A1C'</span>, <span class="st">'#377EB8'</span>), <span class="kw">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Between parties'</span>, <span class="st">'Within party'</span>))+
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Age difference"</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Tie propensities"</span>)+
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">'Model (2): Marginal effects of age difference'</span>)
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(<span class="no">nfit2omega</span>, <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">age_absdiff</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">omega</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">sameparty</span>)))+
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span>(<span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.1</span>) +
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_smooth.html">geom_smooth</a></span>() + <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>) +
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/scale_manual.html">scale_color_manual</a></span>(<span class="st">""</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#E41A1C'</span>, <span class="st">'#377EB8'</span>), <span class="kw">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Between parties'</span>, <span class="st">'Within party'</span>))+
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">xlab</a></span>(<span class="st">"Age difference"</span>) + <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">ylab</a></span>(<span class="st">"Tie propensities"</span>)+
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">ggtitle</a></span>(<span class="st">'Model (2): Marginal effects of age difference'</span>)
 <span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</span></pre></body></html></div>
 <p><img src="Tutorial_NRM_files/figure-html/unnamed-chunk-36-1.png" width="672"></p>
 </div>
@@ -1658,11 +1658,11 @@ shp_cospons_outgoing[1:5, 1:3]
 <p>The <code><a href="../reference/rghype.html">rghype()</a></code>-function simulates networks form <code>nrm</code>-models. The number of simulations can be specified with the <code>nsamples</code> argument.</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">simnw</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span>(<span class="kw">nsamples</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">nfit2</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">1253</span>)</pre></body></html></div>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span>(<span class="kw">graph</span> <span class="kw">=</span> <span class="no">simnw</span>, <span class="kw">layout</span> <span class="kw">=</span> <span class="st">'stress'</span>) +
-  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="no">weight</span><span class="kw">&gt;</span><span class="fl">5</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="no">weight</span>)) +
-  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">dt</span>$<span class="no">parlGroup</span>), <span class="kw">size</span><span class="kw">=</span><span class="fl">10</span>*<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">simnw</span>,<span class="fl">1</span>,<span class="no">sum</span>)/<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">simnw</span>,<span class="fl">1</span>,<span class="no">sum</span>))) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span>(<span class="st">""</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'orange'</span>, <span class="st">'yellow'</span>, <span class="st">'blue'</span>, <span class="st">'green'</span>, <span class="st">'grey'</span>,
+  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="no">weight</span><span class="kw">&gt;</span><span class="fl">5</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="no">weight</span>)) +
+  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">dt</span>$<span class="no">parlGroup</span>), <span class="kw">size</span><span class="kw">=</span><span class="fl">10</span>*<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">simnw</span>,<span class="fl">1</span>,<span class="no">sum</span>)/<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">simnw</span>,<span class="fl">1</span>,<span class="no">sum</span>))) +
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/scale_manual.html">scale_colour_manual</a></span>(<span class="st">""</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'orange'</span>, <span class="st">'yellow'</span>, <span class="st">'blue'</span>, <span class="st">'green'</span>, <span class="st">'grey'</span>,
                                     <span class="st">'darkblue'</span>, <span class="st">'red'</span>, <span class="st">'darkgreen'</span>, <span class="st">'purple'</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>() + <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/theme_graph.html">theme_graph</a></span>()</pre></body></html></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>) + <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/coord_fixed.html">coord_fixed</a></span>() + <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/theme_graph.html">theme_graph</a></span>()</pre></body></html></div>
 <p><img src="Tutorial_NRM_files/figure-html/unnamed-chunk-38-1.png" width="480"></p>
 </div>
 <div id="goodness-of-fit-measures" class="section level2">
