@@ -203,7 +203,7 @@ It's good to have it in the tutorial though, I think. -->
 <span class="va">dtsorted</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dtsorted</span>, <span class="va">dt_unsorted</span>, by <span class="op">=</span> <span class="st">"idMP"</span><span class="op">)</span> 
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">idMP</span>, <span class="va">dtsorted</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></pre></div>
-<p>Learn more about data joins <a href="https://www.r-bloggers.com/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/">here</a>.</p>
+<p>Learn more about data joins <a href="https://www.r-bloggers.com/2018/10/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/">here</a>.</p>
 </div>
 <div id="independent-and-control-variables" class="section level2">
 <h2 class="hasAnchor">
@@ -1479,7 +1479,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797170  0.006735971</span></pre></div>
+<span class="co">#&gt; -0.005797168  0.006735975</span></pre></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit">
 <span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
@@ -1493,13 +1493,13 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;              Estimate   Std.Err t value    Pr(&gt;t)    </span>
-<span class="co">#&gt; same_canton 0.0906919 0.0066777  13.581 &lt; 2.2e-16 ***</span>
+<span class="co">#&gt; same_canton 0.0906921 0.0066777  13.581 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797173  0.006735954</span></pre></div>
+<span class="co">#&gt; -0.005797167  0.006735971</span></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -1557,7 +1557,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt;     online_similarity      0.03 ***</span>
 <span class="co">#&gt;                           (0.00)   </span>
 <span class="co">#&gt; -----------------------------------</span>
-<span class="co">#&gt; AIC                    55374.61    </span>
+<span class="co">#&gt; AIC                    55374.62    </span>
 <span class="co">#&gt; McFadden $R^2$             0.32    </span>
 <span class="co">#&gt; ===================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
@@ -1648,7 +1648,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; ageout                                         0.07         </span>
 <span class="co">#&gt;                                               (0.04)        </span>
 <span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; AIC                55374.61                59565.77         </span>
+<span class="co">#&gt; AIC                55374.62                59565.77         </span>
 <span class="co">#&gt; McFadden $R^2$         0.32                    0.50         </span>
 <span class="co">#&gt; ============================================================</span>
 <span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
