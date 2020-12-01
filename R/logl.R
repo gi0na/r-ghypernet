@@ -1,7 +1,7 @@
 #' Extract Log-Likelihood
 #'
 #' @param object ghype model.
-#' @param ... (ignored) some methods for this generic function require additional arguments.
+#' @param ... additional arguments passed to and from internal methods.
 #'
 #' @return Returns an object of class logLik. This is a number with at least one
 #' attribute, "df" (degrees of freedom), giving the number of (estimated) parameters
@@ -34,7 +34,7 @@ logLik.ghype <- function(object, ...){
 #'   original adjacency matrix stored in object.
 #' @param multinomial  optional boolean. Force multinomial approximation? If not
 #'   chosen, multinomial chosen for large graphs.
-#' @param ... (currently ignored) extra parameters for internal methods
+#' @param ... additional parameters passed to and from internal methods
 #'   
 #' @return
 #' loglikelihood value
@@ -96,11 +96,12 @@ logl_matrix <- function(adj, xi, omega,
   # distribution or multinomial
   # depending on size of the
   # network
+  
+  # number of colors and number of
+  # links
+  ix <- mat2vec.ix(adj, directed, selfloops)
+  
   if (is.null(multinomial)) {
-    # number of colors and number of
-    # links
-    ix <- mat2vec.ix(adj, directed,
-                     selfloops)
     if (requireNamespace("BiasedUrn",
                          quietly = TRUE) && sum(ix) <
         2000 && (sum(adj[ix])) <
@@ -111,7 +112,7 @@ logl_matrix <- function(adj, xi, omega,
     }
   }
 
-  if( all(omega==omega[1]) )
+  if( all(omega[ix]==omega[ix][1]) )
     return(logl_hypergeom(adj,
                             xi, directed,
                             selfloops))

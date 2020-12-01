@@ -76,13 +76,19 @@ vec2mat <- function(vec,directed,selfloops,n){
 #' @param directed boolean, is the graph directed?
 #'
 #' @return a dataframe containing the edgelist
+#' 
+#' @examples 
+#' data(contacts.adj)
+#' el <- adj2el(contacts.adj)
+#' 
 #' @export
 #' @import dplyr
+#' @importFrom rlang .data
 #'
 adj2el <- function(adj, directed=TRUE){
   if(!directed) adj[lower.tri(adj,F)] <- 0
-  reshape2::melt(adj) %>%
-    filter(value!=0) %>%
+  reshape2::melt(adj, value.name = "value") %>%
+    filter(.data$value!=0) %>%
     rename(sender='Var1', target='Var2', edgecount='value') %>%
     mutate_at(c("sender", "target"), as.character) -> el
   return(el)

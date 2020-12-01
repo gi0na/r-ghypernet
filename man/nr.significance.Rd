@@ -8,35 +8,16 @@ means of a likelihood ratio test.}
 nr.significance(mod0 = NULL, mod1, adj = NULL)
 }
 \arguments{
-\item{mod0}{~~Describe \code{mod0} here~~}
+\item{mod0}{null nrm model (optional). defaults to the scm model.}
 
-\item{mod1}{~~Describe \code{mod1} here~~}
+\item{mod1}{alternative nrm model, the model to test}
 
-\item{adj}{~~Describe \code{adj} here~~}
+\item{adj}{adjacency matrix for which performing the test. (optional) defaults to the matrix used for \code{mod1}.}
 }
 \value{
-
+p-value of the lr test mod0 vs mod1
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Computes the significance of more complex model against a simpler model by
+means of a likelihood ratio test.
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

@@ -7,37 +7,17 @@
 nr.ci(nr.m, w, adj, pval)
 }
 \arguments{
-\item{nr.m}{~~Describe \code{nr.m} here~~}
+\item{nr.m}{nrm model from which getting coefficients}
 
-\item{w}{~~Describe \code{w} here~~}
+\item{w}{list of predictors}
 
-\item{adj}{~~Describe \code{adj} here~~}
+\item{adj}{adjacency matrix}
 
-\item{pval}{~~Describe \code{pval} here~~}
+\item{pval}{numeric. confidence level}
 }
 \value{
-
+matrix reporting values of predictors and confidence bounds
 }
 \description{
-~~ A concise (1-5 lines) description of what the function does. ~~
+Internal function to compute confidence intervals for estimated parameters of nrm model
 }
-\details{
-~~ If necessary, more details than the description above ~~
-}
-\note{
-~~further notes~~
-}
-\examples{
-
-}
-\references{
-~put references to the literature/web site here ~
-}
-\seealso{
-~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}

@@ -4,5 +4,12 @@
 ^.*\.Rhistory$
 ^.*\.gitignore$
 cran-comments.md
+logo.svg
 vignettes/.gitignore
 vignettes/.Rhistory
+LICENSE
+^\.travis\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

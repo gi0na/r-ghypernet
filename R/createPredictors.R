@@ -1,35 +1,37 @@
 #' Create a nrmpredictor object from passed argument
 #'
 #' @param predictors the dataframe or list of predictors for to apply nrm model selection
+#' @param ... additional parameters passed to the different methods (currently disabled)
 #'
 #' @return nested list of nrmpredictor class
 #' @export
 #'
 #' @examples
 #' data('highschool.predictors')
-#' predictors <- createPredictors(highschool.predictors)
+#' predictors <- create_predictors(highschool.predictors)
 #' 
-createPredictors <- function(predictors, 
+create_predictors <- function(predictors, 
     ...) {
-    UseMethod("createPredictors")
+    UseMethod("create_predictors")
 }
 
 
 #' Create a nrmpredictor object from list
 #'
 #' @param predictors the dataframe or list of predictors for to apply nrm model selection
+#' @param ... additional parameters used to creating the predictor object (currently disabled)
 #'
 #' @return nested list of nrmpredictor class
 #' @export
 #'
 #' @examples
 #' data('highschool.predictors')
-#' predictors <- createPredictors(highschool.predictors)
+#' predictors <- create_predictors(highschool.predictors)
 #'
 
-createPredictors.list <- function(predictors, 
+create_predictors.list <- function(predictors, 
                                   ...) {
-  cat("Creating predictors list...")
+  message("Creating predictors list...")
   predictors <- lapply(X = predictors, 
                        FUN = list)
   for (i in 1:length(predictors)) names(predictors[[i]]) <- names(predictors)[i]
@@ -37,10 +39,10 @@ createPredictors.list <- function(predictors,
   return(predictors)
 }
 
-# createPredictors.data.frame <-
+# create_predictors.data.frame <-
 # function(predictor, ...){
 # ##TODO }
 
-# createPredictors.matrix <-
+# create_predictors.matrix <-
 # function(predictor, ...){
 # ##TODO }

@@ -4,9 +4,19 @@
 \alias{BootstrapProperty}
 \title{BootstrapProperty computes igraph analytics function on ensemble}
 \usage{
-BootstrapProperty(graph, property, directed, selfloops, nsamples = 1000,
-  xi = NULL, omega = NULL, model = NULL, m = NULL, seed = NULL,
-  ...)
+BootstrapProperty(
+  graph,
+  property,
+  directed,
+  selfloops,
+  nsamples = 1000,
+  xi = NULL,
+  omega = NULL,
+  model = NULL,
+  m = NULL,
+  seed = NULL,
+  ...
+)
 }
 \arguments{
 \item{graph}{igraph graph}
@@ -38,10 +48,10 @@ vector of length nsamples
 BootstrapProperty computes igraph analytics function on ensemble
 }
 \examples{
-\dontrun{
+\donttest{
 library(igraph)
 data('adj_karate')
-result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=100)
+result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=10)
 }
 
 }

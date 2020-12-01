@@ -62,7 +62,6 @@ checkGraphtype <- function(graph) {
 #' @author LB, GC
 #' @seealso \code{\link{sharedPartner_stat}} or \code{\link{homophily_stat}}
 #' @export
-#' @example 
 #' 
 reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
   ## preprocess:
@@ -244,30 +243,33 @@ findPartners_all <- function(node, el){
 #' Calculate homophily in multi-edge graphs.
 #'
 #' The function calculates homophily matrices. If you supply a categorical
-#' variable (factor, character), the function returns attribute matches for dyads
-#' from the same group. If you supply a continuous variable
-#' (numeric, integers), the function returns absolute difference effects for
-#' each dyad in the graph.
+#' variable (factor, character), the function returns attribute matches for
+#' dyads from the same group. If you supply a continuous variable (numeric,
+#' integers), the function returns absolute difference effects for each dyad in
+#' the graph.
 #'
-#' @param variable A attribute variable. Can be categorical (attribute matches) or
-#'   continuous (absolute difference effects).
+#' @param variable A attribute variable. Can be categorical (attribute matches)
+#'   or continuous (absolute difference effects).
 #' @param type set to \code{categorical}. Can be set to \code{absdiff} instead.
 #'   If set to \code{categorical}, the homophily statistic calculates matches
 #'   between dyads from the same group (analogous to dummy variables measuring
 #'   attribute match between two nodes (=10) and attribute mismatch (=1)). If
 #'   set to \code{absdiff} it calculates the difference in values from variable
 #'   for each dyad in the graph.
-#' @param nodes optional character/factor vector. If an edgelist is provied,
-#'   you have to provide a list of unique identifiers of your nodes in the graph.
-#'   This is because in the edgelist, isolates are usually not recorded.
-#'   If you do not specify isolates in your nodes object, they are excluded
-#'   from the analysis (falsifies data).
+#' @param nodes optional character/factor vector. If an edgelist is provied, you
+#'   have to provide a list of unique identifiers of your nodes in the graph.
+#'   This is because in the edgelist, isolates are usually not recorded. If you
+#'   do not specify isolates in your nodes object, they are excluded from the
+#'   analysis (falsifies data).
 #' @param zero_values optional numeric value. Use this to substitute zero-values
 #'   in your reciprocity change statistic matrix. Zero values in the predictors
 #'   are recognized in the gHypEG regression as structural zeros. To ensure this
-#'   does not happen, please recode your zero-values in all your predictors.
-#'   If \code{zero_values} is not specified, the minmal value divided by 10 is
-#'   used instead.
+#'   does not happen, please recode your zero-values in all your predictors. If
+#'   \code{zero_values} is not specified, the minmal value divided by 10 is used
+#'   instead.
+#' @param these.categories.only optional vector specifying the categories to be
+#'   used, if only a subset of factor(variable) is needed.
+#' @return Homophily change statistic matrix.
 #' @author LB, GC
 #' @seealso \code{\link{reciprocity_stat}} or \code{\link{sharedPartner_stat}}
 #' @export
@@ -370,6 +372,6 @@ homophily_stat <- function(variable = variable,
     homophily_mat[homophily_mat == 0] <- zero_values
   }
   
-  ## return matrix with 0.1/1 or absolute difference
+  ## return matrix with 1/10 or absolute difference
   return(homophily_mat)
 }

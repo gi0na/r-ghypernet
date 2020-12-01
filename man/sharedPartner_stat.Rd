@@ -4,8 +4,14 @@
 \alias{sharedPartner_stat}
 \title{Calculate (un-)weighted shared partner change statistics for multi-edge graphs.}
 \usage{
-sharedPartner_stat(graph, directed, weighted = TRUE,
-  triad.type = "undirected", nodes = NULL, zero_values = NULL)
+sharedPartner_stat(
+  graph,
+  directed,
+  weighted = TRUE,
+  triad.type = "undirected",
+  nodes = NULL,
+  zero_values = NULL
+)
 }
 \arguments{
 \item{graph}{A graph adjacency matrix or an edgelist. The edgelist needs to

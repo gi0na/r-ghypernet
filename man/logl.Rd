@@ -6,16 +6,38 @@
 \alias{logl.matrix}
 \title{General method to compute log-likelihood for ghype models.}
 \usage{
-logl(object, xi = NULL, omega = NULL, directed = NULL,
-  selfloops = NULL, adj = NULL, multinomial = NULL, ...)
+logl(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 
-\method{logl}{ghype}(object, xi = NULL, omega = NULL,
-  directed = NULL, selfloops = NULL, adj = NULL,
-  multinomial = NULL, ...)
+\method{logl}{ghype}(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 
-\method{logl}{matrix}(object, xi = NULL, omega = NULL,
-  directed = NULL, selfloops = NULL, adj = NULL,
-  multinomial = NULL, ...)
+\method{logl}{matrix}(
+  object,
+  xi = NULL,
+  omega = NULL,
+  directed = NULL,
+  selfloops = NULL,
+  adj = NULL,
+  multinomial = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{either an adjacency matrix or ghype model If a ghype model is
@@ -42,7 +64,7 @@ original adjacency matrix stored in object.}
 \item{multinomial}{optional boolean. Force multinomial approximation? If not
 chosen, multinomial chosen for large graphs.}
 
-\item{...}{(currently ignored) extra parameters for internal methods}
+\item{...}{additional parameters passed to and from internal methods}
 }
 \value{
 loglikelihood value

@@ -1,20 +1,10 @@
 #' Computes the significance of more complex model against a simpler model by
 #' means of a likelihood ratio test.
 #' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param mod0  ~~Describe \code{mod0} here~~
-#' @param mod1  ~~Describe \code{mod1} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
+#' @param mod0  null nrm model (optional). defaults to the scm model.
+#' @param mod1  alternative nrm model, the model to test
+#' @param adj  adjacency matrix for which performing the test. (optional) defaults to the matrix used for \code{mod1}.
+#' @return  p-value of the lr test mod0 vs mod1
 #' 
 #' @export
 nr.significance <- function(mod0 = NULL, 

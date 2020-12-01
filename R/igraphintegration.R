@@ -1,21 +1,21 @@
 # auxiliary function for to extract igraph properties
 check_specs.igraph <- function(object, ...){
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(object)){
-    if(is.null(directed)){
+    # if(is.null(directed)){
       if(igraph::is.directed(object)){
         directed <- FALSE
       } else{
         directed <- TRUE
       }
-    }
+    # }
 
-    if(is.null(selfloops)){
+    # if(is.null(selfloops)){
       if(igraph::is.simple(igraph::simplify(object, remove.multiple = TRUE, remove.loops = FALSE))){
         selfloops <- FALSE
       } else{
         selfloops <- TRUE
       }
-    }
+    # }
   }
   return(c('directed'=directed, 'selfloops'=selfloops))
 }
@@ -120,10 +120,10 @@ ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
 #' @export
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(igraph)
 #' data('adj_karate')
-#' result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=100)
+#' result <- BootstrapProperty(adj_karate, page_rank, FALSE, FALSE, nsamples=10)
 #' }
 #'
 BootstrapProperty <- function(graph, property, directed, 

@@ -22,8 +22,14 @@
 #' data("vertexlabels","adj_karate")
 #' blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)
 #' 
-bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE){
-  if(is.null(directed) | is.null(selfloops)){
+bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE, ...){
+  model <- .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, xi = xi, regular = regular, ...)
+  model$call <- match.call()
+  return(model)
+}
+
+.bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE){
+    if(is.null(directed) | is.null(selfloops)){
     specs <- check_specs(adj)
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
@@ -90,8 +96,8 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   adjframe <- data.frame(adj=adj[mat2vec.ix(xi,directed,selfloops)], block=blocks[mat2vec.ix(xi,directed,selfloops)])
 
   # compute xi-blocks and adj-blocks
-  xib <- plyr::ddply(xiframe, 'block', plyr::numcolwise(sum))
-  mb <- plyr::ddply(adjframe, 'block', plyr::numcolwise(sum))
+  xib <- xiframe %>% group_by(.data$block) %>% summarise(xi=sum(xi))
+  mb <- adjframe %>% group_by(.data$block) %>% summarise(adj=sum(adj))
 
   ## BUG: if one node singleton in community and selfloops not allowed there is no entry in omegab for it, set manually to 0
   if(!selfloops){
@@ -114,10 +120,10 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
 
 
 
-  omegab <- data.frame(block=xib[,1],omegab=omega.v)
+  omegab <- data.frame(block=xib$block,omegab=omega.v)
 
   # map values to full omega vector
-  omegav <- plyr::mapvalues(xiframe[,2],from=sort(unique(xiframe[,2])), to=omegab[,2][rank(omegab[,1][1:length(unique(xiframe[,2]))])])
+  omegav <- plyr::mapvalues(xiframe$block,from=sort(unique(xiframe$block)), to=omegab$omega[rank(omegab$block[1:length(unique(xiframe$block))])])
 
   # generate omega matrix
   omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
@@ -143,7 +149,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   model$directedBlocks <- directedBlocks
   model$homophily <-  homophily
   model$inBlockOnly <- inBlockOnly
-  ci <- cbind(rep(0,length(xib[,1])),rep(0,length(xib[,1])),rep(0,length(xib[,1])))
+  ci <- cbind(rep(0,nrow(xib)),rep(0,nrow(xib)),rep(0,nrow(xib)))
   # if(length(zerosid)!=0){
   #   ci[-zerosid,][1,] <- c(1,1,0)
   #   ci[-zerosid,][-1,] <-
@@ -151,11 +157,13 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   #                   xiBlocks = xib[-zerosid,2][-1],
   #                   mBlocks = mb[-zerosid,2][-1], m=model$m)
   # } else{
+  if(isFALSE(ignore_pvals)){
     ci[1,] <- c(omegab[1,2],omegab[1,2],0)
     ci[-1,] <-
-      blockmodel.ci(omegaBlocks = omegab[,2][-1],
-                    xiBlocks = xib[,2][-1],
-                    mBlocks = mb[,2][-1], m=model$m)
+      blockmodel.ci(omegaBlocks = omegab$omegab[-1],
+                    xiBlocks = xib$xi[-1],
+                    mBlocks = mb$adj[-1], m=model$m)
+  }
   # }
   model$ci <- ci
   model$coef <- omegab[,2]

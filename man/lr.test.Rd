@@ -4,9 +4,17 @@
 \alias{lr.test}
 \title{Perform likelihood ratio test between two ghype models.}
 \usage{
-lr.test(nullmodel, altmodel, df = NULL, williams = FALSE,
-  Beta = TRUE, seed = NULL, nempirical = NULL, parallel = FALSE,
-  returnBeta = FALSE, method = NULL)
+lr.test(
+  nullmodel,
+  altmodel,
+  df = NULL,
+  Beta = TRUE,
+  seed = NULL,
+  nempirical = NULL,
+  parallel = FALSE,
+  returnBeta = FALSE,
+  method = NULL
+)
 }
 \arguments{
 \item{nullmodel}{ghype object. The null model}
@@ -14,8 +22,6 @@ lr.test(nullmodel, altmodel, df = NULL, williams = FALSE,
 \item{altmodel}{ghype object. The alternative model}
 
 \item{df}{optional scalar. the number of degrees of freedom.}
-
-\item{williams}{(deprecated keep FALSE)}
 
 \item{Beta}{boolean, whether to use empirical Beta distribution approximation. Default TRUE}
 

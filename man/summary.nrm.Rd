@@ -2,18 +2,25 @@
 % Please edit documentation in R/print.R
 \name{summary.nrm}
 \alias{summary.nrm}
+\alias{print.summary.nrm}
 \title{Summary method for elements of class \code{'nrm'}.}
 \usage{
 \method{summary}{nrm}(object, ...)
+
+\method{print}{summary.nrm}(x, ...)
 }
 \arguments{
 \item{object}{an object of class 'nrm', usually, a result of a call to \code{nrm}.}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{x}{object of class `summary.nrm` returned by [summary.nrm()].}
+}
+\value{
+The function \code{\link{summary.nrm}} computes and
+  returns a list of summary statistics of the fitted
+  \code{\link{nrm}} model given in \code{object}.
 }
 \description{
-Summary method for elements of class \code{'nrm'}.
-}
-\examples{
-
+Currently it provides the same output as \code{'print.nrm'}
 }

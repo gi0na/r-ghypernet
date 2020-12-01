@@ -17,3 +17,8 @@ a dataframe containing the edgelist
 \description{
 Maps adjacency matrix to edgelist
 }
+\examples{
+data(contacts.adj)
+el <- adj2el(contacts.adj)
+
+}

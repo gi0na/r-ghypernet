@@ -13,32 +13,35 @@
 #' @author  Giona Casiraghi
 #' @seealso \code{\link{nrm}}
 #' @examples
+#' \donttest{
 #' data('highschool.predictors')
-#' nrmSelection(adj=contacts.adj,predictors=highschool.predictors,
+#' models <- nrm_selection(adj=contacts.adj,predictors=create_predictors(highschool.predictors),
 #'   ncores=1,directed=FALSE,selfloops=FALSE)
+#' texreg::screenreg(models$models, digits=3)
+#'  }
 #' @export
-nrmSelection <- function(adj, predictors, 
+nrm_selection <- function(adj, predictors, 
     directed, selfloops, pval = 0.05, 
     xi = NULL, init = NULL, ncores = NULL, 
-    ...) UseMethod("nrmSelection", 
+    ...) UseMethod("nrm_selection", 
     predictors)
 
 
-#' @describeIn nrmSelection Default method for the nrm stepwise selection.
+#' @describeIn nrm_selection Default method for the nrm stepwise selection.
 #' @export
 #'
-nrmSelection.default <- function(adj, 
+nrm_selection.default <- function(adj, 
                                  predictors, directed, selfloops, 
                                  pval = 0.05, xi = NULL, init = NULL, 
                                  ncores = NULL, ...) {
-  cat("Wrong format of predictors: Use createPredictors()")
+  stop("Wrong format of predictors: Use create_predictors()")
 }
 
 
-#' @describeIn nrmSelection Method for the nrm stepwise selection when nrmpredictors are passed.
+#' @describeIn nrm_selection Method for the nrm stepwise selection when nrmpredictors are passed.
 #' @export
 #'
-nrmSelection.nrmpredictor <- function(adj, 
+nrm_selection.nrmpredictor <- function(adj, 
                                       predictors, directed, selfloops, 
                                       pval = 0.05, xi = NULL, init = NULL, 
                                       ncores = NULL, ...) {
@@ -55,29 +58,30 @@ nrmSelection.nrmpredictor <- function(adj,
   ix <- mat2vec.ix(adj, directed = directed, 
                    selfloops = selfloops)
   M <- sum(adj[ix])
-  cat("\nEstimating Null model...")
+  message("\nEstimating Null model...")
   null.m <- nrm.default(w = list(matrix(1, 
                                         nrow(adj), ncol(adj))), 
                         adj = adj, directed = directed, 
                         selfloops = selfloops, ci = FALSE)
   xi <- null.m$xi
   ww <- predictors
+  totpred <- length(predictors)
   nms <- c()
   significance <- models <- list()
   DLs <- -null.m$loglikelihood/log(2) + nrow(xi)*(1+directed)/2*
     log(sum(adj[mat2vec.ix(adj,directed,selfloops)]), base = 2)
   mod0 <- null.m
   csR2 <- csR2step <- 0
-  cat("\nPerforming forward stepwise selection:")
+  message("\nPerforming forward stepwise selection:")
   ## cycle trough all predictors at
   ## each steps choosing the best
   ## one according to AIC
   for (i in 1:length(predictors)) {
-    cat("\nStep ", i, "...")
+    message("\nStep ", i, " of ", totpred, "...")
     ## select the best predictor
     ## among those in ww and store it
     ## in w
-    sel <- nrmChoose(adj = adj, 
+    sel <- nrm_choose(adj = adj, 
                      w.list = ww, xi = xi, 
                      directed = directed, 
                      selfloops = selfloops, 
@@ -91,9 +95,10 @@ nrmSelection.nrmpredictor <- function(adj,
                       nr.significance(mod0 = mod0, 
                                       mod1 = sel$model))
     csR2step <- c(csR2step, 
-                  coxsnellR2(mod0 = mod0, 
-                             mod1 = sel$model, 
-                             m = M))
+                  mcfaddenR2(directed = directed, selfloops=selfloops,
+                             mod0 = mod0, 
+                             mod1 = sel$model, nparam = sel$model$df-mod0$df
+                            ))
     csR2 <- c(csR2, coxsnellR2(mod0 = null.m, 
                                mod1 = sel$model, m = M))
     DLs <- c(DLs, sel$model$DL)
@@ -114,15 +119,18 @@ nrmSelection.nrmpredictor <- function(adj,
     models <- c(models, list(sel$model))
     ## initial values for parameter
     ## estimation in next step
-    init <- sel$model$coef
-    if (!is.null(default.init)) 
-      init <- c(init, default.init)
+    ### TODO: fix init
+    default.init[[sel$predictor]] <- NULL
+    init <- lapply(X = default.init, 
+                   FUN = function(w.new) {
+                     c(sel$model$coef, w.new)
+                   })
   }
   ## find best model according to
   ## significance: discard all
   ## predictors with significance
   ## below pval
-  cat("\nModel estimation concluded.\n")
+  message("\nModel estimation concluded.\n")
   AICS <- c(null.m$AIC, sapply(models, 
                                FUN = function(mod) mod$AIC))
   R2S <- c(0, sapply(models, FUN = function(mod) mod$R2))
@@ -133,35 +141,33 @@ nrmSelection.nrmpredictor <- function(adj,
                  mcR2 = R2S, csR2 = csR2, 
                  AIC = AICS, directed = directed, 
                  selfloops = selfloops)
-  class(selmod) <- "nrm.selection"
+  class(selmod) <- "nrm_selection"
   return(selmod)
 }
 
 
 #' Selects the best set of predictors among the given sets by means of AIC.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param w.list  ~~Describe \code{w.list} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @param pval  ~~Describe \code{pval} here~~
-#' @param init  ~~Describe \code{init} here~~
-#' @param ncores  ~~Describe \code{init} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
+#'
+#' Computes all the models defined by a list of groups of predictors Returns the
+#' best model according to AIC and id of the corresponding predictors in the
+#' list The different models are computed in parallel
+#'
+#' @param adj  adjacency matrix
+#' @param w.list  nrmPredictor object. Nested list of predictors to be selected.
+#' @param xi  Xi matrix (optional). defaults to scm Xi matrix.
+#' @param directed  logical. Is the network directed?
+#' @param selfloops  logical. Does the network contain selfloops?
+#' @param pval  numeric. the significance at which computing confidence
+#'   intervals. defaults to 0.05
+#' @param init  initial values for the MLE numerical maximisation. (See
+#'   \code{nrm}.)
+#' @param ncores  Number of cores for parallelisation of selection process.
+#'   (optional) Defaults to number of available cores - 1.
+#' @return list containing the best model according to AIC and id of the
+#'   corresponding predictors in the list
+#'
 #' @export
-nrmChoose <- function(adj, w.list, 
+nrm_choose <- function(adj, w.list, 
                       xi = NULL, directed, selfloops, 
                       pval = 0.05, init = NULL, ncores = NULL) {
   # Computes all the models
@@ -181,36 +187,33 @@ nrmChoose <- function(adj, w.list,
                   parallel::detectCores() - 
                     1)
   }
-  nr.ms <- parallel::mclapply(X = w.list, 
-                              FUN = nrm, adj = adj, xi = xi, 
+  # if(TRUE){
+  if (is.null(init) | length(init)!=length(w.list)){
+    init <- NULL
+      nr.ms <- pbmcapply::pbmclapply(FUN = nrm, X=w.list, 
+                              adj = adj, xi = xi, 
                               directed = directed, selfloops = selfloops, 
-                              pval = pval, significance = FALSE, 
-                              init = init, mc.cores = ncores)
-  # to.add <- minAIC(nr.ms)
-  to.add <- findMDL(nr.ms)
+                              pval = pval, significance = FALSE, init=init, 
+                              mc.cores = ncores)
+  } else{
+    nr.ms <- pbmcapply::pbmcmapply(FUN = nrm, w=w.list, init=init, 
+                    MoreArgs = list(
+                      adj = adj, xi = xi, 
+                      directed = directed, selfloops = selfloops, 
+                      pval = pval, significance = FALSE
+                    ), SIMPLIFY = FALSE,
+                    mc.cores = ncores)
+  }
+  to.add <- minAIC(nr.ms)
+  # to.add <- findMDL(nr.ms)
   selected <- list(model = nr.ms[[to.add]], 
                    predictor = to.add, xi = xi)
-  class(selected) <- "nrm.selection"
+  class(selected) <- "nrm_selection"
   return(selected)
 }
 
 
-#' Auxilliary function, finds mininum AIC among different nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param nr.ms  ~~Describe \code{nr.ms} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
-#' 
+# ' Auxilliary function, finds mininum AIC among different nrm models.
 minAIC <- function(nr.ms) {
   # Returns the id of the model
   # with minimal AIC among a
@@ -226,22 +229,22 @@ minAIC <- function(nr.ms) {
   return(id)
 }
 
-#' Auxilliary function, finds mininum AIC among different nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param nr.ms  ~~Describe \code{nr.ms} here~~
-#' @return  
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
-#' 
+# ' Auxilliary function, finds mininum AIC among different nrm models.
+# ' 
+# '  ~~ A concise (1-5 lines) description of what the function does. ~~
+# ' 
+# '  ~~ If necessary, more details than the description above ~~
+# ' 
+# ' @param nr.ms  ~~Describe \code{nr.ms} here~~
+# ' @return  
+# ' @note  ~~further notes~~
+# ' @author  ~~who you are~~
+# ' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+# ' @references  ~put references to the literature/web site here ~
+# ' @keywords ~kwd1 ~kwd2
+# ' @examples
+# ' 
+# ' 
 findMDL <- function(nr.ms) {
   # Returns the id of the model
   # with minimal AIC among a

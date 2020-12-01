@@ -1,3 +1,4 @@
+#' @describeIn ghype
 #' Print method for ghype object.
 #'
 #' @param x ghype model
@@ -32,9 +33,10 @@ print.ghype <- function(x, suppressCall = FALSE,
   cat('Loglikelihood:\n')
   cat(x$loglikelihood)
   cat(paste("\ndf:",x$df,'\n'))
+  invisible()
 }
 
-
+#' @describeIn bccm
 #' Print method for elements of class \code{'bccm'}.
 #'
 #' @param x  object of class \code{'bccm'}
@@ -80,9 +82,10 @@ print.bccm <- function(x, suppressCall = FALSE,
   colnames(cmat) <- c("Estimate",
                       "Std.Err", "t value", "Pr(>t)")
   stats::printCoefmat(cmat)
+  invisible()
 }
 
-
+#' @describeIn nrm
 #' Print method for elements of class \code{'nrm'}.
 #' 
 #' @param x  object of class \code{'nrm'}
@@ -111,17 +114,18 @@ print.nrm <- function(x, suppressCall = FALSE,
   cat("\nR2:\n")
   print(c(`McFadden R2` = x$R2, 
           `Cox Snell R2` = x$csR2))
+  invisible()
 }
 
-#' Print method for elements of class \code{'nrm.selection'}.
+#' @describeIn nrm_selection
+#' Print method for elements of class \code{'nrm_selection'}.
 #' 
-#' @param x  object of class \code{'nrm.selection'}.
+#' @param x  object of class \code{'nrm_selection'}.
 #' @param \dots  optional arguments to print or plot methods.
-#' @return  
 #' @author  Giona Casiraghi
-#' @seealso  \code{nrm.selection}
+#' @seealso  \code{nrm_selection}
 #' @export
-print.nrm.selection <- function(x, 
+print.nrm_selection <- function(x, 
                                 ...) {
   # print method for nrm class
   cat("Call:\n")
@@ -144,23 +148,22 @@ print.nrm.selection <- function(x,
                es[c(1, 3)])
   colnames(out) <- c("AIC", "effect.s")
   print(out)
+  invisible()
 }
 
-#' Summary method for elements of class \code{'nrm.selection'}.
+#' Summary method for elements of class \code{'nrm_selection'}.
 #'
-#' @param object an object of class 'nrm.selection', usually, a result of a call to \code{nrmSelection}. 
+#' @param object an object of class 'nrm_selection', usually, a result of a call to \code{nrm_selection}. 
 #' @param ... further arguments passed to or from other methods.
-#'
+#' 
+#' @return The function \code{\link{summary.nrm_selection}} computes and
+#'   returns a list of summary statistics of the fitted
+#'   \code{\link{nrm_selection}} model given in \code{object}.
 #' @export
 #'
-#' @examples
-#'
-summary.nrm.selection <- function(object, 
+summary.nrm_selection <- function(object, 
                                   ...) {
   # summmary method for nrm class
-  print(object)
-  cat("\n----------------------\n")
-  cat("\nAIC selection:\n")
   results <- cbind(mcR2 = round(object$mcR2, 
                                 digits = 4), csR2 = round(object$csR2, 
                                                           digits = 4), AIC = round(object$AIC), 
@@ -170,33 +173,67 @@ summary.nrm.selection <- function(object,
   if (length(object$nms) > 0) 
     rownames(results) <- c("-", 
                            object$nms)
-  print(results)
+  
+  ans <- list(object=object,results=results)
+  class(ans) <- "summary.nrm_selection"
+  ans
+}
+
+#' @rdname summary.nrm_selection
+#'
+#' @param x object of class `summary.nrm_selection` returned by [summary.nrm._selection()].
+#' @param ... further arguments passed to or from other methods.
+#' @export
+print.summary.nrm_selection <- function (x, ...){
+  # summmary method for nrm class
+  print(x[['object']])
+  cat("\n----------------------\n")
+  cat("\nAIC selection:\n")
+  
+  print(x[['results']])
   cat("\nFull model:\n")
-  print(object$models[[length(object$models)]], 
+  print(x[['object']]$models[[length(x[['object']]$models)]], 
         suppressCall = TRUE)
+  
+  invisible(x)
 }
 
 #' Summary method for elements of class \code{'nrm'}.
+#' 
+#' Currently it provides the same output as \code{'print.nrm'}
 #'
 #' @param object an object of class 'nrm', usually, a result of a call to \code{nrm}. 
 #' @param ... further arguments passed to or from other methods.
 #'
+#' @return The function \code{\link{summary.nrm}} computes and
+#'   returns a list of summary statistics of the fitted
+#'   \code{\link{nrm}} model given in \code{object}.
+#'   
 #' @export
-#'
-#' @examples
 #'
 summary.nrm <- function(object, 
                         ...) {
   # summmary method for nrm class
-  print(object)
+  ans <- list(object=object)
+  class(ans) <- "summary.nrm"
+  ans
 }
 
+#' @rdname summary.nrm
+#'
+#' @param x object of class `summary.nrm` returned by [summary.nrm()].
+#' @param ... further arguments passed to or from other methods.
+#' @export
+print.summary.nrm <- function (x, ...){
+  print(x[['object']])
+  invisible(x)
+}
 
-#' Print method for coeffiients of models of class \code{'nrm'}.
+#' Extraction method for coefficients of models of class \code{'nrm'}.
 #' 
 #' @param object  object of class \code{'nrm'}.
 #' @param \dots  optional arguments to print methods.
-#' @return  
+#' @return coefficients of nrm model.
 #' @author  Giona Casiraghi
 #' @seealso  \code{\link{nrm}}
 #' @export
@@ -205,3 +242,37 @@ coef.nrm <- function(object, ...) {
   # coef method for nrm class
   object$coef
 }
+
+## texreg package
+## Texreg: does not (yet) support nrm or gyhpe-class
+# use the extract()-function to make this available
+#' Extract details from statistical models for table construction. The function has methods for a range of statistical models.
+#'
+#' @param model A statistical model object.
+#' @param ... Custom parameters, which are handed over to subroutines. The arguments are usually passed to the summary function, but in some cases to other functions.
+#'
+#' @return The function returns a texreg object.
+#' @export
+#' @importFrom texreg extract screenreg texreg htmlreg
+#' @author L. Brandenberger, G. Casiraghi
+extract.nrm.cluster <- function(model, ...){
+  # calculate SE, tvalues and pvalues
+  coeffic <- as.numeric(model$coef)
+  stderr <- model$confint[,3]
+  tvalues = abs(coeffic/stderr)
+  pval <- 2 * stats::pnorm(-tvalues)
+  
+  # then create and return a texreg object (replace NULL with actual values):
+  tr <- texreg::createTexreg(
+    coef.names = names(model$coef),    # character vector of coefficient labels
+    coef = coeffic,          # numeric vector with coefficients
+    se = stderr,            # numeric vector with standard error values
+    pvalues = pval,       # numeric vector with p-values
+    gof.names = c("AIC", "McFadden $R^2$"),     # character vector with goodness-of-fit labels
+    gof = c(model$AIC, model$R2)           # numeric vector of goodness-of-fit statistics
+    #gof.decimal = NULL    # logical vector: GOF statistic has decimal points?
+  )
+  return(tr)
+}
+setMethod(texreg::extract, signature = className("nrm", "ghype"), 
+          definition = extract.nrm.cluster)

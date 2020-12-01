@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{ghype model.}
 
-\item{...}{(ignored) some methods for this generic function require additional arguments.}
+\item{...}{additional arguments passed to and from internal methods.}
 }
 \value{
 Returns an object of class logLik. This is a number with at least one

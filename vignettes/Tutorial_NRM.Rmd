@@ -7,12 +7,13 @@ author:
   email: gcasiraghi@ethz.ch
 - name: Laurence Brandenberger
   affiliation: *id
+  email: lbrandenberger@ethz.ch
 date: "`r Sys.Date()`"
 package: ghypernet
-bibliography: bibliography.bib
+# bibliography: bibliography.bib
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{An introduction to generalized hypergeometric ensembles (gHypEG) regressions.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -64,9 +65,9 @@ in a multi-edge network of support among MPs.
 
 ```{r}
 library(ghypernet)
-library(texreg) # for regression tables
-library(ggplot2) 
-library(GGally) #for network plots using ggplot2
+library(texreg, quietly = TRUE) # for regression tables
+library(ggplot2) # for plotting
+library(ggraph) #for network plots using ggplot2
 ```
 
 After loading the \texttt{ghypernet} package, the included data set on 
@@ -169,7 +170,7 @@ dtsorted <- dplyr::left_join(dtsorted, dt_unsorted, by = "idMP")
 identical(dt$idMP, dtsorted$idMP)
 ```
 
-Learn more about data joins [here](https://www.r-bloggers.com/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/).
+Learn more about data joins [here](https://www.r-bloggers.com/2018/10/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/).
 
 ## Independent and control variables
 
@@ -482,34 +483,7 @@ the appropriate initial values by going through a stepwise process first.
 
 ## Regression table export (using the texreg package)
 
-The `texreg`-package can be used to export regression tables. 
-Use this code to add the `nrm`-model type to the texreg package. 
-
-```{r}
-## Texreg: does not (yet) support nrm or gyhpe-class
-# use the extract()-function to make this available:
-extract.nrm.cluster <- function(model,sumsum){
-  # calculate SE, tvalues and pvalues
-  coeffic <- as.numeric(model$coef)
-  stderr <- (model$confint[,2] - model$confint[,1])/5.15
-  tvalues = coeffic/stderr
-  pval <- exp(-0.717*tvalues - 0.416*tvalues^2)
-  
-  # then create and return a texreg object (replace NULL with actual values):
-  tr <- createTexreg(
-    coef.names = names(model$coef),    # character vector of coefficient labels
-    coef = coeffic,          # numeric vector with coefficients
-    se = stderr,            # numeric vector with standard error values
-    pvalues = pval,       # numeric vector with p-values
-    gof.names = c("AIC", "McFadden $pseudo-R^2$"),     # character vector with goodness-of-fit labels
-    gof = c(model$AIC, model$R2)           # numeric vector of goodness-of-fit statistics
-    #gof.decimal = NULL    # logical vector: GOF statistic has decimal points?
-  )
-  return(tr)
-}
-setMethod("extract", signature = className("nrm", "ghype"), 
-          definition = extract.nrm.cluster)
-```
+The `texreg`-package can be used to export regression tables.
 
 ## Regression with degree correction (standard version)
 
@@ -612,14 +586,14 @@ screenreg(list(nfit2, nfit3),
 
 Model comparisons can be done using `AIC`-scores, LR-tests or the R-squared
 measures.
-AIC-scores are the best indicators of model fit. The gHypEG can model also be 
+AIC-scores are the best indicators of model fit. The gHypEG model can also be 
 fit maximally to the data. This perfectly fit model cannot be interpreted (since
 step by step, additional predictive layers are added and these laysers capture
 deviances but would need to be interpreted individually), but the AIC scores
 can be used to check how far away your models are from it. 
 
 ```{r}
-##add code for maximally fit model here.
+fullfit <- ghype(graph = cospons_mat, directed = TRUE, selfloops = FALSE)
 ```
 
 
@@ -657,14 +631,13 @@ The number of simulations can be specified with the `nsamples` argument.
 simnw <- rghype(nsamples = 1, model = nfit2, seed = 1253)
 ```
 
-```{r, fig.height=5, fig.width=7}
-ggnet2(simnw, label = FALSE,
-       color = dt$parlGroup, 
-       size = "degree", size.min = 1)+
-  scale_color_manual("", values = c('orange', 'yellow', 'blue', 'green', 'grey',
-                                    'darkblue', 'red', 'darkgreen', 'purple'))+
-  theme(legend.position = 'bottom') +
-  guides(size = FALSE)
+```{r, fig.height=5, fig.width=5}
+ggraph(graph = simnw, layout = 'stress') +
+  geom_edge_link(aes(filter = weight>5, alpha=weight)) +
+  geom_node_point(aes(colour = dt$parlGroup), size=10*apply(simnw,1,sum)/max(apply(simnw,1,sum))) +
+  scale_colour_manual("", values = c('orange', 'yellow', 'blue', 'green', 'grey',
+                                    'darkblue', 'red', 'darkgreen', 'purple')) +
+  theme(legend.position = 'bottom') + coord_fixed() + theme_graph()
 ```
 
 
@@ -676,8 +649,6 @@ compare structural properties of the simulated networks to the original network
 [@hunter2008goodness]. We are currently working on finding appropriate multi-edge network statistics
 to assess model fit for gHypEGs. We are also looking into alternative ways of
 assessing network model fit. Stay tuned! 
-
-# References
 
 
 

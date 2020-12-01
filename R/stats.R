@@ -1,23 +1,4 @@
-#' Computes Fisher Information matrix for estimators in nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param beta  ~~Describe \code{beta} here~~
-#' @param w  ~~Describe \code{w} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @return val
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' 
-#' 
+# Computes Fisher Information matrix for estimators in nrm models.
 Jn <- function(beta=NULL, w=NULL, xi=NULL, adj=NULL, 
     directed=NULL, selfloops=NULL, model=NULL) {
     # Returns Fisher Information
@@ -123,13 +104,7 @@ coxsnellR2 <- function(mod0, mod1, m) {
                 mod1$loglikelihood)/m)
 }
 
-#' vcov
-#'
-#' @param object 
-#' @param ... 
-#'
-#' @return
-#'
+# vcov
 vcov.nrm <- function(object, ...){
   solve(Jn(model = object))
 }

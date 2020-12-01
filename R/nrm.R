@@ -1,55 +1,74 @@
 #' Fitting gHypEG regression models for multi-edge networks.
-#' 
+#'
 #' nrm is used to fit multi-edge network regression models.
-#' 
+#'
 #' @param w an object of class \code{'list'} containing the predictors layers
-#' (explanatory variables/covariates) of the multiplex, passed as adjacency matrices. 
-#' The entries of the list can be named.
+#'   (explanatory variables/covariates) of the multiplex, passed as adjacency
+#'   matrices. The entries of the list can be named.
 #' @param adj matrix. The adjacency matrix of the response network (dependent
-#' variable).
+#'   variable).
 #' @param xi optional matrix. Passes a non-standard \eqn{\Xi} matrix.
 #' @param pval the significance level used to compute confidence intervals of
-#' the parameters. Per default, set to 0.01.
+#'   the parameters. Per default, set to 0.01.
 #' @param directed logical. If \code{TRUE} the response variable is considered
-#' the adjacency matrix of directed graph.  If \code{FALSE} only the upper
-#' triangular of \code{adj} is considered. Default set to FALSE.
-#' @param selfloops logical. Whether selfloops are allowed. Default set to FALSE.
+#'   the adjacency matrix of directed graph.  If \code{FALSE} only the upper
+#'   triangular of \code{adj} is considered. Default set to FALSE.
+#' @param selfloops logical. Whether selfloops are allowed. Default set to
+#'   FALSE.
 #' @param regular logical. Whether the gHypEG regression should be performed
-#' with correction of combinatorial effects (\code{TRUE}) or without (\code{FALSE}).
-#' #' @param \dots additional arguments to be passed to the low level regression
-#' fitting functions.
+#'   with correction of combinatorial effects (\code{TRUE}) or without
+#'   (\code{FALSE}).
+#' @param ci logical. Whether to compute confidences for the parameters.
+#'   Defaults to \code{TRUE}.
+#' @param significance logical. Whether to test the model significance against
+#'   the null by means of lr-test.
+#' @param null logical. Is this a null model? Used for internal routines.
+#' @param init numeric. Vector of initial values used for numerical MLE. If only
+#'   a single value is passed, this is repeated to match the number of
+#'   predictors in \code{w}.
+#' @param \dots additional arguments to be passed to the low level regression
+#'   fitting functions.
 #' @return nrm returns an object of class 'nrm'.
-#' 
-#' The function summary is used to obtain and print a summary and analysis of
-#' the results. The generic accessory functions coefficients, etc, extract
-#' various useful features of the value returned by nrm.
-#' 
-#' An object of class 'nrm' is a list containing at least the following
-#' components:
-#' 
-#' \item{coef }{a named vector of coefficients.} \item{confint }{a named matrix
-#' with confidence intervals and standard deviation for each coefficient.}
-#' \item{omega }{the estimated propensity matrix.} \item{xi }{the matrix of
-#' possibilities.} \item{loglikelihood }{log-likelihood of the estimated
-#' model.} \item{AIC }{AIC of the estimated model.} \item{R2 }{Mc Fadden pseudo
-#' R-squared} \item{csR2 }{Cox and Snells pseudo R-squared} \item{significance
-#' }{the p-value of the likelihood-ratio test for the estimated model against
-#' the null.}
+#'
+#'   The function summary is used to obtain and print a summary and analysis of
+#'   the results. The generic accessory functions coefficients, etc, extract
+#'   various useful features of the value returned by nrm.
+#'
+#'   An object of class 'nrm' is a list containing at least the following
+#'   components:
+#'
+#'   \item{coef }{a named vector of coefficients.} \item{confint }{a named
+#'   matrix with confidence intervals and standard deviation for each
+#'   coefficient.} \item{omega }{the estimated propensity matrix.} \item{xi
+#'   }{the matrix of possibilities.} \item{loglikelihood }{log-likelihood of the
+#'   estimated model.} \item{AIC }{AIC of the estimated model.} \item{R2 }{Mc
+#'   Fadden pseudo R-squared} \item{csR2 }{Cox and Snells pseudo R-squared}
+#'   \item{significance }{the p-value of the likelihood-ratio test for the
+#'   estimated model against the null.}
 #' @author Giona Casiraghi
-#' @references Casiraghi, Giona. 'Multiplex Network Regression: How do
-#' relations drive interactions?.' arXiv preprint arXiv:1702.02048 (2017).
+#' @references Casiraghi, Giona. 'Multiplex Network Regression: How do relations
+#'   drive interactions?.' arXiv preprint arXiv:1702.02048 (2017).
 #' @keywords models regression nonlinear multivariate sna
 #' @examples
-#' 
+#'
 #' ## For a complete example see the vignette
-#' data('highschool.predictors')
 #' 
-#' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE,
+#' data('highschool.predictors')
+#'
+#' highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE,
 #'   selfloops=FALSE)
 #'
 #' highschool.m
 #' 
-#' 
+#' \donttest{
+#' data('highschool.predictors')
+#'
+#' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE,
+#'   selfloops=FALSE)
+#'
+#' highschool.m
+#'}
+#'
 #' @export
 nrm <- function(w, adj, xi = NULL, 
     pval = 0.01, directed = TRUE, 
@@ -60,8 +79,8 @@ nrm <- function(w, adj, xi = NULL,
 #' @export
 #'
 nrm.default <- function(w, adj, 
-                        xi = NULL, pval = 0.01, directed = TRUE, 
-                        selfloops = TRUE, regular = FALSE, ci = TRUE, significance = TRUE, 
+                        xi = NULL, pval = 0.01, directed = FALSE, 
+                        selfloops = FALSE, regular = FALSE, ci = TRUE, significance = FALSE, 
                         null = FALSE, init = NULL, ...) {
   # Estimate the multivariate
   # network regression model
@@ -101,7 +120,7 @@ nrm.default <- function(w, adj,
                               xi = xi, adj = adj, 
                               directed = directed, 
                               selfloops = selfloops, 
-                              start = init, rtol = 1e-10)$root
+                              start = unlist(init), rtol = 1e-10)$root
   }
   # omega matrix
   omega <- apply(sapply(X = 1:length(b), 
@@ -159,28 +178,26 @@ nrm.default <- function(w, adj,
 }
 
 
-#' Auxilliary function. Returns a value proportional to the first derivative of
-#' the likelihood in nrm models.
-#' 
-#'  ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#'  ~~ If necessary, more details than the description above ~~
-#' 
-#' @param x  ~~Describe \code{x} here~~
-#' @param w  ~~Describe \code{w} here~~
-#' @param xi  ~~Describe \code{xi} here~~
-#' @param adj  ~~Describe \code{adj} here~~
-#' @param directed  ~~Describe \code{directed} here~~
-#' @param selfloops  ~~Describe \code{selfloops} here~~
-#' @return val
-#' @note  ~~further notes~~
-#' @author  ~~who you are~~
-#' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references  ~put references to the literature/web site here ~
-#' @keywords ~kwd1 ~kwd2
-#' @examples
-#' 
-#' 
+# ' Auxilliary function. Returns a value proportional to the first derivative of
+# ' the likelihood in nrm models.
+# ' 
+# '  ~~ A concise (1-5 lines) description of what the function does. ~~
+# ' 
+# '  ~~ If necessary, more details than the description above ~~
+# ' 
+# ' @param x  ~~Describe \code{x} here~~
+# ' @param w  ~~Describe \code{w} here~~
+# ' @param xi  ~~Describe \code{xi} here~~
+# ' @param adj  ~~Describe \code{adj} here~~
+# ' @param directed  ~~Describe \code{directed} here~~
+# ' @param selfloops  ~~Describe \code{selfloops} here~~
+# ' @return val
+# ' @note  ~~further notes~~
+# ' @author  ~~who you are~~
+# ' @seealso  ~~objects to See Also as \code{\link{help}}, ~~~
+# ' @references  ~put references to the literature/web site here ~
+# ' @keywords ~kwd1 ~kwd2
+# ' @examples
 fnM <- function(x, w, xi, adj, directed, 
                 selfloops) {
   # Returns the term of the
@@ -213,60 +230,31 @@ fnM <- function(x, w, xi, adj, directed,
 }
 
 
-#' Method to compute residuals of nrm models
+#' Method to predict the expected values of a nrm model
 #'
-#' @param object nrm object
-#' @param adj odjacency against which to compute residuals
-#' @param RMSLE boolean, return log residuals? default FALSE
-#' @param null 
-#' @param ... 
+#' @param object nrm object from which to predict
+#' @param m integer, the number of edges to be used
+#' @param adj optional matrix, the adjacency matrix from which to get the number
+#'   of edges
+#' @param null optional boolean, is it a null model? default FALSE
+#' @param ... other arguments
+#' @param multinomial logical. Optional argument. Whether to use multinomial
+#'   approximation. If left blank it is selected automatically based on network
+#'   size.
 #'
-#' @return numeric vector, residuals of nrm model fit against the original data
+#' @return numeric, predicted values from nrm model. (If model is undirected,
+#'   only upper.tri of adjacency matrix is returned.)
 #' @export
 #'
 #' @examples
 #' data('highschool.predictors')
-#' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
-#' residuals(highschool.m, contacts.adj)
-
-residuals.nrm <- function(object, 
-                          adj, RMSLE = FALSE, null = FALSE, 
-                          ...) {
-  xi <- object$xi
-  omega <- object$omega
-  selfloops <- object$selfloops
-  directed <- object$directed
-  
-  hatadj <- predict(object = object, 
-                    adj = adj, null = null)
-  
-  ix <- mat2vec.ix(mat = xi, directed = directed, 
-                   selfloops = selfloops)
-  adj <- adj[ix]
-  
-  if (!RMSLE) 
-    return(adj - hatadj)
-  if (RMSLE) 
-    return(log(hatadj + 1) - 
-             log(adj + 1))
-}
-
-
-#' Method to predict the expected values of a nrm model
-#' @param object nrm object from which to predict
-#' @param m integer, the number of edges to be used
-#' @param adj optional matrix, the adjacency matrix from which to get the number of edges
-#' @param null optional boolean, is it a null model? default FALSE
-#' @param ... other arguments
-#'
-#' @return numeric, predicted values from nrm model. (If model is undirected, only upper.tri of adjacency matrix is returned.)
-#' @export
-#'
-#' @examples
+#' highschool.m <- nrm(w=highschool.predictors[1], adj=contacts.adj, directed=FALSE, selfloops=FALSE)
+#' predict(highschool.m, contacts.adj)
+#' \donttest{
 #' data('highschool.predictors')
 #' highschool.m <- nrm(w=highschool.predictors, adj=contacts.adj, directed=FALSE, selfloops=FALSE)
 #' predict(highschool.m, contacts.adj)
-
+#' }
 predict.nrm <- function(object, 
                         m = NULL, adj = NULL, null = FALSE, 
                         multinomial = NULL, ...) {

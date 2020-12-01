@@ -4,8 +4,14 @@
 \alias{conf.test}
 \title{Test regular (gnp) vs configuration model}
 \usage{
-conf.test(graph, directed, selfloops, nempirical = NULL,
-  parallel = NULL, seed = NULL)
+conf.test(
+  graph,
+  directed,
+  selfloops,
+  nempirical = NULL,
+  parallel = NULL,
+  seed = NULL
+)
 }
 \arguments{
 \item{graph}{adjacency matrix or igraph graph}
