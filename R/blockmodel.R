@@ -28,7 +28,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   return(model)
 }
 
-.bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE){
+.bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE, ...){
     if(is.null(directed) | is.null(selfloops)){
     specs <- check_specs(adj)
     if(is.null(directed)) directed <- specs[1]
@@ -129,7 +129,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
 
   # generate and return ensemble
-  model <- ghype(graph = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular)
+  model <- ghype(graph = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular, ...)
 
   # generate block omega matrix for reference
   if( (!homophily) & (!inBlockOnly)){

@@ -1,7 +1,7 @@
 Package: ghypernet
 Type: Package
-Title: Fit and Simulate Generalised Hypergeometric Ensembles of Graphs
-Version: 1.0.1.9999
+Title: Fit and Simulate Generalised Hypergeometric Ensembles of Graphs -- FOF Version
+Version: 1.0.1.0909
 Date: 2020-10-15
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",

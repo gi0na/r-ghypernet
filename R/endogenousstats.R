@@ -182,7 +182,7 @@ sharedPartner_stat <- function(graph,
   if (triad.type == 'directed.incoming')
     partners <- sapply(nodes, findPartners_sender, el = el)
   if (triad.type == 'undirected' | isFALSE(directed))
-    partners <- sapply(nodes, findPartners_all, el = el)
+    partners <- sapply(nodes, findPartners_all, el = el, simplify = FALSE)
   
   tri <-
     matrix(0, nrow(adj), ncol(adj), dimnames = list(rownames(adj), rownames(adj)))
