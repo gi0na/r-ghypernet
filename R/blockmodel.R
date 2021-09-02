@@ -71,23 +71,23 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   
   labs_map <- tibble(labs=levels(factor(unlist(labels))),ids=c(1,numbers::Primes(length(unlist(labels))*8))[1:(length(unique(unlist(labels))))], matchme=1)
   if(directedBlocks){
-    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-matchme) %>%
+    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-.data$matchme) %>%
       rowwise() %>%
-      mutate(lab = paste(labs.x,labs.y, sep = '->'),
-             id = if_else(ids.x<=ids.y,ids.x*ids.y,-ids.x*ids.y)) %>%
-      select(lab,id) %>%
+      mutate(lab = paste(.data$labs.x,.data$labs.y, sep = '->'),
+             id = if_else(.data$ids.x<=.data$ids.y,.data$ids.x*.data$ids.y,-.data$ids.x*.data$ids.y)) %>%
+      select(.data$lab,id) %>%
       ungroup() ->
       labs_map
     blocks[lower.tri(blocks,F)] <- - blocks[lower.tri(blocks,F)]
     blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
   } else{
-    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-matchme) %>%
+    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-.data$matchme) %>%
       rowwise() %>%
-      mutate(lab = paste(labs.x,labs.y, sep = '<->'),
-             id = ids.x*ids.y) %>%
-      select(lab,id) %>%
+      mutate(lab = paste(.data$labs.x,.data$labs.y, sep = '<->'),
+             id = .data$ids.x*.data$ids.y) %>%
+      select(.data$lab,id) %>%
       group_by(id) %>%
-      summarise(lab = first(lab)) ->
+      summarise(lab = first(.data$lab)) ->
       labs_map
   }
 
@@ -103,7 +103,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
       blocks[blocks != 1] <- 2
       labs_map %>%
         mutate(homo = id %in% unique(blockids)^2) %>%
-        mutate(id = (!homo) + 1) %>%
+        mutate(id = (!.data$homo) + 1) %>%
         group_by(id) %>%
         summarise(lab = if_else(first(id) == 1,'homologue', 'hetero')) ->
         labs_map
@@ -112,7 +112,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
       blocks[blocks != 1] <- 2
       labs_map %>%
         mutate(homo = id %in% unique(c(blockids1,blockids2))^2) %>%
-        mutate(id = (!homo) + 1) %>%
+        mutate(id = (!.data$homo) + 1) %>%
         group_by(id) %>%
         summarise(lab = if_else(first(id) == 1,'homologue', 'hetero')) ->
         labs_map
@@ -126,19 +126,19 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
       blocks[!(blocks %in% blockids^2)] <- 0
       labs_map %>%
         mutate(inblock = id %in% unique(blockids)^2,
-               id = if_else(inblock,id,0),
-               lab = if_else(inblock,lab,'betweenblocks')) %>%
+               id = if_else(.data$inblock,id,0),
+               lab = if_else(.data$inblock,.data$lab,'betweenblocks')) %>%
         group_by(id) %>%
-        summarise(lab = first(lab),id = first(id)) ->
+        summarise(lab = first(.data$lab),id = first(id)) ->
         labs_map
     } else{
       blocks[!(blocks %in% unique(c(blockids1,blockids2))^2)] <- 0
       labs_map %>%
         mutate(inblock = id %in% unique(c(blockids1,blockids2))^2,
-               id = if_else(inblock,id,0),
-               lab = if_else(inblock,lab,'betweenblocks')) %>%
+               id = if_else(.data$inblock,id,0),
+               lab = if_else(.data$inblock,.data$lab,'betweenblocks')) %>%
         group_by(id) %>%
-        summarise(lab = first(lab),id = first(id)) ->
+        summarise(lab = first(.data$lab),id = first(id)) ->
         labs_map
     }
   }
@@ -154,8 +154,8 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
 
   } else{
     if(length(xi) == 1 && xi == 'regular'){
-      k1 = rep(sum(net)/nrow(net),nrow(net))
-      k2 = rep(sum(net)/ncol(net),ncol(net))
+      k1 = rep(sum(adj)/nrow(adj),nrow(adj))
+      k2 = rep(sum(adj)/ncol(adj),ncol(adj))
       xi <- round(k1 %*% t(k2))
     }
   }
