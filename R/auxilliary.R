@@ -49,7 +49,7 @@ check_specs <- function(object, ...){
 
 check_specs.matrix <- function(object, ...){
   if(is.matrix(object)){
-    if(nrow(object != ncol(object))){
+    if(nrow(object) != ncol(object)){
       return(c('directed'=TRUE, 'selfloops'=TRUE, 'bipartite' = TRUE))
     }
     # if(is.null(directed)){
