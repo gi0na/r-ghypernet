@@ -2,7 +2,7 @@ Package: ghypernet
 Type: Package
 Title: Fit and Simulate Generalised Hypergeometric Ensembles of Graphs -- FOF Version
 Version: 1.0.1.0921
-Date: 2021-09-2
+Date: 2021-09-02
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
@@ -22,9 +22,10 @@ Description: Provides functions for model fitting and selection of generalised h
     Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) <arXiv:1607.02441>.
     Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) <doi:10.1007/978-3-319-67256-4_11>.
     Casiraghi, G., (2017) <arxiv:1702.02048>
-    Casiraghi, G., Nanumyan, V. (2018) <arXiv:1810.06495>.
     Brandenberger, L., Casiraghi, G., Nanumyan, V., Schweitzer, F. (2019) <doi:10.1145/3341161.3342926>
     Casiraghi, G. (2019) <doi:10.1007/s41109-019-0241-1>.
+    Casiraghi, G., Nanumyan, V. (2021) <doi:10.1038/s41598-021-92519-y>.
+    Casiraghi, G. (2021) <doi:10.1088/2632-072X/ac0493>.
 Depends: R (>= 3.0)
 License: AGPL-3
 Imports: pbmcapply,
