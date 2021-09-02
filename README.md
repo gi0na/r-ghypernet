@@ -18,13 +18,22 @@ It provides efficient methods to perform hypothesis testing and model selection 
 Explore the provided Vignettes for some examples on how to analyse networks with `ghypernet`.
 
 # Installation
-```
-# Install ghypernet from CRAN
-install.packages("ghypernet")
 
-# Or the development version from GitHub:
-devtools::install_github("gi0na/r-ghypernet")
+The branch `feature/fof` is not publicly available.
+You have two ways to install this branch: 1) checkout the branch on your computer and install the package locally, or 2) install directly from R using the devtools package.
+I recommend 2) if you are not familiar with R packages development and maintenance.
+
+To follow 2) you need to obtain an access token from GitHub so that your session can log in as yourself: follow these instructions: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+
+Once you have the token, use the following commands to install devtools (if needed) and then install ghypernet from the chosen GitHub branch. Input your token in the right spot.
+
 ```
+# Install devtools from CRAN
+install.packages("devtools")
+# Install ghypernet from the github branch using your access token
+devtools::install_github("sgdev/r-ghypernet", ref = "feature/fof", auth_token = "YOUR-AUTH-TOKEN”)
+```
+
 # Dependencies
 The package uses the library `BiasedUrn` to work with Wallenius' non-central hypergeometric distribution.
 Although this is not required, it is recommended to install the `BiasedUrn` R package, increasing the number of 'colors', i.e., the number of dimensions of the distribution.
