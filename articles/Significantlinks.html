@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,8 +85,7 @@
 
       
 
-      </header><script src="Significantlinks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Significantlinks_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="Significantlinks_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="Significantlinks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Finding Significant Links with gHypEGs</h1>
@@ -105,9 +104,9 @@
 <div id="load-packages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load Packages</h3>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: 'igraph'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -116,41 +115,41 @@
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     union</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"adj_karate"</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"adj_karate"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"vertexlabels"</span><span class="op">)</span>
 <span class="va">karate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span>adjmatrix <span class="op">=</span> <span class="va">adj_karate</span>, mode<span class="op">=</span><span class="st">'undirected'</span>, weighted<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span></code></pre></div>
 </div>
 <div id="estimate-the-ensemble" class="section level3">
 <h3 class="hasAnchor">
 <a href="#estimate-the-ensemble" class="anchor"></a>Estimate the ensemble</h3>
 <p>First we estimate a soft-configuration model from the data. The second model is a block model based on the two ‘factions’ of members of the club</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span><span class="va">adj_karate</span>,directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span><span class="va">adj_karate</span>,directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 
-<span class="va">blockModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span>, homophily <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></pre></div>
+<span class="va">blockModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span>, homophily <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="finding-the-significance-of-the-links" class="section level2">
 <h2 class="hasAnchor">
 <a href="#finding-the-significance-of-the-links" class="anchor"></a>Finding the significance of the links</h2>
 <p>We use the built-in function in the ghypernet package to compute the significance of each link as described in Casiraghi et al. 2017. The function takes the adjacency matrix of the network and the model from which estimating the probability to observe as many edges as those in the graph. We can obtain a high-pass noise filtering choosing a significance level and filtering those links which have a low significance.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co"># obtain significance matrix</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># obtain significance matrix</span>
 <span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">linkSignificance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">mod</span>, under <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># filter adjacency matrix</span>
 <span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
 <span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></code></pre></div>
 <div id="plot-the-results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-the-results" class="anchor"></a>Plot the results</h3>
 <p>We plot the original graph first, then a graph were the non-significant links are coloured red. The final plot only shows the significant links.</p>
 <p>Note that the configuration model is not able to predict the strong links within the groups, as those go beyond simple degree effects. The results reflect this showing the two factions separated and only the links due to homophily effect left.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
 <span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span>
 <span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span>
@@ -160,13 +159,13 @@
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-3.png" width="700"></p>
 </div>
 </div>
@@ -175,16 +174,16 @@
 <a href="#block-model" class="anchor"></a>Block Model</h2>
 <p>As the Karate Club consists of two factions, we can refine the model adding the block structure to it. Then we can filter out the links that are not significant according to this more complex model.</p>
 <p>What we expect in this case is that most of the within-group links are now not significant anymore, as they can be explained by the joint effect of configuration model and block model. Hence the links that remains after filtering are those that go beyond this joint effect. In particular, only few nodes of a group interact with the other group, i.e. the between-groups links are concentrated between few dyads. From the model instead we should expect most nodes of a group weakly interacting with the other group. Hence, we can expect that the significant links will be mainly those between groups. The results are in accordance with our intuition.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">linkSignificance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">linkSignificance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># filter adjacency matrix</span>
 <span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
 <span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
+<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
 <span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span>
 <span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span>
@@ -194,13 +193,13 @@
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
 </div>
   </div>

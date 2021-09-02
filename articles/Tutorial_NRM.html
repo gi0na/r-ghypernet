@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,8 +85,7 @@
 
       
 
-      </header><script src="Tutorial_NRM_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Tutorial_NRM_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="Tutorial_NRM_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="Tutorial_NRM_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to generalized hypergeometric ensembles (gHypEG) regressions.</h1>
@@ -99,7 +98,7 @@
       Chair of Systems Design, ETH Zurich, Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 class="date">2020-10-22</h4>
+            <h4 class="date">2021-09-02</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -132,8 +131,8 @@
 <div id="loading-package-and-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-package-and-data" class="anchor"></a>Loading package and data</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/leifeld/texreg/">texreg</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># for regression tables</span>
 <span class="co">#&gt; Version:  1.37.5</span>
 <span class="co">#&gt; Date:     2020-06-17</span>
@@ -141,8 +140,8 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Consider submitting praise using the praise or praise_interactive functions.</span>
 <span class="co">#&gt; Please cite the JSS article in your publications -- see citation("texreg").</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span> <span class="co"># for plotting</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span> <span class="co">#for network plots using ggplot2</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span> <span class="co"># for plotting</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span> <span class="co">#for network plots using ggplot2</span></code></pre></div>
 <p>After loading the  package, the included data set on Swiss MPs can be used (already lazy loaded).</p>
 <!-- ## Cosponsorship data -->
 <!-- #- cosponsorship matrix  -->
@@ -165,22 +164,22 @@
 <h2 class="hasAnchor">
 <a href="#network-data-manipulations" class="anchor"></a>Network data manipulations</h2>
 <p>The above data is coded in an adjacency matrix. However, most often, network data is stored in the more efficient edge list format. Two functions help move from one format to another:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">el</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adj2el.html">adj2el</a></span><span class="op">(</span><span class="va">cospons_mat</span>, directed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">el</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adj2el.html">adj2el</a></span><span class="op">(</span><span class="va">cospons_mat</span>, directed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The <code><a href="../reference/adj2el.html">adj2el()</a></code>-function transforms an adjacency matrix into an edgelist. By specifying <code>directed = FALSE</code>, only the top triangle of the adjacency matrix is stored in the edgelist (making it more efficient to handle, especially for large networks).</p>
 <p>Edgelists also allow you to check basic statics about your network, such as average degree or the degree distribution.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">edgecount</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">edgecount</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   1.000   1.000   2.000   3.854   4.000  75.000</span></pre></div>
+<span class="co">#&gt;   1.000   1.000   2.000   3.854   4.000  75.000</span></code></pre></div>
 <p>The function <code>el2adj</code> transforms an edgelist into an adjacency matrix.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
-<span class="va">adj_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/el2adj.html">el2adj</a></span><span class="op">(</span><span class="va">el</span>, nodes <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
+<span class="va">adj_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/el2adj.html">el2adj</a></span><span class="op">(</span><span class="va">el</span>, nodes <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span></code></pre></div>
 <p>Since edgelists (often) do not store isolate nodes in the network, the function takes a <code>nodes</code>-attribute. By specifying the nodes attribute, all all nodes (including isolate nodes) are included in the adjacency matrix.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">cospons_mat</span>, <span class="va">adj_mat</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">cospons_mat</span>, <span class="va">adj_mat</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div id="compiling-nodal-attribute-data" class="section level2">
 <h2 class="hasAnchor">
@@ -188,36 +187,36 @@
 <!-- This can be shortened for the vignette. 
 It's good to have it in the tutorial though, I think. -->
 <p>When preparing nodal attribute data, particular attention has to be given to the ordering of the two data sets (the adjacancy matrix and the attribute data set). Testing whether the adjacency matrix and the attribute data are ordered by the same identifiers (here by the ID codes of the individual MPs, <code>dt$idMP</code>), attribute-based independent and control variables will correspond with the dependent variable.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>In case, the above test-code yields <code>FALSE</code>, the attribute data needs to be ordered.</p>
 <p>Let’s assume, our attribute data set <code>dt_unsorted</code> is sorted differently:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">dt_unsorted</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">firstName</span><span class="op">)</span>,<span class="op">]</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dt_unsorted</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">firstName</span><span class="op">)</span>,<span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, <span class="va">dt_unsorted</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE</span></pre></div>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 <p>The simplest way is to proceed is to create a new data frame with the rownames (or colnames) of the adjacency matrix, then merging the attribute data in.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">dtsorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>idMP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span> 
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dtsorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>idMP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">dtsorted</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dtsorted</span>, <span class="va">dt_unsorted</span>, by <span class="op">=</span> <span class="st">"idMP"</span><span class="op">)</span> 
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">idMP</span>, <span class="va">dtsorted</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Learn more about data joins <a href="https://www.r-bloggers.com/2018/10/how-to-perform-merges-joins-on-two-or-more-data-frames-with-base-r-tidyverse-and-data-table/">here</a>.</p>
 </div>
 <div id="independent-and-control-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#independent-and-control-variables" class="anchor"></a>Independent and control variables</h2>
 <p>To estimate effects of endogenous and exogenous factors (i.e., independent and control variables) on the multi-edge network, covariates have to be fed into the gHypEG regression as matrices with the same dimensions as the multi-edge network (i.e., the dependent variable).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">onlinesim_mat</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE TRUE</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">onlinesim_mat</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE TRUE</span></code></pre></div>
 <p>Additionally, it is prudent to make sure that all covariates have the same row- and column-names:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">onlinesim_mat</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">onlinesim_mat</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; TRUE </span>
-<span class="co">#&gt;  163</span></pre></div>
+<span class="co">#&gt;  163</span></code></pre></div>
 <div id="the-role-of-zero-values-in-covariates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-role-of-zero-values-in-covariates" class="anchor"></a>The role of zero-values in covariates</h3>
@@ -236,15 +235,15 @@ It's good to have it in the tutorial though, I think. -->
 <a href="#reciprocity" class="anchor"></a>Reciprocity</h3>
 <p>The <code><a href="../reference/reciprocity_stat.html">reciprocity_stat()</a></code>-function can be used to calculate weighted reciprocity change statistic. Since it’s dyad-independent, it can be used as a predictor in the gHypEG regression.</p>
 <p>The function takes either a matrix or an edgelist. If an edgelist is provided, the <code>nodes</code>-object can be specified again to ensure that isolates are included as well.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">recip_cospons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reciprocity_stat.html">reciprocity_stat</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">recip_cospons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reciprocity_stat.html">reciprocity_stat</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
 <span class="va">recip_cospons</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">#&gt;                     Andreas Broennimann Ueli Maurer Markus Hutter</span>
 <span class="co">#&gt; Andreas Broennimann                 0.1         0.1           0.1</span>
 <span class="co">#&gt; Ueli Maurer                         0.1         0.1           0.1</span>
 <span class="co">#&gt; Markus Hutter                       2.0         1.0           0.1</span>
 <span class="co">#&gt; Hansruedi Wandfluh                  0.1         1.0           0.1</span>
-<span class="co">#&gt; Thomas Matter                       0.1         0.1           0.1</span></pre></div>
+<span class="co">#&gt; Thomas Matter                       0.1         0.1           0.1</span></code></pre></div>
 <p>The resultant matrix measures reciprocity by checking for each dyad <span class="math inline">\((i, j)\)</span>, how many edges were drawn from <span class="math inline">\((j, i)\)</span>. If reciprocity is a driving force in the network, taking the transpose of the matrix should correlate strongly with the co-sponsorship matrix.</p>
 <p>The <code>zero_values</code>-argument allows for the specification of minimum values. By default, the minimum edgecount in the network divided by a factor of 10 is used (here 1/10 = .1). This simplifyies interpretation of coefficient sizes.</p>
 </div>
@@ -1321,8 +1320,8 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <a href="#homophily" class="anchor"></a>Homophily</h3>
 <p>The <code><a href="../reference/homophily_stat.html">homophily_stat()</a></code>-function can be used to calculate homophily tendencies in the multi-edge network. Homophily represents the tendency of nodes with similar attributes to cluster together (i.e., nodes interact more with similar other nodes than dissimilar ones) <span class="citation">[see @mcpherson2001birds]</span>. The function can be used for categorical and continuous attributes.</p>
 <p>If a categorical attribute is provided (in the form of a <code>character</code> or <code>factor</code> variable), <code><a href="../reference/homophily_stat.html">homophily_stat()</a></code> creates a homophily matrix, where nodes of the same attribute are set to 10 and dyads with nodes of dissimilar attributes are set 1.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">canton_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">canton_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
                                       nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
 <span class="va">canton_homophilymat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">#&gt;                     Andreas Broennimann Ueli Maurer Markus Hutter</span>
@@ -1330,25 +1329,25 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; Ueli Maurer                           1          10            10</span>
 <span class="co">#&gt; Markus Hutter                         1          10            10</span>
 <span class="co">#&gt; Hansruedi Wandfluh                   10           1             1</span>
-<span class="co">#&gt; Thomas Matter                         1          10            10</span></pre></div>
+<span class="co">#&gt; Thomas Matter                         1          10            10</span></code></pre></div>
 <p>The option <code>these.categories.only</code> can be used to specify which categories in the attribute variable should lead to a match. For instance, if you’d only like to test whether parliamentary members from the canton Bern exhibit homophily tendencies, you can specify:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="va">canton_BE_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
-                                      nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span>, these.categories.only <span class="op">=</span> <span class="st">'Bern'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">canton_BE_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
+                                      nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span>, these.categories.only <span class="op">=</span> <span class="st">'Bern'</span><span class="op">)</span></code></pre></div>
 <p>You can also specify multiple matches, e.g.:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">canton_BEZH_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">canton_BEZH_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">canton</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, 
                                       nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span>, 
-                                      these.categories.only <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Bern'</span>, <span class="st">'Zuerich'</span><span class="op">)</span><span class="op">)</span></pre></div>
+                                      these.categories.only <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Bern'</span>, <span class="st">'Zuerich'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The matrix <code>canton_BEZH_homophilymat</code> now reports homophily values of 10 for dyads of MPs who are both from Bern or both from Zurich, compared to all other dyads (set to 1).</p>
 <p>Apart from cantonal homophily, party, parliamentary groups, gender and age homophily may play a role in co-sponsorship interactions.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="va">party_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">party</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">party_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">party</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
 <span class="va">parlgroup_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">parlGroup</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
-<span class="va">gender_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">gender</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span></pre></div>
+<span class="va">gender_homophilymat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">gender</span>, type <span class="op">=</span> <span class="st">'categorical'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span></code></pre></div>
 <p>If a numeric variable is provided, the <code><a href="../reference/homophily_stat.html">homophily_stat()</a></code>-function calculates absolute differences for each dyad in the network.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">dt</span><span class="op">$</span><span class="va">age</span> <span class="op">&lt;-</span> <span class="fl">2019</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">birthdate</span>, format <span class="op">=</span> <span class="st">'%d.%m.%Y'</span><span class="op">)</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dt</span><span class="op">$</span><span class="va">age</span> <span class="op">&lt;-</span> <span class="fl">2019</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">birthdate</span>, format <span class="op">=</span> <span class="st">'%d.%m.%Y'</span><span class="op">)</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">age_absdiffmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/homophily_stat.html">homophily_stat</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">age</span>,  type <span class="op">=</span> <span class="st">'absdiff'</span>, nodes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>
 <span class="va">age_absdiffmat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">#&gt;                     Andreas Broennimann Ueli Maurer Markus Hutter</span>
@@ -1356,7 +1355,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; Ueli Maurer                         5.0         0.1           7.0</span>
 <span class="co">#&gt; Markus Hutter                       2.0         7.0           0.1</span>
 <span class="co">#&gt; Hansruedi Wandfluh                  3.0         2.0           5.0</span>
-<span class="co">#&gt; Thomas Matter                      11.0        16.0           9.0</span></pre></div>
+<span class="co">#&gt; Thomas Matter                      11.0        16.0           9.0</span></code></pre></div>
 <p>For each dyad <span class="math inline">\((i, j)\)</span>, the age of <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are subtracted and the absolute value is used in the resultant homophily matrix. It is important to note that the absolute difference statistic is slightly counter-intuitive, since small differences indicate stronger homophily. In the gHypEG regression, this presents as a negative coefficient for strong homophily tendencies.</p>
 <p>The <code>zero_values</code>-option can again be used to specify your own zero-values replacements.</p>
 </div>
@@ -1365,8 +1364,8 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <a href="#creating-custom-covariates" class="anchor"></a>Creating custom covariates</h3>
 <p>Generally, any meaningful matrix with the same dimension as the dependent variable (i.e., here the co-sponsorship matrix) can be used as a covariate in the gHypEG regression <span class="citation">[see @casiraghi2017multiplex]</span>.</p>
 <p>An example: the data frame <code>dtcommittee</code> contains information on which committees each MP served on during their time in office.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dtcommittee</span><span class="op">)</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dtcommittee</span><span class="op">)</span>
 <span class="co">#&gt;                  idMP</span>
 <span class="co">#&gt; 1 Andreas Broennimann</span>
 <span class="co">#&gt; 2         Ueli Maurer</span>
@@ -1380,10 +1379,10 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; 3                      Kommission fuer Verkehr und Fernmeldewesen NR;Finanzkommission NR</span>
 <span class="co">#&gt; 4                                              Kommission fuer Wirtschaft und Abgaben NR</span>
 <span class="co">#&gt; 5                                              Kommission fuer Wirtschaft und Abgaben NR</span>
-<span class="co">#&gt; 6 Kommission fuer Verkehr und Fernmeldewesen NR;Kommission fuer Rechtsfragen NR;Buero NR</span></pre></div>
+<span class="co">#&gt; 6 Kommission fuer Verkehr und Fernmeldewesen NR;Kommission fuer Rechtsfragen NR;Buero NR</span></code></pre></div>
 <p>One potential predictor for co-sponsorship support may be if two MPs shared the same committee seat. When preparing your own matrices, make sure the row- and columnnames match the depdenent variable (here the co-sponsorship matrix).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="co">## This is just one potential way of accomplishing this! </span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## This is just one potential way of accomplishing this! </span>
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">dtcommittee</span><span class="op">$</span><span class="va">idMP</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="va">shared_committee</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>
@@ -1403,36 +1402,36 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; Ueli Maurer                         1.0         2.0           1.0</span>
 <span class="co">#&gt; Markus Hutter                       1.0         1.0           2.0</span>
 <span class="co">#&gt; Hansruedi Wandfluh                  0.1         0.1           0.1</span>
-<span class="co">#&gt; Thomas Matter                       0.1         0.1           0.1</span></pre></div>
+<span class="co">#&gt; Thomas Matter                       0.1         0.1           0.1</span></code></pre></div>
 </div>
 <div id="attribute-based-degree-measures" class="section level3">
 <h3 class="hasAnchor">
 <a href="#attribute-based-degree-measures" class="anchor"></a>(Attribute-based) Degree measures</h3>
 <p>The gHypEG regression accounts for combinatorial effects, i.e., degree distributions. Compared to other inferential network models, it is therefore not neccessary to specify (out/in-)degree variables. The model can be estimated using average expected degrees. In this case it is wise to specify a degree control matrix:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">dt</span><span class="op">$</span><span class="va">degree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dt</span><span class="op">$</span><span class="va">degree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>
 <span class="va">degreemat</span> <span class="op">&lt;-</span> <span class="va">cospons_mat</span>
 <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
   <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
     <span class="va">degreemat</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">degree</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">dt</span><span class="op">$</span><span class="va">degree</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
-<span class="va">degreemat</span><span class="op">[</span><span class="va">degreemat</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">.1</span></pre></div>
+<span class="va">degreemat</span><span class="op">[</span><span class="va">degreemat</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">.1</span></code></pre></div>
 <p>It is also not neccessary to control for activity (outdegree) and popularity (indegree) of different node groups in the standard gHypEG regression. However, if you’d like to test for these effects (because they are part of your hypothesis), the gHypEG regression can be estimated with average expected degrees (i.e., without the degree correction).</p>
 <p>For attribute-based outdegree measures, create custom matrices:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">age_activity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_activity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
                                 nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">svp_activity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">party</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
                            nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">svp_activity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">svp_activity_mat</span> <span class="op">==</span> <span class="st">'SVP'</span>, <span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span></pre></div>
+<span class="va">svp_activity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">svp_activity_mat</span> <span class="op">==</span> <span class="st">'SVP'</span>, <span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>For attribute-based indegree measures, create custom matrices:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="va">age_popularity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_popularity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
                                 nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">svp_popularity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">party</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span><span class="op">)</span>,
                            nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">svp_popularity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">svp_popularity_mat</span> <span class="op">==</span> <span class="st">'SVP'</span>, <span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span></pre></div>
+<span class="va">svp_popularity_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">svp_popularity_mat</span> <span class="op">==</span> <span class="st">'SVP'</span>, <span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1443,9 +1442,9 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <h2 class="hasAnchor">
 <a href="#regression-set-up-how-to" class="anchor"></a>Regression set up (how to)</h2>
 <p>The gHypEG regression can be estimated using the <code><a href="../reference/nrm.html">nrm()</a></code>-function. The function takes</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>reciprocity <span class="op">=</span> <span class="va">recip_cospons</span><span class="op">)</span>, 
-           directed <span class="op">=</span> <span class="cn">TRUE</span>, selfloops <span class="op">=</span> <span class="cn">FALSE</span>, regular <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>reciprocity <span class="op">=</span> <span class="va">recip_cospons</span><span class="op">)</span>, 
+           directed <span class="op">=</span> <span class="cn">TRUE</span>, selfloops <span class="op">=</span> <span class="cn">FALSE</span>, regular <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>The <code>adj</code>-object takes the adjacency matrix of the multi-edge network (i.e., the dependent variable). The <code>w</code>-object (stands for weights) takes the list of covariates. All covariates can be combined into one list. The list can be named for a better overview in the regression output. The <code>directed</code>-argument can either be <code>TRUE</code> or <code>FALSE</code>. If set to <code>TRUE</code>, the multi-edge network under consideration is directed in nature. The <code>selfloops</code>-argument can either be <code>TRUE</code> or <code>FALSE</code>. If set to <code>TRUE</code>, self-loops are considered possible in the network. In the case of co-sponsorship support signatures, self-loops are not possible by definition and should therefore be excluded from the analysis. In the case of a citation network, however, self-loops are possible and meaningful and should be included from the analysis. The <code>regular</code>-argument can either be <code>TRUE</code> or <code>FALSE</code>. If set to <code>TRUE</code>, the gHypEG regression is estimated with estimated average degrees (specified with the <code>xi</code>-matrix) instead of with the automatic control for combinatorial effects.</p>
 <div id="what-are-initial-values" class="section level3">
 <h3 class="hasAnchor">
@@ -1462,8 +1461,8 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <h2 class="hasAnchor">
 <a href="#regression-with-degree-correction-standard-version" class="anchor"></a>Regression with degree correction (standard version)</h2>
 <p>Co-sponsorship networks have been shown to be structured by reciprocity <span class="citation">[@cranmer2011inferential]</span>. Several empirical studies have shown that co-sponsorship networks also exhibit tendencies towards triadic closure <span class="citation">[@tam2010legislative]</span>. However, Brandenberger <span class="citation">[-@brandenberger2018trading]</span> shows that when estimating co-sponsorship networks as bipartite graphs, the triadic closure effect is non-existant. <span class="citation">@craig2015role</span> show that homophily also plays an important role in co-sponsorship networks. We therefore use these predictors to estimate the effect of MPs supporting each other’s bills in parliament.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
                       w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>same_canton <span class="op">=</span> <span class="va">canton_homophilymat</span><span class="op">)</span>, 
                       directed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span>
@@ -1479,10 +1478,10 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797169  0.006735975</span></pre></div>
+<span class="co">#&gt; -0.005797169  0.006735972</span></code></pre></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
                       w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>same_canton <span class="op">=</span> <span class="va">canton_homophilymat</span><span class="op">)</span>, 
                       directed <span class="op">=</span> <span class="cn">TRUE</span>,
                       init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.09</span><span class="op">)</span><span class="op">)</span>
@@ -1499,9 +1498,9 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt; -0.005797165  0.006735974</span></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span>
+<span class="co">#&gt; -0.005797165  0.006735982</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ============================</span>
 <span class="co">#&gt;                 Model 1     </span>
@@ -1509,13 +1508,13 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; same_canton         0.09 ***</span>
 <span class="co">#&gt;                    (0.01)   </span>
 <span class="co">#&gt; ----------------------------</span>
-<span class="co">#&gt; AIC             82323.81    </span>
+<span class="co">#&gt; AIC             82323.77    </span>
 <span class="co">#&gt; McFadden $R^2$     -0.01    </span>
 <span class="co">#&gt; ============================</span>
-<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
+<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></code></pre></div>
 <p>The variable <code>same_canton</code> shows a positive coefficient and is significant. The coefficient of <span class="math inline">\(0.09\)</span> can be interpreted as follows: The odds of MP <span class="math inline">\(i\)</span> co-sponsoring the bill of MP <span class="math inline">\(j\)</span> increase by a factor of <span class="math inline">\(1.23\)</span> (<span class="math inline">\((10^{0.09})/(1^{0.09}) = 1.23\)</span>) if <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are representatives from the same canton. Since the baseline of the dummy covariate <code>same_canton</code> is 1, the odds can be calculated by exponating the coefficient over the treatment value (here 10).</p>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="va">nfit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nfit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
              w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>reciprocity <span class="op">=</span> <span class="va">recip_cospons</span>,
                       <span class="co">#sharedpartner_in = shp_cospons_incoming,</span>
                       <span class="co">#sharedpartner_out = shp_cospons_outgoing, </span>
@@ -1526,9 +1525,9 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
                       committee <span class="op">=</span> <span class="va">shared_committee</span>,
                       online_similarity <span class="op">=</span> <span class="va">onlinesim_mat</span> <span class="op">)</span>, 
              directed <span class="op">=</span> <span class="cn">TRUE</span>, 
-             init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">.5</span>, <span class="fl">.1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit2</span>, 
+             init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">.5</span>, <span class="fl">.1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="va">nfit2</span>, 
           groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'Endogenous'</span> <span class="op">=</span> <span class="fl">1</span>, 
                      <span class="st">'Homophily'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, 
                      <span class="st">'Exogenous'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -1557,17 +1556,17 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt;     online_similarity      0.03 ***</span>
 <span class="co">#&gt;                           (0.00)   </span>
 <span class="co">#&gt; -----------------------------------</span>
-<span class="co">#&gt; AIC                    55374.67    </span>
+<span class="co">#&gt; AIC                    55374.63    </span>
 <span class="co">#&gt; McFadden $R^2$             0.32    </span>
 <span class="co">#&gt; ===================================</span>
-<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
+<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></code></pre></div>
 <p>XXTODO: add the find-init version here. Add the triad-function. Then interpret some coefficients.</p>
 </div>
 <div id="regression-without-degree-correction-and-when-to-use-it" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression-without-degree-correction-and-when-to-use-it" class="anchor"></a>Regression without degree correction (and when to use it)</h2>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">nfit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nfit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, 
               w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>degree <span class="op">=</span> <span class="va">degreemat</span>,
                        reciprocity <span class="op">=</span> <span class="va">recip_cospons</span>,
                        <span class="co">#sharedpartner_in = shp_cospons_incoming,</span>
@@ -1614,10 +1613,10 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; </span>
 <span class="co">#&gt; R2:</span>
 <span class="co">#&gt;  McFadden R2 Cox Snell R2 </span>
-<span class="co">#&gt;    0.5018393    0.8956821</span></pre></div>
+<span class="co">#&gt;    0.5018393    0.8956821</span></code></pre></div>
 <p>Comparing the two models:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">nfit2</span>, <span class="va">nfit3</span><span class="op">)</span>, 
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html">screenreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">nfit2</span>, <span class="va">nfit3</span><span class="op">)</span>, 
           custom.model.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'with degree correction'</span>, <span class="st">'without deg. cor.'</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ============================================================</span>
@@ -1648,10 +1647,10 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span class="co">#&gt; ageout                                         0.07         </span>
 <span class="co">#&gt;                                               (0.04)        </span>
 <span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; AIC                55374.67                59565.77         </span>
+<span class="co">#&gt; AIC                55374.63                59565.77         </span>
 <span class="co">#&gt; McFadden $R^2$         0.32                    0.50         </span>
 <span class="co">#&gt; ============================================================</span>
-<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></pre></div>
+<span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></code></pre></div>
 </div>
 </div>
 <div id="part-3-model-assessment-network-simulations-gof" class="section level1">
@@ -1661,43 +1660,43 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <h2 class="hasAnchor">
 <a href="#model-comparisons" class="anchor"></a>Model comparisons</h2>
 <p>Model comparisons can be done using <code>AIC</code>-scores, LR-tests or the R-squared measures. AIC-scores are the best indicators of model fit. The gHypEG model can also be fit maximally to the data. This perfectly fit model cannot be interpreted (since step by step, additional predictive layers are added and these laysers capture deviances but would need to be interpreted individually), but the AIC scores can be used to check how far away your models are from it.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="va">fullfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ghype.html">ghype</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">cospons_mat</span>, directed <span class="op">=</span> <span class="cn">TRUE</span>, selfloops <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fullfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ghype.html">ghype</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">cospons_mat</span>, directed <span class="op">=</span> <span class="cn">TRUE</span>, selfloops <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="predicted-probabilities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predicted-probabilities" class="anchor"></a>Predicted probabilities</h2>
 <p>The omega matrix stored in the <code>nrm</code>-object holds XXTODO. It can be used to calculate marginal effects.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="va">nfit2omega</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>omega <span class="op">=</span> <span class="va">nfit2</span><span class="op">$</span><span class="va">omega</span>, 
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nfit2omega</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>omega <span class="op">=</span> <span class="va">nfit2</span><span class="op">$</span><span class="va">omega</span>, 
                          cosponsfull <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cospons_mat</span><span class="op">)</span>, 
                          age_absdiff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">age_absdiffmat</span><span class="op">)</span>, 
                          sameparty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">party_homophilymat</span><span class="op">)</span><span class="op">)</span>
 <span class="va">nfit2omega</span><span class="op">[</span><span class="va">nfit2omega</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
-<span class="va">nfit2omega</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">nfit2omega</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nfit2omega</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_absdiff</span>, y <span class="op">=</span> <span class="va">omega</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sameparty</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+<span class="va">nfit2omega</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">nfit2omega</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nfit2omega</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_absdiff</span>, y <span class="op">=</span> <span class="va">omega</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sameparty</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span><span class="st">""</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#E41A1C'</span>, <span class="st">'#377EB8'</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Between parties'</span>, <span class="st">'Within party'</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Age difference"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Tie propensities"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Model (2): Marginal effects of age difference'</span><span class="op">)</span>
-<span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</span></pre></div>
+<span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</span></code></pre></div>
 <p><img src="Tutorial_NRM_files/figure-html/unnamed-chunk-36-1.png" width="672"></p>
 </div>
 <div id="network-simulations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#network-simulations" class="anchor"></a>Network simulations</h2>
 <p>The <code><a href="../reference/rghype.html">rghype()</a></code>-function simulates networks form <code>nrm</code>-models. The number of simulations can be specified with the <code>nsamples</code> argument.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="va">simnw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="va">nfit2</span>, seed <span class="op">=</span> <span class="fl">1253</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">simnw</span>, layout <span class="op">=</span> <span class="st">'stress'</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simnw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="va">nfit2</span>, seed <span class="op">=</span> <span class="fl">1253</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">simnw</span>, layout <span class="op">=</span> <span class="st">'stress'</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="va">weight</span><span class="op">&gt;</span><span class="fl">5</span>, alpha<span class="op">=</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">parlGroup</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">10</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">simnw</span>,<span class="fl">1</span>,<span class="va">sum</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">simnw</span>,<span class="fl">1</span>,<span class="va">sum</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span><span class="st">""</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'orange'</span>, <span class="st">'yellow'</span>, <span class="st">'blue'</span>, <span class="st">'green'</span>, <span class="st">'grey'</span>,
                                     <span class="st">'darkblue'</span>, <span class="st">'red'</span>, <span class="st">'darkgreen'</span>, <span class="st">'purple'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/theme_graph.html">theme_graph</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/theme_graph.html">theme_graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Tutorial_NRM_files/figure-html/unnamed-chunk-38-1.png" width="480"></p>
 </div>
 <div id="goodness-of-fit-measures" class="section level2">

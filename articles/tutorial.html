@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,14 +85,13 @@
 
       
 
-      </header><script src="tutorial_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="tutorial_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="tutorial_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="tutorial_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ghypernet Tutorial</h1>
                         <h4 class="author">Giona Casiraghi</h4>
             
-            <h4 class="date">2020-10-22</h4>
+            <h4 class="date">2021-09-02</h4>
       
       
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -102,8 +101,8 @@
     
     
 <p>This is a short tutorial to show how to employ the <code>ghypernet</code> R package for the estimation of gHypEG. In the following, we use Zachary’s Karate Club dataset as baseline. The data is provided within this package and can be simply loaded. It corresponds to a weighted adjacency matrix whose entries report the number of interactions between individuals. The graph specified by the adjacency matrix is <em>undirected</em> and does not have <em>self-loops</em>. For this reason, we specify the two parameters <code>directed=FALSE</code> and <code>selfloops=FALSE</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"adj_karate"</span><span class="op">)</span>
 <span class="va">directed</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
@@ -130,14 +129,14 @@
 <span class="co">#&gt; Actor 7         0</span>
 <span class="co">#&gt; Actor 8         0</span>
 <span class="co">#&gt; Actor 9         0</span>
-<span class="co">#&gt; Actor 10        0</span></pre></div>
+<span class="co">#&gt; Actor 10        0</span></code></pre></div>
 <div id="fitting-a-ghypeg-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#fitting-a-ghypeg-model" class="anchor"></a>Fitting a gHypEG Model</h1>
 <p>GHypEG Models can be fitted using the general function <code>ghype</code>. However, we provide some default functions to fit specific models. These functions take an adjacency matrix (not sparse) as main argument, or an <code>igraph</code> graph object. They further allow to specify whether the model should be directed or not, and whether it should have selfloops or not.</p>
 <p>The function <code>regularm</code> allows to fit the simplest possible model that can be formulated with gHypEGs: gnp-like graph where only the average degree is preserved.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="op">(</span><span class="va">regularmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/regularm.html">regularm</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">regularmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/regularm.html">regularm</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; ghype.matrix(graph = graph, directed = directed, selfloops = selfloops, </span>
 <span class="co">#&gt;     unbiased = TRUE, regular = TRUE)</span>
@@ -145,10 +144,10 @@
 <span class="co">#&gt; 34 vertices, 231 edges </span>
 <span class="co">#&gt; Loglikelihood:</span>
 <span class="co">#&gt; -584.7139</span>
-<span class="co">#&gt; df: 1</span></pre></div>
+<span class="co">#&gt; df: 1</span></code></pre></div>
 <p>The function <code>scm</code> allows to fit the soft-configuration model, where all degrees are preserved.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="op">(</span><span class="va">confmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">confmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; ghype.matrix(graph = graph, directed = directed, selfloops = selfloops, </span>
 <span class="co">#&gt;     unbiased = TRUE, regular = FALSE)</span>
@@ -156,26 +155,26 @@
 <span class="co">#&gt; 34 vertices, 231 edges </span>
 <span class="co">#&gt; Loglikelihood:</span>
 <span class="co">#&gt; -434.5449</span>
-<span class="co">#&gt; df: 34</span></pre></div>
+<span class="co">#&gt; df: 34</span></code></pre></div>
 <p>From the models, we can generate random realisations that can be used, e.g., as null-models to test hypothesis about the data. This can be achieved by means of the function <code>rghype</code>, specifying the number of realisations to take.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">random_graphs_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">10</span>, model <span class="op">=</span> <span class="va">regularmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
-<span class="va">random_graphs_scm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">10</span>, model <span class="op">=</span> <span class="va">confmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">random_graphs_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">10</span>, model <span class="op">=</span> <span class="va">regularmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
+<span class="va">random_graphs_scm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">10</span>, model <span class="op">=</span> <span class="va">confmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></code></pre></div>
 <p>Finally, we can perform model selection and hypothesis testing by comparing statistics of two models. We can follow two different approaches, comparing information scores such as AIC, or performing a likelihood ratio test. One simple question we can ask, for example, is whether the degree sequence of the Karate Club can be simply explained by a regular model, or there is the need to use a configuration model. AIC scores can be obtained using the standard R function <code>AIC</code>. Likelihood-ratio tests are performed using the function <code>lr.test</code>. However, we provide some wrappers for the function <code>lr.test</code> for some commonly done tests like the one above.</p>
 <p>Comparing AIC scores for the regular model and the configuration model yields the following result:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">regularmodel</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">regularmodel</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1171.428</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">confmodel</span><span class="op">)</span>
 <span class="co">#&gt; [1] 937.0897</span>
 
 <span class="co"># difference in AICs, high value means more complex model is better</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">regularmodel</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">confmodel</span><span class="op">)</span>
-<span class="co">#&gt; [1] 234.338</span></pre></div>
+<span class="co">#&gt; [1] 234.338</span></code></pre></div>
 <p>This shows that the there is strong evidence for the employing the configuration model, because the degree sequence of the graph strongly deviates from the regular one.</p>
 <p>To increase confidence in this result, we can compare the result above with that obtained from random data generated from the regular model.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># Generate regular models and configuration models for random graphs</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Generate regular models and configuration models for random graphs</span>
 <span class="va">regularmodels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">random_graphs_rm</span>, FUN <span class="op">=</span> <span class="va">regularm</span>, directed<span class="op">=</span><span class="va">directed</span>, selfloops<span class="op">=</span><span class="va">selfloops</span><span class="op">)</span>
 <span class="va">confmodels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">random_graphs_rm</span>, FUN <span class="op">=</span> <span class="va">scm</span>, directed<span class="op">=</span><span class="va">directed</span>, selfloops<span class="op">=</span><span class="va">selfloops</span><span class="op">)</span>
 <span class="co"># Compute AICs</span>
@@ -184,11 +183,11 @@
 <span class="co"># differences in AIC, high value means more complex model is better</span>
 <span class="va">AIC_regularmodels</span> <span class="op">-</span> <span class="va">AIC_confmodels</span>
 <span class="co">#&gt;  [1] -46.55258 -32.36789 -20.92125 -28.61791 -34.33781 -39.78901 -31.21541</span>
-<span class="co">#&gt;  [8] -30.15379 -18.92063 -41.49301</span></pre></div>
+<span class="co">#&gt;  [8] -30.15379 -18.92063 -41.49301</span></code></pre></div>
 <p>As can be seen by the experiment above, in the case of random graphs generated from the regular model, the AIC of the configuration model is <em>higher</em> than that of the regular model, confirming that the added complexity is not justified.</p>
 <p>The (empirical) likelihood-ratio test gives a similar result, with the benefit of providing a p-value. The function <code>conf.test</code> provides a simple way to perform the test without the need of computing the models.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/conf.test.html">conf.test</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/conf.test.html">conf.test</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test -- gnp vs CM</span>
 <span class="co">#&gt; </span>
@@ -196,20 +195,20 @@
 <span class="co">#&gt; lr = 299.79, df = 33, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  19.63033 51.83806</span></pre></div>
+<span class="co">#&gt;  19.63033 51.83806</span></code></pre></div>
 <p>Similarly to what done above, we can perform the test using the random graphs. Now we expect large p-values.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">tests</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">random_graphs_rm</span>, FUN <span class="op">=</span> <span class="va">conf.test</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tests</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">random_graphs_rm</span>, FUN <span class="op">=</span> <span class="va">conf.test</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">tests</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">p.value</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 0.97652855 0.47749983 0.09433827 0.30929582 0.57422868 0.82213540</span>
-<span class="co">#&gt;  [7] 0.42243781 0.37426112 0.06527072 0.87972711</span></pre></div>
+<span class="co">#&gt;  [7] 0.42243781 0.37426112 0.06527072 0.87972711</span></code></pre></div>
 </div>
 <div id="block-constrained-configuration-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#block-constrained-configuration-model" class="anchor"></a>Block-Constrained Configuration Model</h1>
 <p>The next model that can be estimated is the block constrained configuration model. The Karate Club has a well-known partitioning into two communities that can be loaded from the package. We fit a bccm using the <code>bccm</code> function, specifying the vertex labels.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"vertexlabels"</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"vertexlabels"</span><span class="op">)</span>
 <span class="op">(</span><span class="va">blockmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = directed, </span>
@@ -230,10 +229,10 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">blockmodel</span><span class="op">$</span><span class="va">blockOmega</span><span class="op">)</span>
 <span class="co">#&gt;            1          2</span>
 <span class="co">#&gt; 1 1.00000000 0.09044494</span>
-<span class="co">#&gt; 2 0.09044494 0.91049902</span></pre></div>
+<span class="co">#&gt; 2 0.09044494 0.91049902</span></code></pre></div>
 <p>By default, the function fits a ‘full’ block structure, where every parameter for in- out-blocks relations are different. In this case this corresponds to three parameters: one for block 1, one for block 2, one for the edges between the two blocks. However, in some cases we see that the parameters of in-blocks relations are similar to each other, as can be seen above looking at the diagonal entries of the block matrix. In this case, a full block structure may overfit the data, while a simpler model could be better. This can be fitted setting the parameter <code>homophily=TRUE</code>. This corresponds to a model where there are only two parameters, one for in-block edges, one for out-block edges, irrespectively of the number of blocks. The result is shown below.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="op">(</span><span class="va">blockmodel_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, homophily <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">blockmodel_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, homophily <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = directed, </span>
 <span class="co">#&gt;     selfloops = selfloops, homophily = TRUE)</span>
@@ -248,10 +247,10 @@
 <span class="co">#&gt; 1 1.00000000 0.00000000     Inf &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; 2 0.09512422 0.00020628  461.14 &lt; 2.2e-16 ***</span>
 <span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></pre></div>
+<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
 <p>The first test we need to perform is whether either of the model just fitted significantly improve the fit to the data. We do so by performing a likelihood ratio test between the configuration model and the bccms.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/lr.test.html">lr.test</a></span><span class="op">(</span>nullmodel <span class="op">=</span> <span class="va">confmodel</span>, altmodel <span class="op">=</span> <span class="va">blockmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/lr.test.html">lr.test</a></span><span class="op">(</span>nullmodel <span class="op">=</span> <span class="va">confmodel</span>, altmodel <span class="op">=</span> <span class="va">blockmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
@@ -268,18 +267,18 @@
 <span class="co">#&gt; lr = 194.96, df = 1, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  1.474561e-08 8.031860e+00</span></pre></div>
+<span class="co">#&gt;  1.474561e-08 8.031860e+00</span></code></pre></div>
 <p>Unsurprisingly, the test gives low p-values, confirming the presence of a block structure. Again, we can perform a similar analysis using AIC:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">confmodel</span><span class="op">)</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">confmodel</span><span class="op">)</span>
 <span class="co">#&gt; [1] 937.0897</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">blockmodel_2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 744.1332</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">blockmodel</span><span class="op">)</span>
-<span class="co">#&gt; [1] 745.677</span></pre></div>
+<span class="co">#&gt; [1] 745.677</span></code></pre></div>
 <p>From this, we note that while specifying the full bccm gives an improvement in the score compared to the two parameters model, such improvement is relatively small, and appears to not justify the increased complexity. We can verify again this with a likelihood-ratio test:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/lr.test.html">lr.test</a></span><span class="op">(</span>nullmodel <span class="op">=</span> <span class="va">blockmodel_2</span>, altmodel <span class="op">=</span> <span class="va">blockmodel</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/lr.test.html">lr.test</a></span><span class="op">(</span>nullmodel <span class="op">=</span> <span class="va">blockmodel_2</span>, altmodel <span class="op">=</span> <span class="va">blockmodel</span>, seed<span class="op">=</span><span class="fl">123</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  LR test</span>
 <span class="co">#&gt; </span>
@@ -287,10 +286,10 @@
 <span class="co">#&gt; lr = 0.45622, df = 1, p-value = 0.7645</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  0.03722328 6.94467855</span></pre></div>
+<span class="co">#&gt;  0.03722328 6.94467855</span></code></pre></div>
 <p>The result shows that the added complexity of the second model is not justified by the data. We investigate this further by comparing the results with what obtained from random variations.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="co"># First generate random sample from blockmodel</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># First generate random sample from blockmodel</span>
 <span class="va">random_graphs_bccm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rghype.html">rghype</a></span><span class="op">(</span>nsamples <span class="op">=</span> <span class="fl">100</span>, model <span class="op">=</span> <span class="va">blockmodel_2</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
 <span class="co"># Generate the two models for random graphs</span>
 <span class="va">blockmodels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">random_graphs_bccm2</span>, FUN <span class="op">=</span> <span class="va">bccm</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed<span class="op">=</span><span class="va">directed</span>, selfloops<span class="op">=</span><span class="va">selfloops</span><span class="op">)</span>
@@ -301,15 +300,15 @@
 <span class="co"># mean difference in AIC, high value means more complex model is better</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">AIC_blockmodel_2s</span> <span class="op">-</span> <span class="va">AIC_blockmodels</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt; -2.0000 -1.5366 -0.6637 -0.1704  0.6268  8.3348</span></pre></div>
+<span class="co">#&gt; -2.0000 -1.5366 -0.6637 -0.1704  0.6268  8.3348</span></code></pre></div>
 <p>This confirms the fact that the asymmetry in the two blocks can ascribed to random variations.</p>
 </div>
 <div id="goodness-of-fit" class="section level1">
 <h1 class="hasAnchor">
 <a href="#goodness-of-fit" class="anchor"></a>Goodness of Fit</h1>
 <p>Finally, our framework allows to evaluate the goodness-of-fit of model to data. Similarly to a multinomial goodness-of-fit, we perform a test of the chosen against the <em>maximally complex model</em> that can be formulated. This model provides the baseline against which comparing simpler models in terms of their goodness-of-fit. The ‘full model’ is specified such that the observed graph is the expected one. It is fitted using the function <code>ghype</code> with the flag <code>unbiased=FALSE</code>. The likelihood ratio test can be performed either manually or using the function <code>gof.test</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="va">fullmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ghype.html">ghype</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, unbiased <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fullmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ghype.html">ghype</a></span><span class="op">(</span>graph <span class="op">=</span> <span class="va">adj_karate</span>, directed <span class="op">=</span> <span class="va">directed</span>, selfloops <span class="op">=</span> <span class="va">selfloops</span>, unbiased <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/lr.test.html">lr.test</a></span><span class="op">(</span>nullmodel <span class="op">=</span> <span class="va">blockmodel_2</span>, altmodel <span class="op">=</span> <span class="va">fullmodel</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -328,7 +327,7 @@
 <span class="co">#&gt; lr = 454.89, df = 559, p-value = 7.719e-14</span>
 <span class="co">#&gt; alternative hypothesis: one.sided</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  270.4443 340.7790</span></pre></div>
+<span class="co">#&gt;  270.4443 340.7790</span></code></pre></div>
 <p>The reason for this result is the fact that, although the bccm is a good fit for the empirical graph, the latter is characterised by some particular structures that are not encoded by the bccm. For example, the empirical graph is characterised by few ‘bridges’ between the two communities, managed by relatively low degree vertices. Instead, the bccm assumes that <em>all</em> vertices connect weakly the two communities, with an amount of edges proportional to the degree.</p>
 </div>
   </div>
