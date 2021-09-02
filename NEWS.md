@@ -5,6 +5,7 @@
 
 - new features
 * `check_specs()`: recognize bipartite graphs
+* addressed issue #15: bccm now names coefficients according to label names. E.g.: coefficient for the propensities between block 'red' and 'blue' are now named 'red<->blue'.
 
 - bug fixes:
 * `scm()`: fixed df for bipartite graphs

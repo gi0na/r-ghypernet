@@ -59,6 +59,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   
     # generate block matrix
     blocks <- blockids %*% t(blockids)
+    
   } else{
     blockids1 <- as.numeric(plyr::mapvalues(labels[[1]], from = levels(factor(unlist(labels))), 
                                             to = c(1, numbers::Primes(length(unlist(labels)) * 8))[1:(length(unique(unlist(labels))))], warn_missing = FALSE))
@@ -66,6 +67,28 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
                                             to = c(1, numbers::Primes(length(unlist(labels)) * 8))[1:(length(unique(unlist(labels))))], warn_missing = FALSE))
     
     blocks <- blockids1 %*% t(blockids2)
+  }
+  
+  labs_map <- tibble(labs=levels(factor(unlist(labels))),ids=c(1,numbers::Primes(length(unlist(labels))*8))[1:(length(unique(unlist(labels))))], matchme=1)
+  if(directedBlocks){
+    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-matchme) %>%
+      rowwise() %>%
+      mutate(lab = paste(labs.x,labs.y, sep = '->'),
+             id = if_else(ids.x<=ids.y,ids.x*ids.y,-ids.x*ids.y)) %>%
+      select(lab,id) %>%
+      ungroup() ->
+      labs_map
+    blocks[lower.tri(blocks,F)] <- - blocks[lower.tri(blocks,F)]
+    blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
+  } else{
+    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-matchme) %>%
+      rowwise() %>%
+      mutate(lab = paste(labs.x,labs.y, sep = '<->'),
+             id = ids.x*ids.y) %>%
+      select(lab,id) %>%
+      group_by(id) %>%
+      summarise(lab = first(lab)) ->
+      labs_map
   }
 
   if(homophily & inBlockOnly){
@@ -78,9 +101,21 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     if(!bipartite){
       blocks[blocks %in% unique(blockids)^2] <- 1
       blocks[blocks != 1] <- 2
+      labs_map %>%
+        mutate(homo = id %in% unique(blockids)^2) %>%
+        mutate(id = (!homo) + 1) %>%
+        group_by(id) %>%
+        summarise(lab = if_else(first(id) == 1,'homologue', 'hetero')) ->
+        labs_map
     } else{
       blocks[blocks %in% unique(c(blockids1,blockids2))^2] <- 1
       blocks[blocks != 1] <- 2
+      labs_map %>%
+        mutate(homo = id %in% unique(c(blockids1,blockids2))^2) %>%
+        mutate(id = (!homo) + 1) %>%
+        group_by(id) %>%
+        summarise(lab = if_else(first(id) == 1,'homologue', 'hetero')) ->
+        labs_map
     }
   }
 
@@ -89,16 +124,24 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   if(inBlockOnly){
     if(!bipartite){
       blocks[!(blocks %in% blockids^2)] <- 0
+      labs_map %>%
+        mutate(inblock = id %in% unique(blockids)^2,
+               id = if_else(inblock,id,0),
+               lab = if_else(inblock,lab,'betweenblocks')) %>%
+        group_by(id) %>%
+        summarise(lab = first(lab),id = first(id)) ->
+        labs_map
     } else{
       blocks[!(blocks %in% unique(c(blockids1,blockids2))^2)] <- 0
+      labs_map %>%
+        mutate(inblock = id %in% unique(c(blockids1,blockids2))^2,
+               id = if_else(inblock,id,0),
+               lab = if_else(inblock,lab,'betweenblocks')) %>%
+        group_by(id) %>%
+        summarise(lab = first(lab),id = first(id)) ->
+        labs_map
     }
   }
-
-  if(directedBlocks){
-    blocks[lower.tri(blocks,F)] <- - blocks[lower.tri(blocks,F)]
-    blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
-  }
-
   # construct xi matrix
   if(is.null(xi)){
     if(is.null(regular)){
@@ -145,8 +188,8 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   omega.v[!idx.one & !idx.zero] <- fitted_omega_wallenius(mb[,2][!idx.one & !idx.zero], xib[,2][!idx.one & !idx.zero])
 
 
-
-  omegab <- data.frame(block=xib$block,omegab=omega.v)
+  omegab <- data.frame(block=xib$block,omegab=omega.v) %>%
+    left_join(labs_map, by = c('block'='id'))
 
   # map values to full omega vector
   omegav <- plyr::mapvalues(xiframe$block,from=sort(unique(xiframe$block)), to=omegab$omega[rank(omegab$block[1:length(unique(xiframe$block))])])
@@ -207,7 +250,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   # }
   model$ci <- ci
   model$coef <- omegab[,2]
-  names(model$coef) <- omegab[,1]
+  names(model$coef) <- omegab[,3]
   model$labels <- labels
 
   class(model) <- append(c('bccm','ghypeBlock'), class(model))
