@@ -4,7 +4,7 @@
 #'
 #'
 #' @param adj the adjacency matrix of the graph.
-#' @param labels vector, the vertex labels to generate the blocks in the bccm.
+#' @param labels vector or list. contains the vertex labels to generate the blocks in the bccm. In the case of bipartite graphs should be a list of two vectors, the first one with row labels and the second one with column labels.
 #' @param directed a boolean argument specifying whether the graph is directed or not.
 #' @param selfloops boolean argument specifying whether the model should incorporate selfloops.
 #' @param directedBlocks boolean argument specifying whether the model should incorporate directed blocks. Default to FALSE.
@@ -29,10 +29,15 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
 }
 
 .bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE, ...){
-    if(is.null(directed) | is.null(selfloops)){
-    specs <- check_specs(adj)
+  specs <- check_specs(adj)
+  bipartite <- specs[3]
+  if(is.null(directed) | is.null(selfloops)){
     if(is.null(directed)) directed <- specs[1]
     if(is.null(selfloops)) selfloops <- specs[2]
+  }
+  if(bipartite){
+    directed <- specs[1]
+    selfloops <- specs[2]
   }
 
   if(is.matrix(adj)){
@@ -47,12 +52,21 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     directedBlocks <- FALSE
 
   # generate unique blockids
-  blockids <- as.numeric(
-    plyr::mapvalues(labels, from = levels(factor(labels)),
-                    to = c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))]))
-
-  # generate block matrix
-  blocks <- blockids %*% t(blockids)
+  if(!bipartite){
+    blockids <- as.numeric(
+      plyr::mapvalues(labels, from = levels(factor(labels)),
+                      to = c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))]))
+  
+    # generate block matrix
+    blocks <- blockids %*% t(blockids)
+  } else{
+    blockids1 <- as.numeric(plyr::mapvalues(labels[[1]], from = levels(factor(unlist(labels))), 
+                                            to = c(1, numbers::Primes(length(unlist(labels)) * 8))[1:(length(unique(unlist(labels))))], warn_missing = FALSE))
+    blockids2 <- as.numeric(plyr::mapvalues(labels[[2]], from = levels(factor(unlist(labels))), 
+                                            to = c(1, numbers::Primes(length(unlist(labels)) * 8))[1:(length(unique(unlist(labels))))], warn_missing = FALSE))
+    
+    blocks <- blockids1 %*% t(blockids2)
+  }
 
   if(homophily & inBlockOnly){
     e <- simpleError('homophily and inBlockOnly parameters are in conflict')
@@ -61,14 +75,23 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
 
   # if homophily model, fit only in-group vs out-group
   if(homophily){
-    blocks[blocks %in% unique(blockids)^2] <- 1
-    blocks[blocks != 1] <- 2
+    if(!bipartite){
+      blocks[blocks %in% unique(blockids)^2] <- 1
+      blocks[blocks != 1] <- 2
+    } else{
+      blocks[blocks %in% unique(c(blockids1,blockids2))^2] <- 1
+      blocks[blocks != 1] <- 2
+    }
   }
 
   # if inBlockOnly model, fit different in-group parameters
   # but only one out-group parameter
   if(inBlockOnly){
-    blocks[!(blocks %in% blockids^2)] <- 0
+    if(!bipartite){
+      blocks[!(blocks %in% blockids^2)] <- 0
+    } else{
+      blocks[!(blocks %in% unique(c(blockids1,blockids2))^2)] <- 0
+    }
   }
 
   if(directedBlocks){
@@ -87,8 +110,11 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     xi <- ComputeXi(adj,directed,selfloops, regular=regular)
 
   } else{
-    if(length(xi) == 1 && xi == 'regular')
-      xi <- ComputeXi(adj,directed,selfloops, regular=TRUE)
+    if(length(xi) == 1 && xi == 'regular'){
+      k1 = rep(sum(net)/nrow(net),nrow(net))
+      k2 = rep(sum(net)/ncol(net),ncol(net))
+      xi <- round(k1 %*% t(k2))
+    }
   }
 
   # generate map xi and adj values to blocks
@@ -126,26 +152,40 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   omegav <- plyr::mapvalues(xiframe$block,from=sort(unique(xiframe$block)), to=omegab$omega[rank(omegab$block[1:length(unique(xiframe$block))])])
 
   # generate omega matrix
-  omega <- vec2mat(omegav,directed,selfloops,nrow(adj))
+  if(bipartite){ # if bipartite
+    n <- c(nrow(adj)+ncol(adj),nrow(adj),ncol(adj))
+  } else{
+    n <- nrow(adj)
+  }
+  omega <- vec2mat(omegav,directed,selfloops,n)
 
   # generate and return ensemble
   model <- ghype(graph = adj, directed = directed, selfloops = selfloops, xi = xi, omega = omega, regular = regular, ...)
 
   # generate block omega matrix for reference
   if( (!homophily) & (!inBlockOnly)){
-    blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
-
-    if(directedBlocks)
-      blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
-
-    rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
-
-    blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
+    if(bipartite){ # if bipartite
+      blockOmega <- sort(unique(blockids1)) %*% t(sort(unique(blockids2)))
+      rownames(blockOmega) <- levels(factor(labels[[1]]))
+      colnames(blockOmega) <- levels(factor(labels[[2]]))
+      blockOmega <- plyr::mapvalues(blockOmega, from = unique(sort(blockOmega)), 
+                                    to = omegab[, 2][rank(omegab[, 1])])
+    } else{
+      blockOmega <- c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))] %*% t(c(1,numbers::Primes(length(labels)*8))[1:(length(unique(labels)))])
+  
+      if(directedBlocks)
+        blockOmega[lower.tri(blockOmega,F)] <- - blockOmega[lower.tri(blockOmega,F)]
+  
+      rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
+  
+      blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
+    }
   } else{
     blockOmega <- NULL
   }
   model$blockOmega <- blockOmega
-  model$df <- regular + (1-regular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
+  # model$df <- regular + (1-regular)*nrow(xi)*(1+directed) + nrow(omegab)-1 - sum(xib[,2]==0)
+  model$df <- regular + (1 - regular) * (nrow(xi) + directed*ncol(xi)) + nrow(omegab) - 1 - sum(xib[, 2] == 0)
   model$directedBlocks <- directedBlocks
   model$homophily <-  homophily
   model$inBlockOnly <- inBlockOnly

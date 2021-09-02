@@ -34,7 +34,12 @@ phi_element_binomial <- function(edgecount, p, m){
 #' @return
 #'
 phi_element_wallenius <- function(edgecount, xi, sum_xi, oddsratio, m){
-  2 * BiasedUrn::pWNCHypergeo(x = edgecount, m1 = xi, m2 = sum_xi-xi, n = m, odds = oddsratio) - 
+  2 * tryCatch(
+    BiasedUrn::pWNCHypergeo(x = edgecount, m1 = xi, m2 = sum_xi-xi, n = m, odds = oddsratio),
+    error = function(cond){
+      # message(cond)
+      return(1)
+    }) -
     BiasedUrn::dWNCHypergeo(x = edgecount, m1 = xi, m2 = sum_xi-xi, n = m, odds = oddsratio) - 1
 }
 

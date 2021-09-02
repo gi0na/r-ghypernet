@@ -49,6 +49,9 @@ check_specs <- function(object, ...){
 
 check_specs.matrix <- function(object, ...){
   if(is.matrix(object)){
+    if(nrow(object != ncol(object))){
+      return(c('directed'=TRUE, 'selfloops'=TRUE, 'bipartite' = TRUE))
+    }
     # if(is.null(directed)){
       if(isSymmetric(object)){
         directed <- FALSE
@@ -71,5 +74,5 @@ check_specs.matrix <- function(object, ...){
       }
     # }
   }
-  return(c('directed'=directed, 'selfloops'=selfloops))
+  return(c('directed'=directed, 'selfloops'=selfloops, 'bipartite' = FALSE))
 }

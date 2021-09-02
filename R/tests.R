@@ -338,14 +338,14 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #' @examples
 #' data("adj_karate")
 #' fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE)
-#' linkSignificance(graph = adj_karate, model = fullmodel, under=FALSE)
+#' link_significance(graph = adj_karate, model = fullmodel, under=FALSE)
 #'
-linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
+link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
-    adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
-    if(!directed)
-      adj <- adj + t(adj)
+    adj <- igraph::get.adjacency(graph, type='both', sparse = FALSE)
+    # if(!directed)
+    #   adj <- adj + t(adj)
   }
 
   directed <- model$directed
@@ -421,7 +421,7 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
                                                   )
 
   # return matrix of significance for each entry of original adjacency
-  return(vec2mat(probvec,directed,selfloops,nrow(adj)))
+  return(vec2mat(probvec, directed, selfloops, model$n))
 }
 
 

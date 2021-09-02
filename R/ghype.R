@@ -187,7 +187,7 @@ scm <- function(graph, directed = NULL, selfloops = NULL, ...){
   }
 
   model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE, ...)
-  model$df <- nrow(model$xi)*(1+directed)
+  model$df <- nrow(model$xi) * (directed) + ncol(model$xi)
   return(model)
 }
 
