@@ -1,7 +1,7 @@
 # ghypernet 1.0.1.0921
 
 - function renaming:
-* linkSignificance --> link_significance
+* `linkSignificance()` --> `link_significance()`
 
 - new features
 * `check_specs()`: recognize bipartite graphs
@@ -9,7 +9,7 @@
 - bug fixes:
 * `scm()`: fixed df for bipartite graphs
 * `linkSignificance()`: fixed issue for bipartite graphs
-* ``bccm()`: fixed issue for bipartite graphs
+* `bccm()`: fixed issue for bipartite graphs
 
 # ghypernet 1.0.1.0910
 
