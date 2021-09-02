@@ -45,7 +45,7 @@ We can obtain a high-pass noise filtering choosing a significance level and filt
 
 ```{r}
 # obtain significance matrix
-signmat <- linkSignificance(adj_karate, mod, under = FALSE)
+signmat <- link_significance(adj_karate, mod, under = FALSE)
 
 # filter adjacency matrix
 adjfiltered <- adj_karate
@@ -91,7 +91,7 @@ Hence, we can expect that the significant links will be mainly those between gro
 The results are in accordance with our intuition.
 
 ```{r}
-signmat <- linkSignificance(adj_karate, blockModel, under=FALSE)
+signmat <- link_significance(adj_karate, blockModel, under=FALSE)
 
 # filter adjacency matrix
 adjfiltered <- adj_karate
