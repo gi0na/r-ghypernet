@@ -29,3 +29,11 @@ createPredictors <- function(predictors,
   warning('This function is deprecated and will be removed in future versions. Use `create_predictors()`')
   create_predictors(predictors,...)
 }
+
+#' @rdname link_significance
+#' @export
+#'
+linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
+  warning('This function is deprecated and will be removed in future versions. Use `link_significance()`')
+  link_significance(graph, model, under, log.p, binomial.approximation, give_pvals)
+}
