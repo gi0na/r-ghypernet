@@ -90,7 +90,7 @@ nrm.default <- function(w, adj,
   # AIC, and R2
   if (is.null(xi)) {
     ## Build Ensemble
-    xi <- ComputeXi(adj, directed, 
+    xi <- compute_xi(adj, directed, 
                     selfloops, regular)
   }
   if (!null) {

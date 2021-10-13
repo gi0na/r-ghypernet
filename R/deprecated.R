@@ -37,3 +37,11 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   warning('This function is deprecated and will be removed in future versions. Use `link_significance()`')
   link_significance(graph, model, under, log.p, binomial.approximation, give_pvals)
 }
+
+#' @rdname compute_xi
+#' @export
+#'
+ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
+  warning('This function is deprecated and will be removed in future versions. Use `compute_xi()`')
+  compute_xi(adj, directed, selfloops, regular)
+}

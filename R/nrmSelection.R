@@ -179,7 +179,7 @@ nrm_choose <- function(adj, w.list,
   # different models are computed
   # in parallel
   if (is.null(xi)) {
-    xi <- ComputeXi(adj, directed, 
+    xi <- compute_xi(adj, directed, 
                     selfloops)
   }
   if (is.null(ncores)) {

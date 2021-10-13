@@ -2,15 +2,18 @@
 
 - function renaming:
 * `linkSignificance()` --> `link_significance()`
+* `ComputeXi()` --> `compute_xi()`
 
 - new features
+* added testing with test_that
 * `check_specs()`: recognize bipartite graphs
 * addressed issue #15: bccm now names coefficients according to label names. E.g.: coefficient for the propensities between block 'red' and 'blue' are now named 'red<->blue'.
 
 - bug fixes:
 * `scm()`: fixed df for bipartite graphs
 * `linkSignificance()`: fixed issue for bipartite graphs
-* `bccm()`: fixed issue for bipartite graphs
+* `bccm()`: fixed issue when fitting to bipartite graphs
+* `bccm()`: fixed issue arising when passing a list of identical labels (all vertices in one block)
 
 # ghypernet 1.0.1
 

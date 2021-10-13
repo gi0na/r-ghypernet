@@ -18,20 +18,12 @@ It provides efficient methods to perform hypothesis testing and model selection 
 Explore the provided Vignettes for some examples on how to analyse networks with `ghypernet`.
 
 # Installation
-
-The branch `feature/fof` is not publicly available.
-You have two ways to install this branch: 1) checkout the branch on your computer and install the package locally, or 2) install directly from R using the devtools package.
-I recommend 2) if you are not familiar with R packages development and maintenance.
-
-To follow 2) you need to obtain an access token from GitHub so that your session can log in as yourself: follow these instructions: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-
-Once you have the token, use the following commands to install devtools (if needed) and then install ghypernet from the chosen GitHub branch. Input your token in the right spot.
-
 ```
-# Install devtools from CRAN
-install.packages("devtools")
-# Install ghypernet from the github branch using your access token
-devtools::install_github("sgdev/r-ghypernet", ref = "feature/fof", auth_token = "YOUR-AUTH-TOKEN”)
+# Install ghypernet from CRAN
+install.packages("ghypernet")
+
+# Or the development version from GitHub:
+devtools::install_github("gi0na/r-ghypernet")
 ```
 
 # Dependencies
@@ -71,4 +63,4 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 # Copyright
 `ghypernet` is licensed under the [GNU Affero General Public License](https://choosealicense.com/licenses/agpl-3.0/).
 
-(c) Copyright ETH Zürich, 2016-2020
+(c) Copyright ETH Zürich, 2016-2021

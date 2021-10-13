@@ -23,13 +23,8 @@
 #' blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)
 #' 
 bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks = FALSE, homophily = FALSE, inBlockOnly = FALSE, xi = NULL, regular = FALSE, ...){
-  model <- .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, xi = xi, regular = regular, ...)
-  model$call <- match.call()
-  return(model)
-}
-
-.bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE, ...){
-  specs <- check_specs(adj)
+  # check if labels are all identicals
+  specs <- check_specs.matrix(adj)
   bipartite <- specs[3]
   if(is.null(directed) | is.null(selfloops)){
     if(is.null(directed)) directed <- specs[1]
@@ -39,6 +34,18 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     directed <- specs[1]
     selfloops <- specs[2]
   }
+  
+  if(length(unique(as.vector(labels))) == 1){
+    # return unbiased ghype
+    model <- ghype.matrix(graph = adj, directed = directed, selfloops = selfloops, xi = xi, unbiased = TRUE, regular = regular, ...)
+    return(model)
+  }
+  model <- .bccm(adj = adj, labels = labels, directed = directed, selfloops = selfloops, directedBlocks = directedBlocks, homophily = homophily, inBlockOnly = inBlockOnly, xi = xi, regular = regular, bipartite = bipartite, ...)
+  model$call <- match.call()
+  return(model)
+}
+
+.bccm <- function(adj, labels, directed, selfloops, directedBlocks, homophily, inBlockOnly, xi, regular, ignore_pvals=FALSE, bipartite, ...){
 
   if(is.matrix(adj)){
     if(!directed & !isSymmetric(adj)){
@@ -150,7 +157,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
         regular <- TRUE
     }
 
-    xi <- ComputeXi(adj,directed,selfloops, regular=regular)
+    xi <- compute_xi(adj,directed,selfloops, regular=regular)
 
   } else{
     if(length(xi) == 1 && xi == 'regular'){
@@ -169,7 +176,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   mb <- adjframe %>% group_by(.data$block) %>% summarise(adj=sum(adj))
 
   ## BUG: if one node singleton in community and selfloops not allowed there is no entry in omegab for it, set manually to 0
-  if(!selfloops){
+  if(!selfloops & !bipartite){
     vblockcounts <- plyr::count(blockids)
     if(any(vblockcounts$freq<2)){
       xib <- rbind(xib, cbind(block=vblockcounts$x[which(vblockcounts$freq<2)]^2, xi=rep(0, sum(vblockcounts$freq<2))))
