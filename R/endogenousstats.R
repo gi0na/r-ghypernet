@@ -55,13 +55,16 @@ checkGraphtype <- function(graph) {
 #' @param zero_values optional numeric value. Use this to substitute zero-values
 #'   in your reciprocity change statistic matrix. Zero values in the predictors
 #'   are recognized in the gHypEG regression as structural zeros. To ensure this
-#'   does not happen, please recode your zero-values in all your predictors.
-#'   If \code{zero_values} is not specified, the minmal value divided by 10 is
-#'   used instead.
+#'   does not happen, please recode your zero-values in all your predictors,
+#'   ideally using a dummy variable fitting an optimal value for the zeroes.
 #' @return Reciprocity change statistic matrix.
 #' @author LB, GC
 #' @seealso \code{\link{sharedPartner_stat}} or \code{\link{homophily_stat}}
 #' @export
+#' @examples
+#' recip_stat <- reciprocity_stat(adj_karate)
+#' recip_stat_dummy <- get_zero_dummy(recip_stat, name = 'reciprocity')
+#' nrm(w=recip_stat_dummy, adj_karate, directed = FALSE, selfloops = FALSE)
 #' 
 reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
   ## preprocess:
@@ -91,7 +94,7 @@ reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
   
   ## transform zero values
   if(is.null(zero_values)){
-    recip_mat[recip_mat == 0] <- min(recip_mat[recip_mat > 0])/10
+    # recip_mat[recip_mat == 0] <- min(recip_mat[recip_mat > 0])/10
   }else{
     recip_mat[recip_mat == 0] <- zero_values
   }
@@ -126,15 +129,19 @@ reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
 #' @param zero_values optional numeric value. Use this to substitute zero-values
 #'   in your shared partner change statistic matrix. Zero values in the predictors
 #'   are recognized in the gHypEG regression as structural zeros. To ensure this
-#'   does not happen, please recode your zero-values in all your predictors.
+#'   does not happen, please recode your zero-values in all your predictors,
+#'   ideally using a dummy variable fitting an optimal value for the zeroes.
 #' @param directed boolean. Is the graph directed?
-#'   If \code{zero_values} is not specified, the 0.1 is used instead.
 #' @return Shared partner change statistic matrix.
 #' @author LB, GC, GV
 #' @seealso \code{\link{reciprocity_stat}} or \code{\link{homophily_stat}}
 #' @export
 #' @import dplyr
 #' @importFrom utils setTxtProgressBar txtProgressBar
+#' @examples 
+#' tri_stat <- sharedPartner_stat(adj_karate, directed = FALSE)
+#' tri_stat_dummy <- get_zero_dummy(tri_stat, name = 'shared_partners')
+#' nrm(w=tri_stat_dummy, adj_karate, directed = FALSE, selfloops = FALSE)
 sharedPartner_stat <- function(graph,
                                directed,
                                weighted = TRUE,
@@ -262,17 +269,20 @@ findPartners_all <- function(node, el){
 #'   do not specify isolates in your nodes object, they are excluded from the
 #'   analysis (falsifies data).
 #' @param zero_values optional numeric value. Use this to substitute zero-values
-#'   in your reciprocity change statistic matrix. Zero values in the predictors
-#'   are recognized in the gHypEG regression as structural zeros. To ensure this
-#'   does not happen, please recode your zero-values in all your predictors. If
-#'   \code{zero_values} is not specified, the minmal value divided by 10 is used
-#'   instead.
+#'   in your homophily change statistic matrix. Zero values in the predictors
+#'   are recognized in the gHypEG regression as structural zeroes. To ensure this
+#'   does not happen, please recode your zero-values in all your predictors,
+#'   ideally using a dummy variable fitting an optimal value for the zeroes.
+#'   Only useful with absdiff type.
 #' @param these.categories.only optional vector specifying the categories to be
 #'   used, if only a subset of factor(variable) is needed.
 #' @return Homophily change statistic matrix.
 #' @author LB, GC
 #' @seealso \code{\link{reciprocity_stat}} or \code{\link{sharedPartner_stat}}
 #' @export
+#' @examples 
+#' homop_stat <- homophily_stat(variable = vertexlabels, nodes = rownames(adj_karate))
+#' nrm(w=list('homophily'= homop_stat), adj_karate, directed = FALSE, selfloops = FALSE)
 homophily_stat <- function(variable = variable,
                            type = 'categorical',
                            #type = categorical, absdiff
@@ -298,11 +308,6 @@ homophily_stat <- function(variable = variable,
           )
         }
       }
-      # check length/number of categories
-      # if (length(unique(variable)) > 1356) {
-	      ##TODO LB: wait, I think I got this wrong here?
-        # stop("Please recode your homophily variable. It cannot have more than 1356 categories.")
-      # }
     }
   }
   if (is.null(nodes)) {
@@ -335,14 +340,14 @@ homophily_stat <- function(variable = variable,
     if (is.null(these.categories.only)) {
       # create homophily matrix
       homophily_mat <-
-        ifelse(matrix(blocks %in% blockids ^ 2, nrow = length(nodes)), 10, 1) #hardcoded 10, 1
+        ifelse(matrix(blocks %in% blockids ^ 2, nrow = length(nodes)), exp(1), 1) #hardcoded e, 1
     } else{
       #these.categories.only = specified
       # which labels should be selected?
       selectedIDs <-
         numbers::Primes(length(variable))[labels %in% these.categories.only]
       homophily_mat <-
-        ifelse(matrix(blocks %in% selectedIDs ^ 2, nrow = length(nodes)), 10, 1) #hardcoded 10, 1
+        ifelse(matrix(blocks %in% selectedIDs ^ 2, nrow = length(nodes)), exp(1), 1) #hardcoded e, 1
     }
     ## label matrix
     rownames(homophily_mat) <- nodes
@@ -366,8 +371,8 @@ homophily_stat <- function(variable = variable,
   
   ## treat zero-values
   if (is.null(zero_values)) {
-    homophily_mat[homophily_mat == 0] <-
-      min(homophily_mat[homophily_mat > 0]) / 10
+    # homophily_mat[homophily_mat == 0] <-
+    #   min(homophily_mat[homophily_mat > 0]) / 10
   } else{
     homophily_mat[homophily_mat == 0] <- zero_values
   }
@@ -375,3 +380,43 @@ homophily_stat <- function(variable = variable,
   ## return matrix with 1/10 or absolute difference
   return(homophily_mat)
 }
+
+#' Create a dummy variable to encode zero values of another variable.
+#' 
+#' Use this to substitute zero-values in your nrm values. Zero values in the predictors
+#' are recognized in the gHypEG regression as structural zeroes. To ensure this
+#' does not happen, please recode your zero-values in all your predictors,
+#' ideally using a dummy variable fitting an optimal value for the zeroes.
+#' This function takes a predictor that needs to be recoded and returns a list
+#' containing two matrices. The first one contains the original predictor
+#' recoded such that all zero values are 1 (and thus do not impact the model).
+#' The second one consist of a matrix with 1 where the original predictor was
+#' different from 0, and `zero_values` where the original predictor was 0.
+#' If `zero_values` is not specified, it is fixed to e to simplify the interpretation
+#' of the results.
+#' 
+#' @param dat matrix, the predictor for which the zero values should be recoded.
+#' @param zero_values optional numeric, the value to assign to the zero values of `dat`
+#' in the dummy variable. It defaults to e to simplify the interpretation of the results.
+#' @param name optional character, the name of the predictor to create a named list
+#'
+#' @return a possibly named list of two matrices. The first one is the recoded version of `dat` where all zeroes
+#' are changed to 1. The second is the dummy variable such that dummy[dat==0] <- zero_values and 1
+#' otherwise.
+#' @export
+#' @seealso \code{\link{reciprocity_stat}} or \code{\link{sharedPartner_stat}}
+get_zero_dummy <- function(dat, name = NULL, zero_values = NULL){
+  zero_dummy <- matrix(1, nrow(dat), ncol(dat))
+  if(all(is.null(zero_values))){
+    zero_values <- exp(1)
+  }
+  zero_dummy[dat==0] <- zero_values
+  dat[dat==0] <- 1
+  w <- list(dat,zero_dummy)
+  if(is.null(name))
+    return(w)
+  names(w) <- c(name, paste0(name,'_zeroes'))
+  return(w)
+}
+
+

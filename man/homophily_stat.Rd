@@ -33,11 +33,11 @@ analysis (falsifies data).}
 used, if only a subset of factor(variable) is needed.}
 
 \item{zero_values}{optional numeric value. Use this to substitute zero-values
-in your reciprocity change statistic matrix. Zero values in the predictors
-are recognized in the gHypEG regression as structural zeros. To ensure this
-does not happen, please recode your zero-values in all your predictors. If
-\code{zero_values} is not specified, the minmal value divided by 10 is used
-instead.}
+in your homophily change statistic matrix. Zero values in the predictors
+are recognized in the gHypEG regression as structural zeroes. To ensure this
+does not happen, please recode your zero-values in all your predictors,
+ideally using a dummy variable fitting an optimal value for the zeroes.
+Only useful with absdiff type.}
 }
 \value{
 Homophily change statistic matrix.
@@ -48,6 +48,10 @@ variable (factor, character), the function returns attribute matches for
 dyads from the same group. If you supply a continuous variable (numeric,
 integers), the function returns absolute difference effects for each dyad in
 the graph.
+}
+\examples{
+homop_stat <- homophily_stat(variable = vertexlabels, nodes = rownames(adj_karate))
+nrm(w=list('homophily'= homop_stat), adj_karate, directed = FALSE, selfloops = FALSE)
 }
 \seealso{
 \code{\link{reciprocity_stat}} or \code{\link{sharedPartner_stat}}

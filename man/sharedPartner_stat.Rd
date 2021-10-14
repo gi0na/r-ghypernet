@@ -17,8 +17,7 @@ sharedPartner_stat(
 \item{graph}{A graph adjacency matrix or an edgelist. The edgelist needs to
 have 3 columns: a sender vector, a target vector and an edgecount vector.}
 
-\item{directed}{boolean. Is the graph directed?
-If \code{zero_values} is not specified, the 0.1 is used instead.}
+\item{directed}{boolean. Is the graph directed?}
 
 \item{weighted}{set to TRUE.}
 
@@ -35,7 +34,8 @@ from the analysis (falsifies data).}
 \item{zero_values}{optional numeric value. Use this to substitute zero-values
 in your shared partner change statistic matrix. Zero values in the predictors
 are recognized in the gHypEG regression as structural zeros. To ensure this
-does not happen, please recode your zero-values in all your predictors.}
+does not happen, please recode your zero-values in all your predictors,
+ideally using a dummy variable fitting an optimal value for the zeroes.}
 }
 \value{
 Shared partner change statistic matrix.
@@ -50,6 +50,11 @@ dense multi-edge graphs to ensure that meaningful triadic closure is
 detected. The statistic can be calculated in 3 different forms: undirected,
 incoming shared partners (where shared partner k: k->i and k->j) and outgoing
 shared partners (where shared partner k: k<-i and k<-j).
+}
+\examples{
+tri_stat <- sharedPartner_stat(adj_karate, directed = FALSE)
+tri_stat_dummy <- get_zero_dummy(tri_stat, name = 'shared_partners')
+nrm(w=tri_stat_dummy, adj_karate, directed = FALSE, selfloops = FALSE)
 }
 \seealso{
 \code{\link{reciprocity_stat}} or \code{\link{homophily_stat}}
