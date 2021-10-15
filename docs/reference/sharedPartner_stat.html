@@ -51,7 +51,7 @@
 dyad in the graph. Shared partner statistics count for each dyad involving
 nodes i and j in the graph, how many nodes k these two nodes have in common
 (or share). The shared partner $k$ counts are weighted by their
-interactions with the focal nodes $i$ and $j$. This is neccessary in
+interactions with the focal nodes $i$ and $j$. This is necessary in
 dense multi-edge graphs to ensure that meaningful triadic closure is
 detected. The statistic can be calculated in 3 different forms: undirected,
 incoming shared partners (where shared partner k: k-&amp;gt;i and k-&amp;gt;j) and outgoing
@@ -88,7 +88,7 @@ shared partners (where shared partner k: k&amp;lt;-i and k&amp;lt;-j)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ shared partners (where shared partner k: k&amp;lt;-i and k&amp;lt;-j)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -150,21 +150,21 @@ shared partners (where shared partner k: k&amp;lt;-i and k&amp;lt;-j)." />
 dyad in the graph. Shared partner statistics count for each dyad involving
 nodes i and j in the graph, how many nodes k these two nodes have in common
 (or share). The shared partner $k$ counts are weighted by their
-interactions with the focal nodes $i$ and $j$. This is neccessary in
+interactions with the focal nodes $i$ and $j$. This is necessary in
 dense multi-edge graphs to ensure that meaningful triadic closure is
 detected. The statistic can be calculated in 3 different forms: undirected,
 incoming shared partners (where shared partner k: k-&gt;i and k-&gt;j) and outgoing
 shared partners (where shared partner k: k&lt;-i and k&lt;-j).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sharedPartner_stat</span>(
-  <span class='no'>graph</span>,
-  <span class='no'>directed</span>,
-  <span class='kw'>weighted</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>triad.type</span> <span class='kw'>=</span> <span class='st'>"undirected"</span>,
-  <span class='kw'>nodes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>zero_values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>sharedPartner_stat</span><span class='op'>(</span>
+  <span class='va'>graph</span>,
+  <span class='va'>directed</span>,
+  weighted <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  triad.type <span class='op'>=</span> <span class='st'>"undirected"</span>,
+  nodes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  zero_values <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,8 +176,7 @@ have 3 columns: a sender vector, a target vector and an edgecount vector.</p></t
     </tr>
     <tr>
       <th>directed</th>
-      <td><p>boolean. Is the graph directed?
-If <code>zero_values</code> is not specified, the 0.1 is used instead.</p></td>
+      <td><p>boolean. Is the graph directed?</p></td>
     </tr>
     <tr>
       <th>weighted</th>
@@ -186,12 +185,12 @@ If <code>zero_values</code> is not specified, the 0.1 is used instead.</p></td>
     <tr>
       <th>triad.type</th>
       <td><p>set to <code>undirected</code>. Can be set to <code>incoming</code>
-or <code>outgoing</code> instead. This then corresponds to directd triadic closure
+or <code>outgoing</code> instead. This then corresponds to directed triadic closure
 in the multi-edge graph.</p></td>
     </tr>
     <tr>
       <th>nodes</th>
-      <td><p>optional character/factor vector. If an edgelist is provied,
+      <td><p>optional character/factor vector. If an edgelist is provided,
 you have to provide a list of unique identifiers of your nodes in the graph.
 This is because in the edgelist, isolates are usually not recorded.
 If you do not specify isolates in your nodes object, they are excluded
@@ -202,7 +201,8 @@ from the analysis (falsifies data).</p></td>
       <td><p>optional numeric value. Use this to substitute zero-values
 in your shared partner change statistic matrix. Zero values in the predictors
 are recognized in the gHypEG regression as structural zeros. To ensure this
-does not happen, please recode your zero-values in all your predictors.</p></td>
+does not happen, please recode your zero-values in all your predictors,
+ideally using a dummy variable fitting an optimal value for the zeroes.</p></td>
     </tr>
     </table>
 
@@ -212,7 +212,28 @@ does not happen, please recode your zero-values in all your predictors.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='reciprocity_stat.html'>reciprocity_stat</a></code> or <code><a href='homophily_stat.html'>homophily_stat</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
+    <p>LB, GC, GV</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>tri_stat</span> <span class='op'>&lt;-</span> <span class='fu'>sharedPartner_stat</span><span class='op'>(</span><span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |==                                                                    |   3%  |                                                                              |====                                                                  |   6%  |                                                                              |=======                                                               |   9%  |                                                                              |=========                                                             |  12%  |                                                                              |===========                                                           |  16%  |                                                                              |=============                                                         |  19%  |                                                                              |===============                                                       |  22%  |                                                                              |==================                                                    |  25%  |                                                                              |====================                                                  |  28%  |                                                                              |======================                                                |  31%  |                                                                              |========================                                              |  34%  |                                                                              |==========================                                            |  38%  |                                                                              |============================                                          |  41%  |                                                                              |===============================                                       |  44%  |                                                                              |=================================                                     |  47%  |                                                                              |===================================                                   |  50%  |                                                                              |=====================================                                 |  53%  |                                                                              |=======================================                               |  56%  |                                                                              |==========================================                            |  59%  |                                                                              |============================================                          |  62%  |                                                                              |==============================================                        |  66%  |                                                                              |================================================                      |  69%  |                                                                              |==================================================                    |  72%  |                                                                              |====================================================                  |  75%  |                                                                              |=======================================================               |  78%  |                                                                              |=========================================================             |  81%  |                                                                              |===========================================================           |  84%  |                                                                              |=============================================================         |  88%  |                                                                              |===============================================================       |  91%  |                                                                              |==================================================================    |  94%  |                                                                              |====================================================================  |  97%  |                                                                              |======================================================================| 100%</div><div class='input'><span class='va'>tri_stat_dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_zero_dummy.html'>get_zero_dummy</a></span><span class='op'>(</span><span class='va'>tri_stat</span>, name <span class='op'>=</span> <span class='st'>'shared_partners'</span><span class='op'>)</span>
+<span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>tri_stat_dummy</span>, <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Call:
+#&gt; nrm.default(w = tri_stat_dummy, adj = adj_karate, directed = FALSE, 
+#&gt;     selfloops = FALSE)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                         Estimate   Std.Err t value    Pr(&gt;t)    
+#&gt; shared_partners         0.056595  0.095447  0.5929    0.5532    
+#&gt; shared_partners_zeroes -1.051407  0.256275  4.1027 4.084e-05 ***
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; R2:
+#&gt;  McFadden R2 Cox Snell R2 
+#&gt;   -0.0358701    0.1619978 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,11 +245,11 @@ does not happen, please recode your zero-values in all your predictors.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

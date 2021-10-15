@@ -40,7 +40,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
   # if(!directed) xiregular <- xiregular + t(xiregular) - diag(diag(xiregular))
   xiregular <- ceiling(xiregular)
 
-  xiconfiguration <- ComputeXi(adj, directed, selfloops)
+  xiconfiguration <- compute_xi(adj, directed, selfloops)
 
   # if(nrow(adj)<50){
     loglikeregular <- extraDistr::dmvhyper(x = adj[ix], n = xiregular[ix], k = m, log = TRUE)
@@ -76,7 +76,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
     n <- c(1, nrow(adj),ncol(adj))
     tmp <- vec2mat(adjr,directed,selfloops,n = n)
     if(!directed & n[2]==n[3]) tmp <- tmp + t(tmp) - diag(diag(tmp))
-    xiconfigurationr <- ComputeXi(tmp, directed, selfloops)
+    xiconfigurationr <- compute_xi(tmp, directed, selfloops)
     loglikeregularr <- extraDistr::dmvhyper(x = adjr, n = xiregular[ix], k = m, log = TRUE)
     loglikeconfr <- extraDistr::dmvhyper(x = adjr, n = xiconfigurationr[ix], k = m, log = TRUE)
     -2 * (loglikeregularr-loglikeconfr)
@@ -338,14 +338,14 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #' @examples
 #' data("adj_karate")
 #' fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE)
-#' linkSignificance(graph = adj_karate, model = fullmodel, under=FALSE)
+#' link_significance(graph = adj_karate, model = fullmodel, under=FALSE)
 #'
-linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
+link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
-    adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
-    if(!directed)
-      adj <- adj + t(adj)
+    adj <- igraph::get.adjacency(graph, type='both', sparse = FALSE)
+    # if(!directed)
+    #   adj <- adj + t(adj)
   }
 
   directed <- model$directed
@@ -366,7 +366,7 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
   }
   probvec <- rep(ifelse(log.p, 0, 1), sum(idx))
 
-  if( all(model$omega == model$omega[1]) & (!binomial.approximation) ){
+  if( all(model$omega[idx] == model$omega[1]) & (!binomial.approximation) ){
     probvec[id] <- Vectorize(FUN = stats::phyper, vectorize.args = c('q', 'm','n'))(
       q = adj[idx][id], m = model$xi[idx][id], n = xibar[id],
       k = sum(adj[idx]),
@@ -399,28 +399,29 @@ linkSignificance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.ap
       k = sum(adj[idx]), log = log.p
     )
 
-  if(!under & give_pvals & any(model$omega != model$omega[1]) & !binomial.approximation)
-    probvec[id] <- probvec[id] + ifelse(test = log.p, yes =
+  # wrong sum with log-p
+  if(!under & give_pvals & any(model$omega[idx] != model$omega[1]) & !binomial.approximation)
+    probvec[idx] <- probvec[idx] + ifelse(test = log.p, yes =
                                           log(Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
-                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
-                                            n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id]
+                                            x = adj[idx],m1 = model$xi[idx],m2 = xibar,
+                                            n = sum(adj[idx]), odds = model$omega[idx]/omegabar
                                           )),
                                         no =
                                           Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
-                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
-                                            n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id]
+                                            x = adj[idx],m1 = model$xi[idx],m2 = xibar,
+                                            n = sum(adj[idx]), odds = model$omega[idx]/omegabar
                                           ))
-  if(!under & give_pvals & any(model$omega != model$omega[1]) & binomial.approximation)
-    probvec[id] <- probvec[id] + Vectorize(FUN = stats::dbinom, vectorize.args = c('x', 'size', 'prob'))(
-                                                    x = adj[idx][id], size = sum(adj[idx]),
-                                                    prob = model$xi[idx][id]* model$omega[idx][id]/(
-                                                      model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
+  if(!under & give_pvals & any(model$omega[idx] != model$omega[1]) & binomial.approximation)
+    probvec[idx] <- probvec[idx] + Vectorize(FUN = stats::dbinom, vectorize.args = c('x', 'size', 'prob'))(
+                                                    x = adj[idx], size = sum(adj[idx]),
+                                                    prob = model$xi[idx]* model$omega[idx]/(
+                                                      model$xi[idx] * model$omega[idx]+xibar*omegabar
                                                     ),
                                                     log = log.p
                                                   )
 
   # return matrix of significance for each entry of original adjacency
-  return(vec2mat(probvec,directed,selfloops,nrow(adj)))
+  return(vec2mat(probvec, directed, selfloops, model$n))
 }
 
 

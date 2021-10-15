@@ -71,8 +71,8 @@
 #'
 #' @export
 nrm <- function(w, adj, xi = NULL, 
-    pval = 0.01, directed = FALSE, 
-    selfloops = FALSE, regular = FALSE,
+    pval = 0.01, directed = TRUE, 
+    selfloops = TRUE, regular = FALSE,
     ...) UseMethod("nrm")
 
 #' @describeIn nrm Default method for nrm
@@ -90,7 +90,7 @@ nrm.default <- function(w, adj,
   # AIC, and R2
   if (is.null(xi)) {
     ## Build Ensemble
-    xi <- ComputeXi(adj, directed, 
+    xi <- compute_xi(adj, directed, 
                     selfloops, regular)
   }
   if (!null) {

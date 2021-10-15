@@ -15,9 +15,9 @@
 #' 
 #' @examples
 #' data('adj_karate')
-#' xi = ComputeXi(adj_karate, directed = FALSE, selfloops = FALSE)
+#' xi = compute_xi(adj_karate, directed = FALSE, selfloops = FALSE)
 #'
-ComputeXi <- function(adj, directed, selfloops, regular = FALSE) {
+compute_xi <- function(adj, directed, selfloops, regular = FALSE) {
   # returns the matrix xi according to the nodes degrees
 
   if(!directed & !isSymmetric(adj)){

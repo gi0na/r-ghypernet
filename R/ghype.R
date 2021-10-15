@@ -39,7 +39,7 @@ ghype.matrix <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
   df <- NULL
 
   if(is.null(xi)){
-    xi=ComputeXi(graph,directed,selfloops, regular = regular)
+    xi <- compute_xi(graph,directed,selfloops, regular = regular)
     df <- regular + (1-regular)*nrow(xi)*(1+directed)
   }
 
@@ -187,7 +187,7 @@ scm <- function(graph, directed = NULL, selfloops = NULL, ...){
   }
 
   model <- ghype(graph, directed=directed, selfloops=selfloops, unbiased = TRUE, regular = FALSE, ...)
-  model$df <- nrow(model$xi)*(1+directed)
+  model$df <- nrow(model$xi) * (directed) + ncol(model$xi)
   return(model)
 }
 

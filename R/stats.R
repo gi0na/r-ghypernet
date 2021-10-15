@@ -54,7 +54,7 @@ Jn <- function(beta=NULL, w=NULL, xi=NULL, adj=NULL,
 #' 
 #' Pass either the models or the model parameters as arguments
 #' 
-#' @param adj optinal adjacency matrix
+#' @param adj optimal adjacency matrix
 #' @param xi  optional xi matrix
 #' @param omega0  optional propensity matrix of null model
 #' @param omega1  optional propensity matrix of alternative model

@@ -11,8 +11,8 @@ nrm(
   adj,
   xi = NULL,
   pval = 0.01,
-  directed = FALSE,
-  selfloops = FALSE,
+  directed = TRUE,
+  selfloops = TRUE,
   regular = FALSE,
   ...
 )

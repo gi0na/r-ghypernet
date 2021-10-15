@@ -63,7 +63,7 @@ ghype.igraph <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
   }
 
   if(is.null(xi)){
-    xi=ComputeXi(adj,directed,selfloops)
+    xi <- compute_xi(adj,directed,selfloops)
   }
 
   if(nrow(adj)==ncol(adj)){

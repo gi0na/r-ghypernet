@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2555300.svg)](https://doi.org/10.5281/zenodo.2555300)
 [![Generic badge](https://cranlogs.r-pkg.org/badges/last-month/ghypernet)](https://cran.r-project.org/package=ghypernet)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Build Status](https://app.travis-ci.com/gi0na/r-ghypernet.svg?branch=master)](https://app.travis-ci.com/github/gi0na/r-ghypernet)
+[![Travis build status](https://api.travis-ci.com/gi0na/r-ghypernet.svg?branch=master)](https://app.travis-ci.com/github/gi0na/r-ghypernet)
   <!-- badges: end -->
  
 
@@ -25,9 +25,10 @@ install.packages("ghypernet")
 # Or the development version from GitHub:
 devtools::install_github("gi0na/r-ghypernet")
 ```
+
 # Dependencies
 The package uses the library `BiasedUrn` to work with Wallenius' non-central hypergeometric distribution.
-Although this is not required, it is recommended to install the `BiasedUrn` R package, increasing the number of 'colors', i.e., the number of dimensions of the distribution.
+Although this is not required, it is recommended to install the `BiasedUrn` R package, increasing the number of 'colours', i.e., the number of dimensions of the distribution.
 It can be easily done modifying the _makevar_ file.
 In case the `BiasedUrn` library cannot be found, all computations will be performed using the multinomial approximation.
 
@@ -62,4 +63,4 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 # Copyright
 `ghypernet` is licensed under the [GNU Affero General Public License](https://choosealicense.com/licenses/agpl-3.0/).
 
-(c) Copyright ETH Zürich, 2016-2020
+(c) Copyright ETH Zürich, 2016-2021

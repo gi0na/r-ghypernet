@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -141,58 +141,58 @@
     <p>Perform AIC forward selection for nrm.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nrmSelection</span>(
-  <span class='no'>adj</span>,
-  <span class='no'>predictors</span>,
-  <span class='no'>directed</span>,
-  <span class='no'>selfloops</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>nrmSelection</span><span class='op'>(</span>
+  <span class='va'>adj</span>,
+  <span class='va'>predictors</span>,
+  <span class='va'>directed</span>,
+  <span class='va'>selfloops</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  xi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ncores <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>nrm_selection</span>(
-  <span class='no'>adj</span>,
-  <span class='no'>predictors</span>,
-  <span class='no'>directed</span>,
-  <span class='no'>selfloops</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>nrm_selection</span><span class='op'>(</span>
+  <span class='va'>adj</span>,
+  <span class='va'>predictors</span>,
+  <span class='va'>directed</span>,
+  <span class='va'>selfloops</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  xi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ncores <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>nrm_selection</span>(
-  <span class='no'>adj</span>,
-  <span class='no'>predictors</span>,
-  <span class='no'>directed</span>,
-  <span class='no'>selfloops</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>nrm_selection</span><span class='op'>(</span>
+  <span class='va'>adj</span>,
+  <span class='va'>predictors</span>,
+  <span class='va'>directed</span>,
+  <span class='va'>selfloops</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  xi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ncores <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for nrmpredictor</span>
-<span class='fu'>nrm_selection</span>(
-  <span class='no'>adj</span>,
-  <span class='no'>predictors</span>,
-  <span class='no'>directed</span>,
-  <span class='no'>selfloops</span>,
-  <span class='kw'>pval</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>nrm_selection</span><span class='op'>(</span>
+  <span class='va'>adj</span>,
+  <span class='va'>predictors</span>,
+  <span class='va'>directed</span>,
+  <span class='va'>selfloops</span>,
+  pval <span class='op'>=</span> <span class='fl'>0.05</span>,
+  xi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ncores <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for nrm_selection</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,12 +254,17 @@
 
     <div class='dont-index'><p><code><a href='nrm.html'>nrm</a></code></p>
 <p><code>nrm_selection</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Giona Casiraghi</p>
+<p>Giona Casiraghi</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'highschool.predictors'</span>)
-<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'>nrm_selection</span>(<span class='kw'>adj</span><span class='kw'>=</span><span class='no'>contacts.adj</span>,<span class='kw'>predictors</span><span class='kw'>=</span><span class='fu'><a href='create_predictors.html'>create_predictors</a></span>(<span class='no'>highschool.predictors</span>),
-  <span class='kw'>ncores</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>directed</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>selfloops</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Creating predictors list...</span></div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
+<span class='va'>models</span> <span class='op'>&lt;-</span> <span class='fu'>nrm_selection</span><span class='op'>(</span>adj<span class='op'>=</span><span class='va'>contacts.adj</span>,predictors<span class='op'>=</span><span class='fu'><a href='create_predictors.html'>create_predictors</a></span><span class='op'>(</span><span class='va'>highschool.predictors</span><span class='op'>)</span>,
+  ncores<span class='op'>=</span><span class='fl'>1</span>,directed<span class='op'>=</span><span class='cn'>FALSE</span>,selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Creating predictors list...</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Estimating Null model...</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Performing forward stepwise selection:</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Step 1 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -267,7 +272,8 @@
 #&gt; <span class='message'>Step 3 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Step 4 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Step 5 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Model estimation concluded.</span></div><div class='input'><span class='kw pkg'>texreg</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/texreg/man/screenreg.html'>screenreg</a></span>(<span class='no'>models</span>$<span class='no'>models</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
+#&gt; <span class='message'>Model estimation concluded.</span></div><div class='input'><span class='fu'>texreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/texreg/man/screenreg.html'>screenreg</a></span><span class='op'>(</span><span class='va'>models</span><span class='op'>$</span><span class='va'>models</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; ==============================================================================================
 #&gt;                 Model 1         Model 2         Model 3         Model 4         Model 5       
 #&gt; ----------------------------------------------------------------------------------------------
@@ -285,7 +291,7 @@
 #&gt; AIC             692711.753      627181.581      612308.357      610880.109      609529.798    
 #&gt; McFadden $R^2$       0.486           0.534           0.545           0.546           0.547    
 #&gt; ==============================================================================================
-#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</div><div class='input'> # }
+#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</div><div class='input'> <span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -298,11 +304,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

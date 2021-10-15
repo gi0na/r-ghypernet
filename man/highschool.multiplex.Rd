@@ -15,7 +15,7 @@ data(highschool.multiplex)
 }
 \description{
 **highschool.multiplex**: list containing the adjacency matrix of 327 x 327
-highschool students, and the adjacency matrices correspodning to the 5
+highschool students, and the adjacency matrices corresponding to the 5
 predictors used in Casiraghi2017.
 }
 \references{

@@ -57,7 +57,7 @@ is an adjacency matrix}
 object is an adjacency matrix}
 
 \item{adj}{optional matrix, adjacency matrix of which to compute
-log-likelihood, cconsidered only if object is ghype model If adj is not
+log-likelihood, considered only if object is ghype model If adj is not
 passed, and object is a ghype model, the log-likelihood is computed for the
 original adjacency matrix stored in object.}
 

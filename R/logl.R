@@ -29,7 +29,7 @@ logLik.ghype <- function(object, ...){
 #' @param selfloops boolean, has ghype model selfloops? considered only if
 #'   object is an adjacency matrix
 #' @param adj optional matrix, adjacency matrix of which to compute
-#'   log-likelihood, cconsidered only if object is ghype model If adj is not
+#'   log-likelihood, considered only if object is ghype model If adj is not
 #'   passed, and object is a ghype model, the log-likelihood is computed for the
 #'   original adjacency matrix stored in object.
 #' @param multinomial  optional boolean. Force multinomial approximation? If not

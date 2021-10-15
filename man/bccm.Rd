@@ -23,7 +23,7 @@ bccm(
 \arguments{
 \item{adj}{the adjacency matrix of the graph.}
 
-\item{labels}{vector, the vertex labels to generate the blocks in the bccm.}
+\item{labels}{vector or list. contains the vertex labels to generate the blocks in the bccm. In the case of bipartite graphs should be a list of two vectors, the first one with row labels and the second one with column labels.}
 
 \item{directed}{a boolean argument specifying whether the graph is directed or not.}
 

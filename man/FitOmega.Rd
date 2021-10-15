@@ -23,7 +23,7 @@ propensity matrix
 }
 \examples{
 data(adj_karate)
-xi <- ComputeXi(adj_karate, FALSE, FALSE)
+xi <- compute_xi(adj_karate, FALSE, FALSE)
 FitOmega(adj_karate, xi, FALSE, FALSE)
 
 }
