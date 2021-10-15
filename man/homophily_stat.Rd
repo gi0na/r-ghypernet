@@ -23,7 +23,7 @@ attribute match between two nodes (=10) and attribute mismatch (=1)). If
 set to \code{absdiff} it calculates the difference in values from variable
 for each dyad in the graph.}
 
-\item{nodes}{optional character/factor vector. If an edgelist is provied, you
+\item{nodes}{optional character/factor vector. If an edgelist is provided, you
 have to provide a list of unique identifiers of your nodes in the graph.
 This is because in the edgelist, isolates are usually not recorded. If you
 do not specify isolates in your nodes object, they are excluded from the

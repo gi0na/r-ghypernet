@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{nrm object}
 
-\item{adj}{odjacency against which to compute residuals}
+\item{adj}{adjacency against which to compute residuals}
 
 \item{RMSLE}{logical, return log residuals? default FALSE}
 

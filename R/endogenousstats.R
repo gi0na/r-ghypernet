@@ -47,7 +47,7 @@ checkGraphtype <- function(graph) {
 #'
 #' @param graph A graph adjacency matrix or an edgelist.  The edgelist needs to
 #'   have 3 columns: a sender vector, a target vector and an edgecount vector.
-#' @param nodes optional character/factor vector. If an edgelist is provied,
+#' @param nodes optional character/factor vector. If an edgelist is provided,
 #'   you have to provide a list of unique identifiers of your nodes in the graph.
 #'   This is because in the edgelist, isolates are usually not recorded.
 #'   If you do not specify isolates in your nodes object, they are excluded
@@ -109,7 +109,7 @@ reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
 #' dyad in the graph. Shared partner statistics count for each dyad involving
 #' nodes i and j in the graph, how many nodes k these two nodes have in common
 #' (or share). The shared partner $k$ counts are weighted by their
-#' interactions with the focal nodes $i$ and $j$. This is neccessary in
+#' interactions with the focal nodes $i$ and $j$. This is necessary in
 #' dense multi-edge graphs to ensure that meaningful triadic closure is
 #' detected. The statistic can be calculated in 3 different forms: undirected,
 #' incoming shared partners (where shared partner k: k->i and k->j) and outgoing
@@ -119,9 +119,9 @@ reciprocity_stat <- function(graph, nodes = NULL, zero_values = NULL){
 #'   have 3 columns: a sender vector, a target vector and an edgecount vector.
 #' @param weighted set to TRUE.
 #' @param triad.type set to \code{undirected}. Can be set to \code{incoming}
-#'   or \code{outgoing} instead. This then corresponds to directd triadic closure
+#'   or \code{outgoing} instead. This then corresponds to directed triadic closure
 #'   in the multi-edge graph.
-#' @param nodes optional character/factor vector. If an edgelist is provied,
+#' @param nodes optional character/factor vector. If an edgelist is provided,
 #'   you have to provide a list of unique identifiers of your nodes in the graph.
 #'   This is because in the edgelist, isolates are usually not recorded.
 #'   If you do not specify isolates in your nodes object, they are excluded
@@ -263,7 +263,7 @@ findPartners_all <- function(node, el){
 #'   attribute match between two nodes (=10) and attribute mismatch (=1)). If
 #'   set to \code{absdiff} it calculates the difference in values from variable
 #'   for each dyad in the graph.
-#' @param nodes optional character/factor vector. If an edgelist is provied, you
+#' @param nodes optional character/factor vector. If an edgelist is provided, you
 #'   have to provide a list of unique identifiers of your nodes in the graph.
 #'   This is because in the edgelist, isolates are usually not recorded. If you
 #'   do not specify isolates in your nodes object, they are excluded from the

@@ -103,7 +103,7 @@
 #' Highschool contact network multiplex representation
 #'
 #' **highschool.multiplex**: list containing the adjacency matrix of 327 x 327
-#' highschool students, and the adjacency matrices correspodning to the 5
+#' highschool students, and the adjacency matrices corresponding to the 5
 #' predictors used in Casiraghi2017.
 #'
 #' @docType data
@@ -168,6 +168,6 @@
 #' Mastrandrea, R., Fournet, J. & Barrat, A. Contact patterns in a high school:
 #' A comparison between data collected using wearable sensors, contact diaries
 #' and friendship surveys. PLoS One 10, 1–26 (2015).
-#' @source \href{http://www.sociopatterns.org}{http://www.sociopatterns.orgg}
+#' @source \href{http://www.sociopatterns.org}{http://www.sociopatterns.org}
 #'   
 "contacts.adj"

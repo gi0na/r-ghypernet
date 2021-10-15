@@ -17,7 +17,7 @@ mcfaddenR2(
 )
 }
 \arguments{
-\item{adj}{optinal adjacency matrix}
+\item{adj}{optimal adjacency matrix}
 
 \item{xi}{optional xi matrix}
 

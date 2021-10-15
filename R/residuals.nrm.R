@@ -1,7 +1,7 @@
 #' Method to compute residuals of nrm models
 #'
 #' @param object nrm object
-#' @param adj odjacency against which to compute residuals
+#' @param adj adjacency against which to compute residuals
 #' @param RMSLE logical, return log residuals? default FALSE
 #' @param null logical. use null model?
 #' @param ... additional parameters to be passed to and from internal functions.

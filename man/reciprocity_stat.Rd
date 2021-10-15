@@ -10,7 +10,7 @@ reciprocity_stat(graph, nodes = NULL, zero_values = NULL)
 \item{graph}{A graph adjacency matrix or an edgelist.  The edgelist needs to
 have 3 columns: a sender vector, a target vector and an edgecount vector.}
 
-\item{nodes}{optional character/factor vector. If an edgelist is provied,
+\item{nodes}{optional character/factor vector. If an edgelist is provided,
 you have to provide a list of unique identifiers of your nodes in the graph.
 This is because in the edgelist, isolates are usually not recorded.
 If you do not specify isolates in your nodes object, they are excluded

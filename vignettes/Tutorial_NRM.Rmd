@@ -140,7 +140,7 @@ identical(cospons_mat, adj_mat)
 It's good to have it in the tutorial though, I think. -->
 
 When preparing nodal attribute data, particular attention has to be given to the
-ordering of the two data sets (the adjacancy matrix and the attribute data set).
+ordering of the two data sets (the adjacency matrix and the attribute data set).
 Testing whether the adjacency matrix and the attribute data are ordered by the
 same identifiers (here by the ID codes of the individual MPs, `dt$idMP`),
 attribute-based independent and control variables will correspond with the
@@ -196,7 +196,7 @@ The gHypEG regression is zero-sensitive. Zero value entries in covariates
 signify structural zeros and are not considered in the estimation process. 
 Therefore, all zero-values that do not signify structural zeros need to be recoded.
 The best solution is to the define a dummy variable that encodes zero and non-zero values to be used together with the covariate of interest.
-In this way, zero values are accounted separetely in the regression process and do not enforce structural zeroes in the network.
+In this way, zero values are accounted separately in the regression process and do not enforce structural zeroes in the network.
 
 ### Change statistics to calculate endogenous network statistics
 
@@ -205,7 +205,7 @@ In this way, zero values are accounted separetely in the regression process and 
 
 Change statistics (or change scores) can be used to model endogenous network properties in
 inferential network models [@snijders2006new, @hunter2008goodness, @krivitsky2011adjusting].
-For each dyad in the multi-edge network, the change statistic caputres the 
+For each dyad in the multi-edge network, the change statistic captures the 
 (un-)weighted values of additional edges involved in the interested network
 pattern. See Brandenberger et al. [-@brandenberger2019quantifying] for additional
 information on change statistics for multi-edge networks.
@@ -372,7 +372,7 @@ head(dtcommittee)
 
 One potential predictor for co-sponsorship support may be if two MPs
 shared the same committee seat. When preparing your own matrices, make sure
-the row- and column names match the depedenent variable (here the co-sponsorship matrix).
+the row- and column names match the dependent variable (here the co-sponsorship matrix).
 
 ```{r}
 ## This is just one potential way of accomplishing this! 
@@ -393,7 +393,7 @@ shared_committee[1:5, 1:3]
 ### (Attribute-based) Degree measures
 
 The gHypEG regression accounts for combinatorial effects, i.e., degree distributions. 
-Compared to other inferential network models, it is therefore not neccessary
+Compared to other inferential network models, it is therefore not necessary
 to specify (out/in-)degree variables. 
 The model can be estimated using average expected degrees. In this case it is
 wise to specify a degree control matrix:
@@ -489,7 +489,7 @@ gHypEG regression is estimated with estimated average degrees (specified with th
 Initial values for the weights can be specified in the gHypEG regression.
 These initial values help the estimation process to speed up the estimation 
 process even more. 
-Alternatiely, these initial values can be calculated endogenously.
+Alternatively, these initial values can be calculated endogenously.
 
 ## Regression table export (using the texreg package)
 
@@ -502,7 +502,7 @@ Several empirical studies have shown that co-sponsorship networks also exhibit
 tendencies towards triadic closure [@tam2010legislative]. 
 However, Brandenberger [-@brandenberger2018trading] shows
 that when estimating co-sponsorship networks as bipartite graphs, the triadic
-closure effect is non-existant.
+closure effect is non-existent.
 @craig2015role show that homophily also plays an important role in co-sponsorship
 networks. 
 We therefore use these predictors to estimate the effect of MPs supporting
@@ -596,7 +596,7 @@ Model comparisons can be done using `AIC`-scores, LR-tests or the R-squared
 measures.
 AIC-scores are the best indicators of model fit. The gHypEG model can also be 
 fit maximally to the data. This perfectly fit model cannot be interpreted (since
-step by step, additional predictive layers are added and these laysers capture
+step by step, additional predictive layers are added and these layers capture
 deviances but would need to be interpreted individually), but the AIC scores
 can be used to check how far away your models are from it. 
 

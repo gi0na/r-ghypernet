@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -142,7 +142,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for nrm</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>adj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>multinomial</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>object</span>, m <span class='op'>=</span> <span class='cn'>NULL</span>, adj <span class='op'>=</span> <span class='cn'>NULL</span>, null <span class='op'>=</span> <span class='cn'>FALSE</span>, multinomial <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,9 +182,10 @@ size.</p></td>
   only upper.tri of adjacency matrix is returned.)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'highschool.predictors'</span>)
-<span class='no'>highschool.m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nrm.html'>nrm</a></span>(<span class='kw'>w</span><span class='kw'>=</span><span class='no'>highschool.predictors</span>[<span class='fl'>1</span>], <span class='kw'>adj</span><span class='kw'>=</span><span class='no'>contacts.adj</span>, <span class='kw'>directed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>selfloops</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>highschool.m</span>, <span class='no'>contacts.adj</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt;               650          498          627          857          487
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
+<span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>, selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>highschool.m</span>, <span class='va'>contacts.adj</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt;               650          498          627          857          487
 #&gt; 650  0.000000e+00 1.272302e-05 0.000000e+00 0.000000e+00 3.588429e-05
 #&gt; 498  3.886692e-06 0.000000e+00 2.875483e-03 1.543566e-03 4.698614e-06
 #&gt; 627  0.000000e+00 1.726415e-03 0.000000e+00 7.767917e-03 4.287368e-05
@@ -20381,9 +20382,10 @@ size.</p></td>
 #&gt; 38   2.281593e-06 0.000000e+00
 #&gt; 54   0.000000e+00 0.000000e+00
 #&gt;  [ reached getOption("max.print") -- omitted 22 rows ]</div><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'highschool.predictors'</span>)
-<span class='no'>highschool.m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nrm.html'>nrm</a></span>(<span class='kw'>w</span><span class='kw'>=</span><span class='no'>highschool.predictors</span>, <span class='kw'>adj</span><span class='kw'>=</span><span class='no'>contacts.adj</span>, <span class='kw'>directed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>selfloops</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>highschool.m</span>, <span class='no'>contacts.adj</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt;               650          498          627          857          487
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
+<span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>, selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>highschool.m</span>, <span class='va'>contacts.adj</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt;               650          498          627          857          487
 #&gt; 650  0.000000e+00 6.270715e-05 0.000000e+00 0.000000e+00 1.242677e-05
 #&gt; 498  1.915609e-05 0.000000e+00 1.155624e-02 3.084646e-04 1.627135e-06
 #&gt; 627  0.000000e+00 8.508873e-03 0.000000e+00 1.552332e-03 6.986341e-06
@@ -40579,7 +40581,7 @@ size.</p></td>
 #&gt; 502  0.000000e+00 0.000000e+00
 #&gt; 38   9.169461e-06 0.000000e+00
 #&gt; 54   0.000000e+00 0.000000e+00
-#&gt;  [ reached getOption("max.print") -- omitted 22 rows ]</div><div class='input'># }
+#&gt;  [ reached getOption("max.print") -- omitted 22 rows ]</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -40592,11 +40594,11 @@ size.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -141,21 +141,21 @@
     <p>bccm is used to fit a block-constrained configuration model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bccm</span>(
-  <span class='no'>adj</span>,
-  <span class='no'>labels</span>,
-  <span class='kw'>directed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>selfloops</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>directedBlocks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>homophily</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>inBlockOnly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>regular</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>bccm</span><span class='op'>(</span>
+  <span class='va'>adj</span>,
+  <span class='va'>labels</span>,
+  directed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  selfloops <span class='op'>=</span> <span class='cn'>NULL</span>,
+  directedBlocks <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  homophily <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  inBlockOnly <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  xi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  regular <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for bccm</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>suppressCall</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, suppressCall <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>vector, the vertex labels to generate the blocks in the bccm.</p></td>
+      <td><p>vector or list. contains the vertex labels to generate the blocks in the bccm. In the case of bipartite graphs should be a list of two vectors, the first one with row labels and the second one with column labels.</p></td>
     </tr>
     <tr>
       <th>directed</th>
@@ -225,13 +225,14 @@
     <div class='dont-index'><p><code>bccm</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"vertexlabels"</span>,<span class='st'>"adj_karate"</span>)
-<span class='no'>blockmodel</span> <span class='kw'>&lt;-</span> <span class='fu'>bccm</span>(<span class='kw'>adj</span> <span class='kw'>=</span> <span class='no'>adj_karate</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>vertexlabels</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selfloops</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"vertexlabels"</span>,<span class='st'>"adj_karate"</span><span class='op'>)</span>
+<span class='va'>blockmodel</span> <span class='op'>&lt;-</span> <span class='fu'>bccm</span><span class='op'>(</span>adj <span class='op'>=</span> <span class='va'>adj_karate</span>, labels <span class='op'>=</span> <span class='va'>vertexlabels</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'adj_karate'</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'vertexlabels'</span>)
-<span class='no'>bcc.model</span> <span class='kw'>&lt;-</span> <span class='fu'>bccm</span>(<span class='no'>adj_karate</span>, <span class='kw'>labels</span><span class='kw'>=</span><span class='no'>vertexlabels</span>, <span class='kw'>directed</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>selfloops</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>bcc.model</span>)</div><div class='output co'>#&gt; Call:
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'vertexlabels'</span><span class='op'>)</span>
+<span class='va'>bcc.model</span> <span class='op'>&lt;-</span> <span class='fu'>bccm</span><span class='op'>(</span><span class='va'>adj_karate</span>, labels<span class='op'>=</span><span class='va'>vertexlabels</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>, selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>bcc.model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Call:
 #&gt; bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, 
 #&gt;     selfloops = FALSE)
 #&gt; block ghype undirected , no selfloops 
@@ -241,10 +242,10 @@
 #&gt; df: 36 
 #&gt; 
 #&gt; Coefficients:
-#&gt;     Estimate    Std.Err t value    Pr(&gt;t)    
-#&gt; 1 1.00000000 0.00000000     Inf &lt; 2.2e-16 ***
-#&gt; 2 0.09044494 0.00021692  416.95 &lt; 2.2e-16 ***
-#&gt; 4 0.91049902 0.00040434 2251.79 &lt; 2.2e-16 ***
+#&gt;         Estimate    Std.Err t value    Pr(&gt;t)    
+#&gt; 1&lt;-&gt;1 1.00000000 0.00000000     Inf &lt; 2.2e-16 ***
+#&gt; 1&lt;-&gt;2 0.09044494 0.00021692  416.95 &lt; 2.2e-16 ***
+#&gt; 2&lt;-&gt;2 0.91049902 0.00040434 2251.79 &lt; 2.2e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div class='input'>
 </div></pre>
@@ -259,11 +260,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -28,7 +28,7 @@ devtools::install_github("gi0na/r-ghypernet")
 
 # Dependencies
 The package uses the library `BiasedUrn` to work with Wallenius' non-central hypergeometric distribution.
-Although this is not required, it is recommended to install the `BiasedUrn` R package, increasing the number of 'colors', i.e., the number of dimensions of the distribution.
+Although this is not required, it is recommended to install the `BiasedUrn` R package, increasing the number of 'colours', i.e., the number of dimensions of the distribution.
 It can be easily done modifying the _makevar_ file.
 In case the `BiasedUrn` library cannot be found, all computations will be performed using the multinomial approximation.
 

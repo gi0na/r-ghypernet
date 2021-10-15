@@ -22,10 +22,10 @@ have 3 columns: a sender vector, a target vector and an edgecount vector.}
 \item{weighted}{set to TRUE.}
 
 \item{triad.type}{set to \code{undirected}. Can be set to \code{incoming}
-or \code{outgoing} instead. This then corresponds to directd triadic closure
+or \code{outgoing} instead. This then corresponds to directed triadic closure
 in the multi-edge graph.}
 
-\item{nodes}{optional character/factor vector. If an edgelist is provied,
+\item{nodes}{optional character/factor vector. If an edgelist is provided,
 you have to provide a list of unique identifiers of your nodes in the graph.
 This is because in the edgelist, isolates are usually not recorded.
 If you do not specify isolates in your nodes object, they are excluded
@@ -45,7 +45,7 @@ The function calculates the change statistic for shared partners for each
 dyad in the graph. Shared partner statistics count for each dyad involving
 nodes i and j in the graph, how many nodes k these two nodes have in common
 (or share). The shared partner $k$ counts are weighted by their
-interactions with the focal nodes $i$ and $j$. This is neccessary in
+interactions with the focal nodes $i$ and $j$. This is necessary in
 dense multi-edge graphs to ensure that meaningful triadic closure is
 detected. The statistic can be calculated in 3 different forms: undirected,
 incoming shared partners (where shared partner k: k->i and k->j) and outgoing
