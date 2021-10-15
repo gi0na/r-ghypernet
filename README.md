@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2555300.svg)](https://doi.org/10.5281/zenodo.2555300)
 [![Generic badge](https://cranlogs.r-pkg.org/badges/last-month/ghypernet)](https://cran.r-project.org/package=ghypernet)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Travis build status](https://travis-ci.com/gi0na/r-ghypernet.svg?branch=master)](https://travis-ci.com/gi0na/r-ghypernet)
+[![Travis build status](https://travis-ci.com/gi0na/r-ghypernet.svg?branch=master)](https://www.travis-ci.com/gi0na/r-ghypernet)
   <!-- badges: end -->
  
 
