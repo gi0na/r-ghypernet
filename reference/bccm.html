@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>vector, the vertex labels to generate the blocks in the bccm.</p></td>
+      <td><p>vector or list. contains the vertex labels to generate the blocks in the bccm. In the case of bipartite graphs should be a list of two vectors, the first one with row labels and the second one with column labels.</p></td>
     </tr>
     <tr>
       <th>directed</th>
@@ -242,10 +242,10 @@
 #&gt; df: 36 
 #&gt; 
 #&gt; Coefficients:
-#&gt;     Estimate    Std.Err t value    Pr(&gt;t)    
-#&gt; 1 1.00000000 0.00000000     Inf &lt; 2.2e-16 ***
-#&gt; 2 0.09044494 0.00021692  416.95 &lt; 2.2e-16 ***
-#&gt; 4 0.91049902 0.00040434 2251.79 &lt; 2.2e-16 ***
+#&gt;         Estimate    Std.Err t value    Pr(&gt;t)    
+#&gt; 1&lt;-&gt;1 1.00000000 0.00000000     Inf &lt; 2.2e-16 ***
+#&gt; 1&lt;-&gt;2 0.09044494 0.00021692  416.95 &lt; 2.2e-16 ***
+#&gt; 2&lt;-&gt;2 0.91049902 0.00040434 2251.79 &lt; 2.2e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div class='input'>
 </div></pre>
@@ -260,7 +260,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">

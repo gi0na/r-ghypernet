@@ -84,7 +84,7 @@ the graph." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -176,7 +176,7 @@ for each dyad in the graph.</p></td>
     </tr>
     <tr>
       <th>nodes</th>
-      <td><p>optional character/factor vector. If an edgelist is provied, you
+      <td><p>optional character/factor vector. If an edgelist is provided, you
 have to provide a list of unique identifiers of your nodes in the graph.
 This is because in the edgelist, isolates are usually not recorded. If you
 do not specify isolates in your nodes object, they are excluded from the
@@ -190,11 +190,11 @@ used, if only a subset of factor(variable) is needed.</p></td>
     <tr>
       <th>zero_values</th>
       <td><p>optional numeric value. Use this to substitute zero-values
-in your reciprocity change statistic matrix. Zero values in the predictors
-are recognized in the gHypEG regression as structural zeros. To ensure this
-does not happen, please recode your zero-values in all your predictors. If
-<code>zero_values</code> is not specified, the minmal value divided by 10 is used
-instead.</p></td>
+in your homophily change statistic matrix. Zero values in the predictors
+are recognized in the gHypEG regression as structural zeroes. To ensure this
+does not happen, please recode your zero-values in all your predictors,
+ideally using a dummy variable fitting an optimal value for the zeroes.
+Only useful with absdiff type.</p></td>
     </tr>
     </table>
 
@@ -208,6 +208,22 @@ instead.</p></td>
 
     <p>LB, GC</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>homop_stat</span> <span class='op'>&lt;-</span> <span class='fu'>homophily_stat</span><span class='op'>(</span>variable <span class='op'>=</span> <span class='va'>vertexlabels</span>, nodes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>adj_karate</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>'homophily'</span><span class='op'>=</span> <span class='va'>homop_stat</span><span class='op'>)</span>, <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Call:
+#&gt; nrm.default(w = list(homophily = homop_stat), adj = adj_karate, 
+#&gt;     directed = FALSE, selfloops = FALSE)
+#&gt; 
+#&gt; Coefficients:
+#&gt;           Estimate Std.Err t value    Pr(&gt;t)    
+#&gt; homophily  2.35164 0.22414  10.492 &lt; 2.2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; R2:
+#&gt;  McFadden R2 Cox Snell R2 
+#&gt;    0.1437786    0.5699989 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +235,7 @@ instead.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">

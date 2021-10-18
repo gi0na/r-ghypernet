@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
 <p>We use the built-in function in the ghypernet package to compute the significance of each link as described in Casiraghi et al. 2017. The function takes the adjacency matrix of the network and the model from which estimating the probability to observe as many edges as those in the graph. We can obtain a high-pass noise filtering choosing a significance level and filtering those links which have a low significance.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># obtain significance matrix</span>
-<span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">linkSignificance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">mod</span>, under <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">mod</span>, under <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># filter adjacency matrix</span>
 <span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
@@ -173,9 +173,9 @@
 <h2 class="hasAnchor">
 <a href="#block-model" class="anchor"></a>Block Model</h2>
 <p>As the Karate Club consists of two factions, we can refine the model adding the block structure to it. Then we can filter out the links that are not significant according to this more complex model.</p>
-<p>What we expect in this case is that most of the within-group links are now not significant anymore, as they can be explained by the joint effect of configuration model and block model. Hence the links that remains after filtering are those that go beyond this joint effect. In particular, only few nodes of a group interact with the other group, i.e. the between-groups links are concentrated between few dyads. From the model instead we should expect most nodes of a group weakly interacting with the other group. Hence, we can expect that the significant links will be mainly those between groups. The results are in accordance with our intuition.</p>
+<p>What we expect in this case is that most of the within-group links are now not significant, as they can be explained by the joint effect of configuration model and block model. Hence the links that remains after filtering are those that go beyond this joint effect. In particular, only few nodes of a group interact with the other group, i.e. the between-groups links are concentrated between few dyads. From the model instead we should expect most nodes of a group weakly interacting with the other group. Hence, we can expect that the significant links will be mainly those between groups. The results are in accordance with our intuition.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">linkSignificance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># filter adjacency matrix</span>
 <span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
@@ -215,7 +215,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan, Laurence Brandenberger.</p>
+  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
