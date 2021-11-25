@@ -359,7 +359,7 @@ link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.a
   omegabar <- (sum(model$xi[idx]*model$omega[idx])-model$xi[idx]*model$omega[idx])/xibar
 
   # compute vector of probabilities using hypergeometric, Wallenius univariate distribution or binomial
-  if(!under){
+  if(!under & give_pvals){
     id <- adj[idx]!=0
   } else{
     id <- is.numeric(adj[idx])

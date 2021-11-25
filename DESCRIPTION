@@ -2,7 +2,7 @@ Package: ghypernet
 Type: Package
 Title: Fit and Simulate Generalised Hypergeometric Ensembles of Graphs
 Version: 1.1.0.1021
-Date: 2021-10-15
+Date: 2021-11-25
 Authors@R: c(
     person("Giona", "Casiraghi", email = "giona@ethz.ch",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0233-5747")),
