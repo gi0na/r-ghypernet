@@ -1,3 +1,8 @@
+# ghypernet 1.1.0.1
+
+- bug fixes:
+* `link_significance()`: When calling with under = FALSE and pval = FALSE was returning phi(0) = 1 instead of Pr(x>0)
+
 # ghypernet 1.1.0
 
 - function renaming:
