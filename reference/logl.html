@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -235,14 +235,16 @@ chosen, multinomial chosen for large graphs.</p></td>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scm.html'>scm</a></span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'>logl</span><span class='op'>(</span>object <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] -434.5449</div><div class='input'><span class='va'>new_adj</span> <span class='op'>&lt;-</span> <span class='va'>adj_karate</span>
-<span class='va'>new_adj</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='fu'>logl</span><span class='op'>(</span>object<span class='op'>=</span><span class='va'>model</span>, adj<span class='op'>=</span><span class='va'>new_adj</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] -445.8136</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scm.html'>scm</a></span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>logl</span><span class='op'>(</span>object <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -434.5449</span>
+<span class='r-in'><span class='va'>new_adj</span> <span class='op'>&lt;-</span> <span class='va'>adj_karate</span></span>
+<span class='r-in'><span class='va'>new_adj</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>10</span></span>
+<span class='r-in'><span class='fu'>logl</span><span class='op'>(</span>object<span class='op'>=</span><span class='va'>model</span>, adj<span class='op'>=</span><span class='va'>new_adj</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -445.8136</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

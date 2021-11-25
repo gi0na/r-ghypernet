@@ -83,7 +83,7 @@ undirected etc." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -170,184 +170,185 @@ undirected etc.</p>
     <p>a boolean matrix that can be used to mask adjacency matrices.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span>
-<span class='fu'>mat2vec.ix</span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          Mr Hi Actor 2 Actor 3 Actor 4 Actor 5 Actor 6 Actor 7 Actor 8 Actor 9
-#&gt; Mr Hi    FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE
-#&gt; Actor 2  FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE
-#&gt; Actor 3  FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE
-#&gt; Actor 4  FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE
-#&gt; Actor 5  FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE
-#&gt; Actor 6  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE
-#&gt; Actor 7  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE
-#&gt; Actor 8  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE
-#&gt; Actor 9  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 10 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 11 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 12 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 13 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 14 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 15 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 16 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 17 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 18 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 19 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 20 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 21 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 22 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 23 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 24 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 25 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 26 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 27 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 28 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 29 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 30 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 31 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 32 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; Actor 33 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt; John A   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE
-#&gt;          Actor 10 Actor 11 Actor 12 Actor 13 Actor 14 Actor 15 Actor 16
-#&gt; Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 10    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 11    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 12    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 13    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE
-#&gt; Actor 14    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE
-#&gt; Actor 15    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE
-#&gt; Actor 16    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 17    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 18    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 19    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 20    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 21    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 22    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 23    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 24    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 25    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 26    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 27    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt;          Actor 17 Actor 18 Actor 19 Actor 20 Actor 21 Actor 22 Actor 23
-#&gt; Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 10     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 11     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 12     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 13     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 14     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 15     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 16     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 17    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 18    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 19    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 20    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE
-#&gt; Actor 21    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE
-#&gt; Actor 22    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE
-#&gt; Actor 23    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 24    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 25    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 26    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 27    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt;          Actor 24 Actor 25 Actor 26 Actor 27 Actor 28 Actor 29 Actor 30
-#&gt; Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 10     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 11     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 12     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 13     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 14     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 15     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 16     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 17     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 18     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 19     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 20     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 21     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 22     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 23     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 24    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 25    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 26    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE
-#&gt; Actor 27    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE
-#&gt; Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE
-#&gt; Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE
-#&gt; Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt; John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE
-#&gt;          Actor 31 Actor 32 Actor 33 John A
-#&gt; Mr Hi        TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 2      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 3      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 4      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 5      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 6      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 7      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 8      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 9      TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 10     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 11     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 12     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 13     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 14     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 15     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 16     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 17     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 18     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 19     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 20     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 21     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 22     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 23     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 24     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 25     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 26     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 27     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 28     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 29     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 30     TRUE     TRUE     TRUE   TRUE
-#&gt; Actor 31    FALSE     TRUE     TRUE   TRUE
-#&gt; Actor 32    FALSE    FALSE     TRUE   TRUE
-#&gt; Actor 33    FALSE    FALSE    FALSE   TRUE
-#&gt; John A      FALSE    FALSE    FALSE  FALSE</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>mat2vec.ix</span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Mr Hi Actor 2 Actor 3 Actor 4 Actor 5 Actor 6 Actor 7 Actor 8 Actor 9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mr Hi    FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 2  FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 3  FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 4  FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 5  FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 6  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 7  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 8  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 9  FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 10 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 11 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 12 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 13 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 14 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 15 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 16 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 17 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 18 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 19 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 20 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 21 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 22 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 23 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 24 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 25 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 26 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 27 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 28 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 29 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 30 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 31 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 32 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 33 FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> John A   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Actor 10 Actor 11 Actor 12 Actor 13 Actor 14 Actor 15 Actor 16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 10    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 11    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 12    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 13    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 14    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 15    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 16    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 17    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 18    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 19    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 20    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 21    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 22    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 23    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 24    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 25    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 26    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 27    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Actor 17 Actor 18 Actor 19 Actor 20 Actor 21 Actor 22 Actor 23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 10     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 11     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 12     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 13     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 14     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 15     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 16     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 17    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 18    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 19    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 20    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 21    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 22    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 23    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 24    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 25    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 26    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 27    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Actor 24 Actor 25 Actor 26 Actor 27 Actor 28 Actor 29 Actor 30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mr Hi        TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 2      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 3      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 4      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 5      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 6      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 7      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 8      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 9      TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 10     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 11     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 12     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 13     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 14     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 15     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 16     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 17     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 18     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 19     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 20     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 21     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 22     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 23     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 24    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 25    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 26    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 27    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 28    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 29    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 30    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 31    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 32    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 33    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> John A      FALSE    FALSE    FALSE    FALSE    FALSE    FALSE    FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          Actor 31 Actor 32 Actor 33 John A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mr Hi        TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 2      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 3      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 4      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 5      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 6      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 7      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 8      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 9      TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 10     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 11     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 12     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 13     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 14     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 15     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 16     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 17     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 18     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 19     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 20     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 21     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 22     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 23     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 24     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 25     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 26     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 27     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 28     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 29     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 30     TRUE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 31    FALSE     TRUE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 32    FALSE    FALSE     TRUE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actor 33    FALSE    FALSE    FALSE   TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> John A      FALSE    FALSE    FALSE  FALSE</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -84,7 +84,7 @@ function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -258,21 +258,22 @@ function.</p>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"adj_karate"</span><span class='op'>)</span>
-<span class='va'>fullmodel</span> <span class='op'>&lt;-</span> <span class='fu'>ghype</span><span class='op'>(</span>graph <span class='op'>=</span> <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span>, unbiased <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scm.html'>scm</a></span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Call:
-#&gt; ghype.matrix(graph = graph, directed = directed, selfloops = selfloops, 
-#&gt;     unbiased = TRUE, regular = FALSE)
-#&gt; ghype undirected , no selfloops 
-#&gt; 34 vertices, 231 edges 
-#&gt; Loglikelihood:
-#&gt; -434.5449
-#&gt; df: 34 </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"adj_karate"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fullmodel</span> <span class='op'>&lt;-</span> <span class='fu'>ghype</span><span class='op'>(</span>graph <span class='op'>=</span> <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span>, unbiased <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'adj_karate'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scm.html'>scm</a></span><span class='op'>(</span><span class='va'>adj_karate</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ghype.matrix(graph = graph, directed = directed, selfloops = selfloops, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     unbiased = TRUE, regular = FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ghype undirected , no selfloops </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34 vertices, 231 edges </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Loglikelihood:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -434.5449</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> df: 34 </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -283,54 +283,56 @@ predictors in <code>w</code>.</p></td>
 <p>Giona Casiraghi</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## For a complete example see the vignette</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
-
-<span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'>nrm</span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>,
-  selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='va'>highschool.m</span>
-</div><div class='output co'>#&gt; Call:
-#&gt; nrm.default(w = highschool.predictors[1], adj = contacts.adj, 
-#&gt;     directed = FALSE, selfloops = FALSE)
-#&gt; 
-#&gt; Coefficients:
-#&gt;         Estimate   Std.Err t value    Pr(&gt;t)    
-#&gt; gender 0.3160804 0.0021095  149.84 &lt; 2.2e-16 ***
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; 
-#&gt; R2:
-#&gt;  McFadden R2 Cox Snell R2 
-#&gt;   0.01717056   0.11851816 </div><div class='input'>
-<span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
-
-<span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'>nrm</span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>,
-  selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='va'>highschool.m</span>
-</div><div class='output co'>#&gt; Call:
-#&gt; nrm.default(w = highschool.predictors, adj = contacts.adj, directed = FALSE, 
-#&gt;     selfloops = FALSE)
-#&gt; 
-#&gt; Coefficients:
-#&gt;              Estimate    Std.Err t value    Pr(&gt;t)    
-#&gt; gender      0.0773066  0.0021205  36.456 &lt; 2.2e-16 ***
-#&gt; class       1.3920467  0.0047051 295.862 &lt; 2.2e-16 ***
-#&gt; topic       0.9996831  0.0089452 111.757 &lt; 2.2e-16 ***
-#&gt; friendship  0.6958169  0.0024252 286.905 &lt; 2.2e-16 ***
-#&gt; facebook   -0.0886211  0.0023652  37.469 &lt; 2.2e-16 ***
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; 
-#&gt; R2:
-#&gt;  McFadden R2 Cox Snell R2 
-#&gt;    0.5474069    0.9800463 </div><div class='input'><span class='co'># }</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## For a complete example see the vignette</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'>nrm</span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>,</span>
+<span class='r-in'>  selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>highschool.m</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> nrm.default(w = highschool.predictors[1], adj = contacts.adj, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     directed = FALSE, selfloops = FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         Estimate   Std.Err t value    Pr(&gt;t)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gender 0.3160804 0.0021095  149.84 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> R2:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  McFadden R2 Cox Snell R2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   0.01717056   0.11851816 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>highschool.m</span> <span class='op'>&lt;-</span> <span class='fu'>nrm</span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>highschool.predictors</span>, adj<span class='op'>=</span><span class='va'>contacts.adj</span>, directed<span class='op'>=</span><span class='cn'>FALSE</span>,</span>
+<span class='r-in'>  selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>highschool.m</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> nrm.default(w = highschool.predictors, adj = contacts.adj, directed = FALSE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     selfloops = FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              Estimate    Std.Err t value    Pr(&gt;t)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gender      0.0773066  0.0021205  36.456 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> class       1.3920467  0.0047051 295.862 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> topic       0.9996831  0.0089452 111.757 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> friendship  0.6958169  0.0024252 286.905 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> facebook   -0.0886211  0.0023652  37.469 &lt; 2.2e-16 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> R2:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  McFadden R2 Cox Snell R2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    0.5474069    0.9800463 </span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

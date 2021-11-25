@@ -82,7 +82,7 @@ matrix can then be used as a predictor in the gHypEG regression." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -184,22 +184,23 @@ ideally using a dummy variable fitting an optimal value for the zeroes.</p></td>
     <p>LB, GC</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>recip_stat</span> <span class='op'>&lt;-</span> <span class='fu'>reciprocity_stat</span><span class='op'>(</span><span class='va'>adj_karate</span><span class='op'>)</span>
-<span class='va'>recip_stat_dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_zero_dummy.html'>get_zero_dummy</a></span><span class='op'>(</span><span class='va'>recip_stat</span>, name <span class='op'>=</span> <span class='st'>'reciprocity'</span><span class='op'>)</span>
-<span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>recip_stat_dummy</span>, <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Call:
-#&gt; nrm.default(w = recip_stat_dummy, adj = adj_karate, directed = FALSE, 
-#&gt;     selfloops = FALSE)
-#&gt; 
-#&gt; Coefficients:
-#&gt;                     Estimate   Std.Err t value Pr(&gt;t)
-#&gt; reciprocity          0.13130   0.16883  0.7777 0.4367
-#&gt; reciprocity_zeroes -19.55967 852.48448  0.0229 0.9817
-#&gt; 
-#&gt; R2:
-#&gt;  McFadden R2 Cox Snell R2 
-#&gt;    0.5312417    0.9007760 </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>recip_stat</span> <span class='op'>&lt;-</span> <span class='fu'>reciprocity_stat</span><span class='op'>(</span><span class='va'>adj_karate</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>recip_stat_dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_zero_dummy.html'>get_zero_dummy</a></span><span class='op'>(</span><span class='va'>recip_stat</span>, name <span class='op'>=</span> <span class='st'>'reciprocity'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='nrm.html'>nrm</a></span><span class='op'>(</span>w<span class='op'>=</span><span class='va'>recip_stat_dummy</span>, <span class='va'>adj_karate</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span>, selfloops <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> nrm.default(w = recip_stat_dummy, adj = adj_karate, directed = FALSE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     selfloops = FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     Estimate   Std.Err t value Pr(&gt;t)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> reciprocity          0.13130   0.16883  0.7777 0.4367</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> reciprocity_zeroes -19.55967 852.48448  0.0229 0.9817</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> R2:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  McFadden R2 Cox Snell R2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    0.5312417    0.9007760 </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

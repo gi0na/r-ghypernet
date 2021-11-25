@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
       </span>
     </div>
 
@@ -260,39 +260,49 @@
 <p>Giona Casiraghi</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span>
-<span class='va'>models</span> <span class='op'>&lt;-</span> <span class='fu'>nrm_selection</span><span class='op'>(</span>adj<span class='op'>=</span><span class='va'>contacts.adj</span>,predictors<span class='op'>=</span><span class='fu'><a href='create_predictors.html'>create_predictors</a></span><span class='op'>(</span><span class='va'>highschool.predictors</span><span class='op'>)</span>,
-  ncores<span class='op'>=</span><span class='fl'>1</span>,directed<span class='op'>=</span><span class='cn'>FALSE</span>,selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating predictors list...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Estimating Null model...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Performing forward stepwise selection:</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Step 1 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Step 2 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Step 3 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Step 4 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Step 5 of 5...</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Model estimation concluded.</span></div><div class='input'><span class='fu'>texreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/texreg/man/screenreg.html'>screenreg</a></span><span class='op'>(</span><span class='va'>models</span><span class='op'>$</span><span class='va'>models</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; ==============================================================================================
-#&gt;                 Model 1         Model 2         Model 3         Model 4         Model 5       
-#&gt; ----------------------------------------------------------------------------------------------
-#&gt; class                2.016 ***       1.914 ***       1.391 ***       1.393 ***       1.392 ***
-#&gt;                     (0.004)         (0.004)         (0.005)         (0.005)         (0.005)   
-#&gt; friendship                           0.679 ***       0.675 ***       0.703 ***       0.696 ***
-#&gt;                                     (0.002)         (0.002)         (0.002)         (0.002)   
-#&gt; topic                                                0.999 ***       1.011 ***       1.000 ***
-#&gt;                                                     (0.009)         (0.009)         (0.009)   
-#&gt; facebook                                                            -0.088 ***      -0.089 ***
-#&gt;                                                                     (0.002)         (0.002)   
-#&gt; gender                                                                               0.077 ***
-#&gt;                                                                                     (0.002)   
-#&gt; ----------------------------------------------------------------------------------------------
-#&gt; AIC             692711.753      627181.581      612308.357      610880.109      609529.798    
-#&gt; McFadden $R^2$       0.486           0.534           0.545           0.546           0.547    
-#&gt; ==============================================================================================
-#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</div><div class='input'> <span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'highschool.predictors'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>models</span> <span class='op'>&lt;-</span> <span class='fu'>nrm_selection</span><span class='op'>(</span>adj<span class='op'>=</span><span class='va'>contacts.adj</span>,predictors<span class='op'>=</span><span class='fu'><a href='create_predictors.html'>create_predictors</a></span><span class='op'>(</span><span class='va'>highschool.predictors</span><span class='op'>)</span>,</span>
+<span class='r-in'>  ncores<span class='op'>=</span><span class='fl'>1</span>,directed<span class='op'>=</span><span class='cn'>FALSE</span>,selfloops<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Creating predictors list...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Estimating Null model...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Performing forward stepwise selection:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Step 1 of 5...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Step 2 of 5...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Step 3 of 5...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Step 4 of 5...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Step 5 of 5...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Model estimation concluded.</span>
+<span class='r-in'><span class='fu'>texreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/texreg/man/screenreg.html'>screenreg</a></span><span class='op'>(</span><span class='va'>models</span><span class='op'>$</span><span class='va'>models</span>, digits<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ==============================================================================================</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                 Model 1         Model 2         Model 3         Model 4         Model 5       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> class                2.016 ***       1.914 ***       1.391 ***       1.393 ***       1.392 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     (0.004)         (0.004)         (0.005)         (0.005)         (0.005)   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> friendship                           0.679 ***       0.675 ***       0.703 ***       0.696 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                     (0.002)         (0.002)         (0.002)         (0.002)   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> topic                                                0.999 ***       1.011 ***       1.000 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                     (0.009)         (0.009)         (0.009)   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> facebook                                                            -0.088 ***      -0.089 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                     (0.002)         (0.002)   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gender                                                                               0.077 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                                     (0.002)   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AIC             692711.753      627181.581      612308.357      610880.109      609529.798    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> McFadden $R^2$       0.486           0.534           0.545           0.546           0.547    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ==============================================================================================</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span>
+<span class='r-in'> <span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
