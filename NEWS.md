@@ -1,4 +1,4 @@
-# ghypernet 1.1.0.0420
+# ghypernet 1.1.0.0722
 
 - bug fixes:
 * `compute_xi()`: Fixed a bug that introduced spurious stubs for nodes with zero degrees when creating a Xi matrix without selfloops
