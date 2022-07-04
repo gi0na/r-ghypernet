@@ -48,7 +48,7 @@ ghype.matrix <- function(graph, directed, selfloops, xi=NULL, omega=NULL, unbias
       omega <- matrix(1,nrow(graph), ncol(graph))
     } else{
       omega <- FitOmega(adj = graph, xi = xi, directed = directed, selfloops = selfloops)
-      df <- df + sum(mat2vec.ix(omega,directed,selfloops)) - 1
+      df <- df + sum(mat2vec.ix(omega,directed,selfloops)) - 1 - sum(xi[mat2vec.ix(omega,directed,selfloops)]==0)
     }
   }
 
