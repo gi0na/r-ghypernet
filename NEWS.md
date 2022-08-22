@@ -2,7 +2,7 @@
 
 - bug fixes:
 * `compute_xi()`: Fixed a bug that introduced spurious stubs for nodes with zero degrees when creating a Xi matrix without selfloops
-* `link_significance()`: fixed bug when under=TRUE
+* `link_significance()`: fixed bug when under=TRUE, updated implementation to improve performance
 * `ghype()`: fixed computation of degrees of freedom for full model where xi has zero values
 
 # ghypernet 1.1.0.1

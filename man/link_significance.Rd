@@ -20,7 +20,7 @@ link_significance(
   under = FALSE,
   log.p = FALSE,
   binomial.approximation = FALSE,
-  give_pvals = FALSE
+  give_pvals = TRUE
 )
 }
 \arguments{
@@ -28,13 +28,17 @@ link_significance(
 
 \item{model}{a ghype model}
 
-\item{under}{boolean, estimate under-represented deviations? Default FALSE.}
+\item{under}{boolean, estimate under-represented deviations? Default FALSE:
+i.e. returns over representation}
 
 \item{log.p}{boolean, return log values of probabilities}
 
 \item{binomial.approximation}{boolean, force binomial? default FALSE}
 
-\item{give_pvals}{boolean, return p-values for both under and over significance?}
+\item{give_pvals}{boolean, return p-values for both under and over
+significance? when FALSE, it returns probabilty of observing stricly more
+(or less) edges than in graph. When TRUE returns probability of observing
+exactly as many edges or more (less) than in graph, like a standard pvalue.}
 }
 \value{
 matrix of probabilities with same size as adjacency matrix.
