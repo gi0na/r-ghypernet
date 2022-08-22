@@ -45,11 +45,13 @@ compute_xi <- function(adj, directed, selfloops, regular = FALSE) {
   if(nrow(adj)==ncol(adj)){
     if(!selfloops & directed){
       diagxi <- diag(xi)
-      vbas <- floor( diagxi /(ncol(adj)-1))
-      diagxir <- diagxi -vbas*(ncol(adj)-1)
+      nnzero <- apply(adj,1,function(x) sum(x>0))
+      vbas <- floor( diagxi /nnzero)
+      vbas[is.nan(vbas)] <- 0
+      diagxir <- diagxi -vbas*nnzero
       diag(xi) <- 0
       xi <- #floor(
-        (xi+t(vxi(1:nrow(adj), diagxir, vbas, xi, adj))) #/(as.integer(!directed)+1))
+        (xi+t(vxi(idx = 1:nrow(adj), diagxir, vbas, xi, adj))) #/(as.integer(!directed)+1))
       # if(!directed){
       # xi[upper.tri(xi,FALSE)] <- ceiling( apply( cbind(xi[upper.tri(xi,FALSE)], t( xi )[upper.tri(xi,FALSE)] ), 1, mean) )
       # xi[lower.tri(xi,FALSE)] <- t( xi )[lower.tri(xi,FALSE)]
@@ -79,8 +81,11 @@ compute_xi <- function(adj, directed, selfloops, regular = FALSE) {
 # temporary workaround
 vxi <- function(idx, diagxir, vbas, xi, adj){
   v <- rep(0, ncol(adj)-1)
-  v[sample(ncol(adj)-1, diagxir[idx])] <- 1
-  v <- v+vbas[idx]
+  nnzeroid <- adj[idx,][-idx]>0
+  if(any(nnzeroid)){
+  v[nnzeroid][sample(sum(nnzeroid), diagxir[idx])] <- 1
+  v[nnzeroid] <- v[nnzeroid]+vbas[idx]
+  }
   if(idx>1 & idx<ncol(xi)){
     v <- c(v[1:(idx-1)],0,v[idx:length(v)])
   } else{

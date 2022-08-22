@@ -127,6 +127,12 @@ nrm.default <- function(w, adj,
                         FUN = function(i) {
                           w[[i]]^b[i]
                         }), MARGIN = 1, FUN = prod)
+  
+  idzero <- apply(sapply(X = 1:length(w), 
+                           FUN = function(i) {
+                             w[[i]]
+                           }), MARGIN = 1, FUN = prod)==0
+  omega[idzero] <- 0
   # Compute the various stats
   ll <- logl(object = adj, xi = xi, 
              omega = omega, directed=directed, 
@@ -215,6 +221,10 @@ fnM <- function(x, w, xi, adj, directed,
   # compute the product of all
   # layers to the power of the
   # parameter beta
+  idnnzero <- apply(sapply(X = 1:length(x), 
+                           FUN = function(i) {
+                             w[[i]][ix]
+                           }), MARGIN = 1, FUN = prod)!=0
   product <- apply(sapply(X = 1:length(x), 
                           FUN = function(i) {
                             w[[i]][ix]^x[i]
@@ -222,10 +232,10 @@ fnM <- function(x, w, xi, adj, directed,
   # return the value of the right
   # term in eq. 7
   sapply(X = 1:length(x), FUN = function(i) {
-    -sum(log(w[[i]][ix]) * xi[ix] * 
-           product)/sum(xi[ix] * 
-                          product) + sum(adj[ix] * 
-                                           log(w[[i]][ix]))/sum(adj[ix])
+    -sum(log(w[[i]][ix][idnnzero]) * xi[ix][idnnzero] * 
+           product[idnnzero])/sum(xi[ix][idnnzero] * 
+                          product[idnnzero]) + sum(adj[ix][idnnzero] * 
+                                           log(w[[i]][ix][idnnzero]))/sum(adj[ix][idnnzero])
   })
 }
 

@@ -340,7 +340,7 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #' fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE)
 #' link_significance(graph = adj_karate, model = fullmodel, under=FALSE)
 #'
-link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = FALSE){
+link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = TRUE){
   adj <- graph
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='both', sparse = FALSE)
@@ -401,21 +401,21 @@ link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.a
 
   # wrong sum with log-p
   if(!under & give_pvals & any(model$omega[idx] != model$omega[1]) & !binomial.approximation)
-    probvec[idx] <- probvec[idx] + ifelse(test = log.p, yes =
+    probvec[id] <- probvec[id] + ifelse(test = log.p, yes =
                                           log(Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
-                                            x = adj[idx],m1 = model$xi[idx],m2 = xibar,
-                                            n = sum(adj[idx]), odds = model$omega[idx]/omegabar
+                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+                                            n = sum(adj[idx]), odds = model$omega[idx][id]/omegabar[id]
                                           )),
                                         no =
                                           Vectorize(FUN = BiasedUrn::dWNCHypergeo, vectorize.args = c('x', 'm1', 'm2','n','odds'))(
-                                            x = adj[idx],m1 = model$xi[idx],m2 = xibar,
-                                            n = sum(adj[idx]), odds = model$omega[idx]/omegabar
+                                            x = adj[idx][id],m1 = model$xi[idx][id],m2 = xibar[id],
+                                            n = sum(adj[idx]), odds = model$omega[idx]/omegabar[id]
                                           ))
   if(!under & give_pvals & any(model$omega[idx] != model$omega[1]) & binomial.approximation)
-    probvec[idx] <- probvec[idx] + Vectorize(FUN = stats::dbinom, vectorize.args = c('x', 'size', 'prob'))(
-                                                    x = adj[idx], size = sum(adj[idx]),
-                                                    prob = model$xi[idx]* model$omega[idx]/(
-                                                      model$xi[idx] * model$omega[idx]+xibar*omegabar
+    probvec[id] <- probvec[id] + Vectorize(FUN = stats::dbinom, vectorize.args = c('x', 'size', 'prob'))(
+                                                    x = adj[idx][id], size = sum(adj[idx]),
+                                                    prob = model$xi[idx][id]* model$omega[idx][id]/(
+                                                      model$xi[idx][id] * model$omega[idx][id]+xibar[id]*omegabar[id]
                                                     ),
                                                     log = log.p
                                                   )
