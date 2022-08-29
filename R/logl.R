@@ -101,6 +101,10 @@ logl_matrix <- function(adj, xi, omega,
   # links
   ix <- mat2vec.ix(adj, directed, selfloops)
   
+  ## throw error if all(omega == 0)
+  if(all(omega[ix] == 0))
+    stop('Not enough pairs with nonzero odds. (all(omega == 0))')
+  
   if (is.null(multinomial)) {
     if (requireNamespace("BiasedUrn",
                          quietly = TRUE) && sum(ix) <
