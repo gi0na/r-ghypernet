@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -89,9 +85,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Finding Significant Links with gHypEGs</h1>
-                        <h4 class="author">Giona CasiraghI</h4>
+                        <h4 data-toc-skip class="author">Giona CasiraghI</h4>
             
-            <h4 class="date">20/4/2018</h4>
+            <h4 data-toc-skip class="date">20/4/2018</h4>
       
       
       <div class="hidden name"><code>Significantlinks.Rmd</code></div>
@@ -101,105 +97,105 @@
     
     
 <p>In this short tutorial we exploit the ghypernet package to detect significant links. We use the Karate Club as running example.</p>
-<div id="load-packages" class="section level3">
-<h3 class="hasAnchor">
-<a href="#load-packages" class="anchor"></a>Load Packages</h3>
+<div class="section level3">
+<h3 id="load-packages">Load Packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net">ghypernet</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: 'igraph'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum</code></pre>
-<pre><code>## The following object is masked from 'package:base':
-## 
-##     union</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ghyper.net" class="external-link">ghypernet</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'igraph'</span></span></code></pre>
+<pre><code><span><span class="co">## The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     decompose, spectrum</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:base':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     union</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"adj_karate"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"vertexlabels"</span><span class="op">)</span>
-<span class="va">karate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span>adjmatrix <span class="op">=</span> <span class="va">adj_karate</span>, mode<span class="op">=</span><span class="st">'undirected'</span>, weighted<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"adj_karate"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"vertexlabels"</span><span class="op">)</span></span>
+<span><span class="va">karate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html" class="external-link">graph_from_adjacency_matrix</a></span><span class="op">(</span>adjmatrix <span class="op">=</span> <span class="va">adj_karate</span>, mode<span class="op">=</span><span class="st">'undirected'</span>, weighted<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span></span></code></pre></div>
 </div>
-<div id="estimate-the-ensemble" class="section level3">
-<h3 class="hasAnchor">
-<a href="#estimate-the-ensemble" class="anchor"></a>Estimate the ensemble</h3>
+<div class="section level3">
+<h3 id="estimate-the-ensemble">Estimate the ensemble<a class="anchor" aria-label="anchor" href="#estimate-the-ensemble"></a>
+</h3>
 <p>First we estimate a soft-configuration model from the data. The second model is a block model based on the two ‘factions’ of members of the club</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span><span class="va">adj_karate</span>,directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
-
-<span class="va">blockModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span>, homophily <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scm.html">scm</a></span><span class="op">(</span><span class="va">adj_karate</span>,directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">blockModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bccm.html">bccm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">adj_karate</span>, labels <span class="op">=</span> <span class="va">vertexlabels</span>, directed <span class="op">=</span> <span class="cn">F</span>, selfloops <span class="op">=</span> <span class="cn">F</span>, homophily <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="finding-the-significance-of-the-links" class="section level2">
-<h2 class="hasAnchor">
-<a href="#finding-the-significance-of-the-links" class="anchor"></a>Finding the significance of the links</h2>
+<div class="section level2">
+<h2 id="finding-the-significance-of-the-links">Finding the significance of the links<a class="anchor" aria-label="anchor" href="#finding-the-significance-of-the-links"></a>
+</h2>
 <p>We use the built-in function in the ghypernet package to compute the significance of each link as described in Casiraghi et al. 2017. The function takes the adjacency matrix of the network and the model from which estimating the probability to observe as many edges as those in the graph. We can obtain a high-pass noise filtering choosing a significance level and filtering those links which have a low significance.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># obtain significance matrix</span>
-<span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">mod</span>, under <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># filter adjacency matrix</span>
-<span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
-<span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></code></pre></div>
-<div id="plot-the-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plot-the-results" class="anchor"></a>Plot the results</h3>
+<code class="sourceCode R"><span><span class="co"># obtain significance matrix</span></span>
+<span><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/link_significance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">mod</span>, under <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># filter adjacency matrix</span></span>
+<span><span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span></span>
+<span><span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="plot-the-results">Plot the results<a class="anchor" aria-label="anchor" href="#plot-the-results"></a>
+</h3>
 <p>We plot the original graph first, then a graph were the non-significant links are coloured red. The final plot only shows the significant links.</p>
 <p>Note that the configuration model is not able to predict the strong links within the groups, as those go beyond simple degree effects. The results reflect this showing the two factions separated and only the links due to homophily effect left.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
-<span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span>
-<span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">gfiltered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjfiltered</span>, mode <span class="op">=</span> <span class="st">'upper'</span><span class="op">)</span>
-<span class="va">g</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjcolor</span>, mode <span class="op">=</span> <span class="st">'upper'</span>, weighted <span class="op">=</span> <span class="st">'color'</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span></span>
+<span><span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">gfiltered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html" class="external-link">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjfiltered</span>, mode <span class="op">=</span> <span class="st">'upper'</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html" class="external-link">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjcolor</span>, mode <span class="op">=</span> <span class="st">'upper'</span>, weighted <span class="op">=</span> <span class="st">'color'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="va">vertexlabels</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-4-3.png" width="700"></p>
 </div>
 </div>
-<div id="block-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#block-model" class="anchor"></a>Block Model</h2>
+<div class="section level2">
+<h2 id="block-model">Block Model<a class="anchor" aria-label="anchor" href="#block-model"></a>
+</h2>
 <p>As the Karate Club consists of two factions, we can refine the model adding the block structure to it. Then we can filter out the links that are not significant according to this more complex model.</p>
 <p>What we expect in this case is that most of the within-group links are now not significant, as they can be explained by the joint effect of configuration model and block model. Hence the links that remains after filtering are those that go beyond this joint effect. In particular, only few nodes of a group interact with the other group, i.e. the between-groups links are concentrated between few dyads. From the model instead we should expect most nodes of a group weakly interacting with the other group. Hence, we can expect that the significant links will be mainly those between groups. The results are in accordance with our intuition.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linkSignificance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># filter adjacency matrix</span>
-<span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
-<span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">signmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/link_significance.html">link_significance</a></span><span class="op">(</span><span class="va">adj_karate</span>, <span class="va">blockModel</span>, under<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># filter adjacency matrix</span></span>
+<span><span class="va">adjfiltered</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span></span>
+<span><span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&gt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">adjfiltered</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">adj_karate</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">adjfiltered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span>
-<span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span>
-<span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">gfiltered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjfiltered</span>, mode <span class="op">=</span> <span class="st">'upper'</span><span class="op">)</span>
-<span class="va">g</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjcolor</span>, mode <span class="op">=</span> <span class="st">'upper'</span>, weighted <span class="op">=</span> <span class="st">'color'</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">adjcolor</span> <span class="op">&lt;-</span> <span class="va">adj_karate</span></span>
+<span><span class="va">adjcolor</span><span class="op">[</span><span class="va">adj_karate</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">adjcolor</span><span class="op">[</span><span class="va">signmat</span><span class="op">&lt;</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">mod</span><span class="op">$</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">adjcolor</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">gfiltered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html" class="external-link">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjfiltered</span>, mode <span class="op">=</span> <span class="st">'upper'</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html" class="external-link">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjcolor</span>, mode <span class="op">=</span> <span class="st">'upper'</span>, weighted <span class="op">=</span> <span class="st">'color'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">==</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"black"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span><span class="op">$</span><span class="va">color</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">karate</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">gfiltered</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Significantlinks_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
 </div>
   </div>
@@ -215,11 +211,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
+  <p></p>
+<p>Developed by Giona Casiraghi.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -227,6 +225,8 @@
 
   
 
+
+  
 
   </body>
 </html>
