@@ -31,6 +31,11 @@ rghype <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
     n <- nrow(model$xi)
 
   omega <- model$omega[idx]
+  
+  ## throw error if all(omega == 0)
+  if(all(omega == 0))
+    stop('Not enough pairs with nonzero odds. (all(omega == 0))')
+  
   xi <- model$xi[idx]
   if (is.null(multinomial)) {
     # number of colors and number of
