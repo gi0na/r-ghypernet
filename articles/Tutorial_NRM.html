@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
       Chair of Systems Design, ETH Zurich, Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2022-08-29</h4>
+            <h4 data-toc-skip class="date">2022-08-30</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -248,7 +248,7 @@ It's good to have it in the tutorial though, I think. -->
 <p>The <code><a href="../reference/sharedPartner_stat.html">sharedPartner_stat()</a></code>-function provides change statistics to check your multi-edge network for meaningful triadic closure effects. Triadic closure refers to the important tendency observed in social networks to form triangles, or triads, between three nodes <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span> and <span class="math inline">\(i\)</span>. If dyad <span class="math inline">\((i, k)\)</span> are connected, and dyad <span class="math inline">\((j, k)\)</span> are connected, there is a strong tendency in some social networks that dyad <span class="math inline">\((i, j)\)</span> also shares an edge (see Figure 1a and 1b).</p>
 <p>The <code><a href="../reference/sharedPartner_stat.html">sharedPartner_stat()</a></code>-function uses the concept of shared partner statistics to calculate the tendencies of nodes in multi-edge networks to re-inforce triangular structures (see Figure 1c).</p>
 <div class="figure" style="text-align: center">
-<embed src="images/tikz_nweffects.pdf" title="Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) edge-wise shared partners. Source: Brandenberger et al. [-@brandenberger2019quantifying]." width="100%" type="application/pdf"></embed><p class="caption">
+<embed src="./images/tikz_nweffects.pdf" title="Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) edge-wise shared partners. Source: Brandenberger et al. [-@brandenberger2019quantifying]." width="100%" type="application/pdf"></embed><p class="caption">
 Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) edge-wise shared partners. Source: Brandenberger et al. <span class="citation">[-@brandenberger2019quantifying]</span>.
 </p>
 </div>
@@ -1481,7 +1481,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; R2:</span></span>
 <span><span class="co">#&gt;  McFadden R2 Cox Snell R2 </span></span>
-<span><span class="co">#&gt; -0.005887399  0.006630311</span></span></code></pre></div>
+<span><span class="co">#&gt; -0.005887393  0.006630324</span></span></code></pre></div>
 <p>To speed things up, the <code>init</code>-argument can be specified:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nfit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nrm.html">nrm</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="va">cospons_mat</span>, </span>
@@ -1495,13 +1495,13 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate  Std.Err t value    Pr(&gt;t)    </span></span>
-<span><span class="co">#&gt; same_canton 0.207151 0.015376  13.472 &lt; 2.2e-16 ***</span></span>
+<span><span class="co">#&gt; same_canton 0.207150 0.015376  13.472 &lt; 2.2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; R2:</span></span>
 <span><span class="co">#&gt;  McFadden R2 Cox Snell R2 </span></span>
-<span><span class="co">#&gt; -0.005887397  0.006630316</span></span></code></pre></div>
+<span><span class="co">#&gt; -0.005887403  0.006630298</span></span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html" class="external-link">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1511,7 +1511,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span><span class="co">#&gt; same_canton         0.21 ***</span></span>
 <span><span class="co">#&gt;                    (0.02)   </span></span>
 <span><span class="co">#&gt; ----------------------------</span></span>
-<span><span class="co">#&gt; AIC             81552.04    </span></span>
+<span><span class="co">#&gt; AIC             81552.03    </span></span>
 <span><span class="co">#&gt; McFadden $R^2$     -0.01    </span></span>
 <span><span class="co">#&gt; ============================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
@@ -1565,7 +1565,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span><span class="co">#&gt;     online_similarity       0.02 ***</span></span>
 <span><span class="co">#&gt;                            (0.00)   </span></span>
 <span><span class="co">#&gt; ------------------------------------</span></span>
-<span><span class="co">#&gt; AIC                     54417.96    </span></span>
+<span><span class="co">#&gt; AIC                     54417.98    </span></span>
 <span><span class="co">#&gt; McFadden $R^2$              0.33    </span></span>
 <span><span class="co">#&gt; ====================================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
@@ -1666,7 +1666,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 <span><span class="co">#&gt; ageout                                          0.09 *       </span></span>
 <span><span class="co">#&gt;                                                (0.04)        </span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; AIC                 54417.96                59441.71         </span></span>
+<span><span class="co">#&gt; AIC                 54417.98                59441.71         </span></span>
 <span><span class="co">#&gt; McFadden $R^2$          0.33                    0.50         </span></span>
 <span><span class="co">#&gt; =============================================================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
@@ -1733,7 +1733,7 @@ Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) 
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Giona Casiraghi.</p>
+<p>Developed by Giona Casiraghi, Vahan Nanumyan.</p>
 </div>
 
 <div class="pkgdown">
