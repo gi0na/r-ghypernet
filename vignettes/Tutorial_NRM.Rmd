@@ -248,7 +248,7 @@ to calculate the tendencies of nodes in multi-edge networks to re-inforce
 triangular structures (see Figure 1c).
 
 ```{r, out.width='100%', fig.align='center', fig.cap='Figure 1: Triadic closure: (a) undirected triangle, (b) transitive triplet, (c) edge-wise shared partners. Source: Brandenberger et al. [-@brandenberger2019quantifying].', echo=FALSE}
-knitr::include_graphics('images/tikz_nweffects.pdf')
+knitr::include_graphics('./images/tikz_nweffects.pdf')
 ```
 
 For undirected multi-edge networks, the statistic measures for each dyad 

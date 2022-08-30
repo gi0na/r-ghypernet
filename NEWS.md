@@ -1,4 +1,4 @@
-# ghypernet 1.1.0.2
+# ghypernet 1.1.1
 
 - new features:
 * extended testing scripts of package
