@@ -2,6 +2,7 @@
 #'
 #' Likelihood ratio test for gnp vs configuration model.
 #'
+#' @importFrom methods new 
 #' @param graph adjacency matrix or igraph graph
 #' @param directed a boolean argument specifying whether object is directed or not.
 #' @param selfloops a boolean argument specifying whether the model should incorporate selfloops.
