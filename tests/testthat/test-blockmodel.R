@@ -19,3 +19,8 @@ test_that("bccm returns same matrix for blockOmega and Omega when every node is 
   m <- bccm(adj = adj, labels = 3:1, directed = TRUE, selfloops = FALSE, directedBlocks = TRUE, regular = TRUE)
   expect_equal(all(m$blockOmega == m$omega), TRUE)
 })
+
+test_that("bccm runs through", {
+  m <- bccm(adj = adj_karate, labels = vertexlabels, directed = F, selfloops = F, homophily = F)
+  expect_equal(all(m$blockOmega %in% m$coef), TRUE)
+})

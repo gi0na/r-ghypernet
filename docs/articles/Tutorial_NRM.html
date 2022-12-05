@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ghypernet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.1</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@ Brandenberger</h4>
 Switzerland<br><a class="author_email" href="mailto:#"></a><a href="mailto:lbrandenberger@ethz.ch" class="email">lbrandenberger@ethz.ch</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2022-08-29</h4>
+            <h4 data-toc-skip class="date">2022-12-05</h4>
       
       
       <div class="hidden name"><code>Tutorial_NRM.Rmd</code></div>
@@ -1680,13 +1680,13 @@ in parliament.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate  Std.Err t value    Pr(&gt;t)    </span></span>
-<span><span class="co">#&gt; same_canton 0.207150 0.015376  13.472 &lt; 2.2e-16 ***</span></span>
+<span><span class="co">#&gt; same_canton 0.207151 0.015376  13.472 &lt; 2.2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; R2:</span></span>
 <span><span class="co">#&gt;  McFadden R2 Cox Snell R2 </span></span>
-<span><span class="co">#&gt; -0.005887398  0.006630310</span></span></code></pre></div>
+<span><span class="co">#&gt; -0.005887399  0.006630315</span></span></code></pre></div>
 <p>To speed things up, the <code>init</code>-argument can be
 specified:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -1707,7 +1707,7 @@ specified:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; R2:</span></span>
 <span><span class="co">#&gt;  McFadden R2 Cox Snell R2 </span></span>
-<span><span class="co">#&gt; -0.005887398  0.006630310</span></span></code></pre></div>
+<span><span class="co">#&gt; -0.005887400  0.006630309</span></span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">texreg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/texreg/man/screenreg.html" class="external-link">screenreg</a></span><span class="op">(</span><span class="va">nfit1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1717,7 +1717,7 @@ specified:</p>
 <span><span class="co">#&gt; same_canton         0.21 ***</span></span>
 <span><span class="co">#&gt;                    (0.02)   </span></span>
 <span><span class="co">#&gt; ----------------------------</span></span>
-<span><span class="co">#&gt; AIC             81552.06    </span></span>
+<span><span class="co">#&gt; AIC             81552.03    </span></span>
 <span><span class="co">#&gt; McFadden $R^2$     -0.01    </span></span>
 <span><span class="co">#&gt; ============================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
@@ -1779,7 +1779,7 @@ exponentiating the coefficient over the treatment value (here <span class="math 
 <span><span class="co">#&gt;     online_similarity       0.02 ***</span></span>
 <span><span class="co">#&gt;                            (0.00)   </span></span>
 <span><span class="co">#&gt; ------------------------------------</span></span>
-<span><span class="co">#&gt; AIC                     54417.95    </span></span>
+<span><span class="co">#&gt; AIC                     54417.96    </span></span>
 <span><span class="co">#&gt; McFadden $R^2$              0.33    </span></span>
 <span><span class="co">#&gt; ====================================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>
@@ -1880,7 +1880,7 @@ exponentiating the coefficient over the treatment value (here <span class="math 
 <span><span class="co">#&gt; ageout                                          0.09 *       </span></span>
 <span><span class="co">#&gt;                                                (0.04)        </span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; AIC                 54417.95                59441.71         </span></span>
+<span><span class="co">#&gt; AIC                 54417.96                59441.71         </span></span>
 <span><span class="co">#&gt; McFadden $R^2$          0.33                    0.50         </span></span>
 <span><span class="co">#&gt; =============================================================</span></span>
 <span><span class="co">#&gt; *** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</span></span></code></pre></div>

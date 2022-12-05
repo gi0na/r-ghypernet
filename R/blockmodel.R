@@ -228,7 +228,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   
       rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
   
-      blockOmega <- plyr::mapvalues(blockOmega,from=sort(unique(blockOmega)), to=omegab[,2][order(unique(omegab[,1]))])
+      blockOmega <- plyr::mapvalues(blockOmega,from=sort(unique(as.vector(blockOmega))), to=omegab[,2][order(unique(omegab[,1]))])
     }
   } else{
     blockOmega <- NULL
