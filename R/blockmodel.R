@@ -199,7 +199,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     left_join(labs_map, by = c('block'='id'))
 
   # map values to full omega vector
-  omegav <- plyr::mapvalues(xiframe$block,from=sort(unique(xiframe$block)), to=omegab$omega[rank(omegab$block[1:length(unique(xiframe$block))])])
+  omegav <- plyr::mapvalues(xiframe$block,from=sort(unique(xiframe$block)), to=omegab$omega[order(unique(omegab$block[1:length(unique(xiframe$block))]))])
 
   # generate omega matrix
   if(bipartite){ # if bipartite
@@ -228,7 +228,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   
       rownames(blockOmega) <- colnames(blockOmega) <- levels(factor(labels))
   
-      blockOmega <- plyr::mapvalues(blockOmega,from=unique(sort(blockOmega)), to=omegab[,2][rank(omegab[,1])])
+      blockOmega <- plyr::mapvalues(blockOmega,from=sort(unique(blockOmega)), to=omegab[,2][order(unique(omegab[,1]))])
     }
   } else{
     blockOmega <- NULL
