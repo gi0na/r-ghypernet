@@ -54,9 +54,9 @@ bccm is used to fit a block-constrained configuration model.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{print}: Print method for elements of class \code{'bccm'}.
-}}
+\item \code{print(bccm)}: Print method for elements of class \code{'bccm'}.
 
+}}
 \examples{
 data("vertexlabels","adj_karate")
 blockmodel <- bccm(adj = adj_karate, labels = vertexlabels, directed = FALSE, selfloops = FALSE)

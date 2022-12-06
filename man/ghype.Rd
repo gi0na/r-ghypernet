@@ -87,15 +87,18 @@ function.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{matrix}: Fitting ghype models from an adjacency matrix
+\item \code{ghype(matrix)}: Fitting ghype models from an adjacency matrix
 
-\item \code{default}: Generating a ghype model from given xi and omega
+\item \code{ghype(default)}: Generating a ghype model from given xi and omega
 
-\item \code{igraph}: Fitting ghype models from an igraph graph
+\item \code{ghype(igraph)}: Fitting ghype models from an igraph graph
 
-\item \code{ghype}: Print method for ghype object.
 }}
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print(ghype)}: Print method for ghype object.
 
+}}
 \examples{
 data("adj_karate")
 fullmodel <- ghype(graph = adj_karate, directed = FALSE, selfloops = FALSE, unbiased = FALSE)

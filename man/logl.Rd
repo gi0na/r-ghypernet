@@ -74,11 +74,11 @@ General method to compute log-likelihood for ghype models.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{ghype}: Computes log-likelihood for ghype models from model object
+\item \code{logl(ghype)}: Computes log-likelihood for ghype models from model object
 
-\item \code{matrix}: Computes log-likelihood for ghype models from adjacency.
+\item \code{logl(matrix)}: Computes log-likelihood for ghype models from adjacency.
+
 }}
-
 \examples{
 data('adj_karate')
 model <- scm(adj_karate, FALSE, FALSE)

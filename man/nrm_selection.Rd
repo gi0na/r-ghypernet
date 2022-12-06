@@ -87,13 +87,16 @@ Perform AIC forward selection for nrm.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Default method for the nrm stepwise selection.
+\item \code{nrm_selection(default)}: Default method for the nrm stepwise selection.
 
-\item \code{nrmpredictor}: Method for the nrm stepwise selection when nrmpredictors are passed.
+\item \code{nrm_selection(nrmpredictor)}: Method for the nrm stepwise selection when nrmpredictors are passed.
 
-\item \code{nrm_selection}: Print method for elements of class \code{'nrm_selection'}.
 }}
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print(nrm_selection)}: Print method for elements of class \code{'nrm_selection'}.
 
+}}
 \examples{
 \donttest{
 data('highschool.predictors')
@@ -108,7 +111,5 @@ texreg::screenreg(models$models, digits=3)
 \code{nrm_selection}
 }
 \author{
-Giona Casiraghi
-
 Giona Casiraghi
 }

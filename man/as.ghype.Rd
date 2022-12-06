@@ -25,11 +25,11 @@ Manually map a list to a ghype object
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{list}: Map list to ghype
+\item \code{as.ghype(list)}: Map list to ghype
 
-\item \code{nrm}: Map list to ghype
+\item \code{as.ghype(nrm)}: Map list to ghype
+
 }}
-
 \examples{
 ll <- list(call = NULL, 'adj' = NULL, 'xi'= matrix(36,4,4), 'omega' = matrix(1,4,4), 
      'n' = 4, 'm' = 12, 'directed' = TRUE, 'selfloops' = TRUE,

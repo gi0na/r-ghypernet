@@ -100,11 +100,14 @@ nrm is used to fit multi-edge network regression models.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Default method for nrm
+\item \code{nrm(default)}: Default method for nrm
 
-\item \code{nrm}: Print method for elements of class \code{'nrm'}.
 }}
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print(nrm)}: Print method for elements of class \code{'nrm'}.
 
+}}
 \examples{
 
 ## For a complete example see the vignette
@@ -134,8 +137,6 @@ Casiraghi, Giona. 'Multiplex Network Regression: How do relations
 \code{\link{nrm}}
 }
 \author{
-Giona Casiraghi
-
 Giona Casiraghi
 }
 \keyword{models}
