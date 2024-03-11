@@ -95,7 +95,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
   }
   
   if(directedBlocks){
-    full_join(labs_map,labs_map,  by = 'matchme') %>% select(-"matchme") %>%
+    full_join(relationship = "many-to-many",labs_map,labs_map,  by = 'matchme') %>% select(-"matchme") %>%
       rowwise() %>%
       mutate(lab = paste(.data$labs.x,.data$labs.y, sep = '->'),
              id = if_else(.data$ids.x<=.data$ids.y,.data$ids.x*.data$ids.y,-.data$ids.x*.data$ids.y)) %>%
@@ -108,7 +108,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
     blocks[abs(blocks) %in% unique(blockids)^2] <- abs(blocks[abs(blocks) %in% unique(blockids)^2])
   } else{
     if(!bipartite){
-      full_join(labs_map,labs_map,  by = 'matchme') %>% select(-"matchme") %>%
+      full_join(relationship = "many-to-many",labs_map,labs_map,  by = 'matchme') %>% select(-"matchme") %>%
         rowwise() %>%
         mutate(lab = paste(.data$labs.x,.data$labs.y, sep = '<->'),
                id = .data$ids.x*.data$ids.y) %>%
@@ -117,7 +117,7 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
         labs_map
     }
     if(bipartite){
-      full_join(labs_map1,labs_map2,  by = 'matchme') %>% select(-"matchme") %>%
+      full_join(relationship = "many-to-many",labs_map1,labs_map2,  by = 'matchme') %>% select(-"matchme") %>%
         rowwise() %>%
         mutate(lab = paste(.data$labs.x,.data$labs.y, sep = '<->'),
                id = .data$ids.x*.data$ids.y) %>%
@@ -225,10 +225,10 @@ bccm <- function(adj, labels, directed = NULL, selfloops = NULL, directedBlocks 
 
 
   omegab <- data.frame(block=xib$block,omegab=omega.v) %>%
-    left_join(labs_map, by = c('block'='id'))
+    left_join(relationship = "many-to-many",labs_map, by = c('block'='id'))
 
   # map values to full omega vector
-  omegav <- left_join(xiframe, omegab %>% select('block','omegab'), by = 'block') %>% pull(omegab)
+  omegav <- left_join(relationship = "many-to-many",xiframe, omegab %>% select('block','omegab'), by = 'block') %>% pull(omegab)
   # omegav <- plyr::mapvalues(xiframe$block,from=sort(xiframe$block), to=omegab$omega[order(omegab$block)])
 
   # generate omega matrix
