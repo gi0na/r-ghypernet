@@ -8,7 +8,6 @@ logo.svg
 vignettes/.gitignore
 vignettes/.Rhistory
 LICENSE
-^\.travis\.yml$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
