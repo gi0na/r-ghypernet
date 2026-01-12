@@ -1,5 +1,7 @@
 # ghypernet 1.1.2
 
+- fixed reversed dependency issues for dplyr:::id "no visible binding for global variable 'id'" errors. 
+
 - bug fixes:
 * `bccm()`: fixed bug that returned wrongly filled omegaBlock matrix. The bug should not have affected the model fit itself.
 
