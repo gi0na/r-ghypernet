@@ -1,3 +1,6 @@
+# fix dplyr::id "no visible binding for global variable 'id'" errors:
+utils::globalVariables("id")
+
 updateModel <- function(model, adj){
 
   callname <- as.character(model$call[1])
