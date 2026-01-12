@@ -1,4 +1,4 @@
-# ghypernet 1.1.1.1
+# ghypernet 1.1.2
 
 - bug fixes:
 * `bccm()`: fixed bug that returned wrongly filled omegaBlock matrix. The bug should not have affected the model fit itself.

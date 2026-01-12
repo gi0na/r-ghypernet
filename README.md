@@ -63,4 +63,4 @@ The research and development behind `ghypernet` is performed at the Chair of Sys
 # Copyright
 `ghypernet` is licensed under the [GNU Affero General Public License](https://choosealicense.com/licenses/agpl-3.0/).
 
-(c) Copyright ETH Zürich, 2016-2021
+(c) Copyright ETH Zürich, 2016-2026
