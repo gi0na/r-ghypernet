@@ -50,6 +50,7 @@ check_specs <- function(object, ...){
   UseMethod('check_specs')
 }
 
+#' @exportS3Method
 check_specs.matrix <- function(object, ...){
   if(is.matrix(object)){
     if(nrow(object) != ncol(object)){

@@ -29,7 +29,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
   }
 
   adj <- graph
-  if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
+  if(requireNamespace("igraph", quietly = TRUE) && igraph::is_igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
     if(!directed)
       adj <- adj + t(adj)
@@ -269,7 +269,7 @@ isNetwork <- function(graph, directed, selfloops, Beta=TRUE, nempirical=NULL, pa
   if(conftest$p.value >= 1e-3){
     method <- 'LR test -- optimal = gnp vs full model'
     adj <- graph
-    if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
+    if(requireNamespace("igraph", quietly = TRUE) && igraph::is_igraph(graph)){
       adj <- igraph::get.adjacency(graph, type='upper', sparse = FALSE)
       if(!directed)
         adj <- adj + t(adj)
@@ -347,7 +347,7 @@ gof.test <- function(model, Beta=TRUE, nempirical = NULL, parallel = NULL, retur
 #' 
 link_significance <- function(graph, model, under=FALSE, log.p=FALSE, binomial.approximation = FALSE, give_pvals = TRUE){
   adj <- graph
-  if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(graph)){
+  if(requireNamespace("igraph", quietly = TRUE) && igraph::is_igraph(graph)){
     adj <- igraph::get.adjacency(graph, type='both', sparse = FALSE)
     # if(!directed)
     #   adj <- adj + t(adj)

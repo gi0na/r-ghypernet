@@ -19,10 +19,10 @@ Description: Provides functions for model fitting and selection of generalised h
     Please reference its use as Casiraghi, G., Nanumyan, V. (2019) <doi:10.5281/zenodo.2555300>
     together with those relevant references from the one listed below.
     The package is based on the research developed at the Chair of Systems Design, ETH Zurich.
-    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) <arXiv:1607.02441>.
+    Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2016) <doi:10.48550/arXiv.1607.02441>.
     Casiraghi, G., Nanumyan, V., Scholtes, I., Schweitzer, F. (2017) <doi:10.1007/978-3-319-67256-4_11>.
-    Casiraghi, G., (2017) <arXiv:1702.02048>
-    Brandenberger, L., Casiraghi, G., Nanumyan, V., Schweitzer, F. (2019) <doi:10.1145/3341161.3342926>
+    Casiraghi, G., (2017) <doi:10.48550/arXiv.1702.02048>.
+    Brandenberger, L., Casiraghi, G., Nanumyan, V., Schweitzer, F. (2019) <doi:10.1145/3341161.3342926>.
     Casiraghi, G. (2019) <doi:10.1007/s41109-019-0241-1>.
     Casiraghi, G., Nanumyan, V. (2021) <doi:10.1038/s41598-021-92519-y>.
     Casiraghi, G. (2021) <doi:10.1088/2632-072X/ac0493>.
@@ -49,7 +49,7 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Language: en-GB
 LazyData: true
 Config/testthat/edition: 3
