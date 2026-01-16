@@ -1,9 +1,12 @@
 # ghypernet 1.1.2
 
+- removed dependency from `extraDistr` (orphaned package):
+* introduced helper functions for handling multivariate hypergeometric density and sampling: `dmvhyper_base` and `rmvhyper_base`.
+
 - fixed reversed dependency issues for dplyr:::id "no visible binding for global variable 'id'" errors. 
 
 - bug fixes:
-* `bccm()`: fixed bug that returned wrongly filled omegaBlock matrix. The bug should not have affected the model fit itself.
+* `bccm()`: fixed bug that returned wrongly filled omegaBlock matrix. The bug did not affect the model fit itself.
 
 # ghypernet 1.1.1
 

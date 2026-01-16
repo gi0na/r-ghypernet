@@ -44,8 +44,8 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
   xiconfiguration <- compute_xi(adj, directed, selfloops)
 
   # if(nrow(adj)<50){
-    loglikeregular <- extraDistr::dmvhyper(x = adj[ix], n = xiregular[ix], k = m, log = TRUE)
-    loglikeconf <- extraDistr::dmvhyper(x = adj[ix], n = xiconfiguration[ix], k = m, log = TRUE)
+    loglikeregular <- dmvhyper_base(x = adj[ix], n = xiregular[ix], k = m, log = TRUE)
+    loglikeconf <- dmvhyper_base(x = adj[ix], n = xiconfiguration[ix], k = m, log = TRUE)
   # } else{
   #   print(sum(xiregular[ix]))
   #   loglikeregular <- stats::dmultinom(x = adj[ix], prob = xiregular[ix]/sum(xiregular[ix]), log = TRUE)
@@ -62,7 +62,7 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
 
   gees <- NULL
   if(nrow(adj)<200){
-    gees <- extraDistr::rmvhyper(nn = nempirical, n = xiregular[ix], k = m)
+    gees <- rmvhyper_base(nn = nempirical, n = xiregular[ix], k = m)
   } else{
     gees <- stats::rmultinom(n = nempirical, prob = xiregular[ix]/sum(xiregular[ix]), size = m)
   }
@@ -78,8 +78,8 @@ conf.test <- function(graph, directed, selfloops, nempirical=NULL, parallel=NULL
     tmp <- vec2mat(adjr,directed,selfloops,n = n)
     if(!directed & n[2]==n[3]) tmp <- tmp + t(tmp) - diag(diag(tmp))
     xiconfigurationr <- compute_xi(tmp, directed, selfloops)
-    loglikeregularr <- extraDistr::dmvhyper(x = adjr, n = xiregular[ix], k = m, log = TRUE)
-    loglikeconfr <- extraDistr::dmvhyper(x = adjr, n = xiconfigurationr[ix], k = m, log = TRUE)
+    loglikeregularr <- dmvhyper_base(x = adjr, n = xiregular[ix], k = m, log = TRUE)
+    loglikeconfr <- dmvhyper_base(x = adjr, n = xiconfigurationr[ix], k = m, log = TRUE)
     -2 * (loglikeregularr-loglikeconfr)
   }, mc.cores = ncores))
 

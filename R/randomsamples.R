@@ -53,7 +53,7 @@ rghype <- function(nsamples, model, m=NULL, multinomial=NULL, seed=NULL){
     set.seed(seed)
   }
   if(all(omega == omega[1]) & m<23331){
-    rvec <- t(extraDistr::rmvhyper(nn = nsamples, n = xi, k = m))
+    rvec <- t(rmvhyper_base(nn = nsamples, n = xi, k = m))
   } else{
     if (multinomial) {
       p <- omega*xi/sum(omega*xi)
