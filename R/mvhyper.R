@@ -1,3 +1,5 @@
+# Introducing two helper functions to remove dependency from extraDistr (orphaned since 01-2026)
+
 #' Log PMF of multivariate hypergeometric
 #'
 #' @param x integer vector of counts drawn in each category

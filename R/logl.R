@@ -160,18 +160,13 @@ logl_hypergeom <- function(adj,
   # Returns the log-likelihood of
   # the model given by 'xi' and
   # 'omega'.
-  if (!requireNamespace("extraDistr",
-                        quietly = TRUE)) {
-    stop("extraDistr needed for this function to work. Please install it.",
-         call. = FALSE)
-  }
+
   # get indices
   ix <- mat2vec.ix(adj, directed,
                    selfloops)
   # compute likelihood according
-  # to wallenius distribution: it
-  # uses BiasedUrn package
-  extraDistr::dmvhyper(x = adj[ix],
+  # to hypergeometric distribution
+  dmvhyper_base(x = adj[ix],
                        k = sum(adj[ix]), n = xi[ix],
                        log = TRUE)
 }
