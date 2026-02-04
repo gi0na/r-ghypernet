@@ -36,8 +36,8 @@ Imports: pbmcapply,
          rlang,
          reshape2,
          rootSolve,
-         methods,
-         texreg
+         texreg,
+         methods
 Suggests: 
     BiasedUrn,
     igraph,

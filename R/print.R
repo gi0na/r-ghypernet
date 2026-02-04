@@ -254,6 +254,7 @@ coef.nrm <- function(object, ...) {
 #' @return The function returns a texreg object.
 #' @export
 #' @importFrom texreg extract screenreg texreg htmlreg
+#' @importFrom methods setMethod
 #' @author L. Brandenberger, G. Casiraghi
 extract.nrm.cluster <- function(model, ...){
   # calculate SE, tvalues and pvalues
