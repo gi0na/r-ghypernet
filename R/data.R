@@ -121,7 +121,7 @@
 #'   school: A comparison between data collected using wearable sensors, contact
 #'   diaries and friendship surveys. PLoS One 10, 1–26 (2015).
 #'   
-#' @source \href{https://www.sociopatterns.org/}{https://www.sociopatterns.org/}
+#' @source \href{https://sociopatterns.org/}{https://sociopatterns.org/}
 #'   
 "highschool.multiplex"
 
@@ -145,7 +145,7 @@
 #'   school: A comparison between data collected using wearable sensors, contact
 #'   diaries and friendship surveys. PLoS One 10, 1–26 (2015).
 #'
-#' @source \href{https://www.sociopatterns.org/}{https://www.sociopatterns.org/}
+#' @source \href{https://sociopatterns.org/}{https://sociopatterns.org/}
 #'   
 "highschool.predictors"
 
@@ -168,6 +168,6 @@
 #' Mastrandrea, R., Fournet, J. & Barrat, A. Contact patterns in a high school:
 #' A comparison between data collected using wearable sensors, contact diaries
 #' and friendship surveys. PLoS One 10, 1–26 (2015).
-#' @source \href{https://www.sociopatterns.org/}{https://www.sociopatterns.org/}
+#' @source \href{https://sociopatterns.org/}{https://sociopatterns.org/}
 #'   
 "contacts.adj"
