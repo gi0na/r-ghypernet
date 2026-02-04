@@ -23,6 +23,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(ggplot2)
+theme_set(theme_gray(base_family = "Helvetica"))
 ```
 
 # Introduction
