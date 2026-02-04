@@ -105,6 +105,7 @@ coxsnellR2 <- function(mod0, mod1, m) {
 }
 
 # vcov
+#' @exportS3Method
 vcov.nrm <- function(object, ...){
   solve(Jn(model = object))
 }

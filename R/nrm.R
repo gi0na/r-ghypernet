@@ -299,22 +299,22 @@ predict.nrm <- function(object,
     }
   }
   if (multinomial) {
-    return(predict.nrm.multinomial(m, 
+    return(predict_nrm_multinomial(m, 
                                    xi, omega, ix))
   } else {
-    return(predict.nrm.wallenius(m, 
+    return(predict_nrm_wallenius(m, 
                                  xi, omega, ix))
   }
 }
 
-predict.nrm.multinomial <- function(m, 
+predict_nrm_multinomial <- function(m, 
                                     xi, omega, ix) {
   p <- xi[ix] * omega[ix]/
     sum(xi[ix] * omega[ix])
   return(m * p)
 }
 
-predict.nrm.wallenius <- function(m, 
+predict_nrm_wallenius <- function(m, 
                                   xi, omega, ix) {
   return(BiasedUrn::meanMWNCHypergeo(m = xi[ix], 
                                      n = m, odds = omega[ix]))

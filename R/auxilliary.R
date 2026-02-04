@@ -1,3 +1,6 @@
+# fix dplyr::id "no visible binding for global variable 'id'" errors:
+utils::globalVariables("id")
+
 updateModel <- function(model, adj){
 
   callname <- as.character(model$call[1])
@@ -47,6 +50,7 @@ check_specs <- function(object, ...){
   UseMethod('check_specs')
 }
 
+#' @exportS3Method
 check_specs.matrix <- function(object, ...){
   if(is.matrix(object)){
     if(nrow(object) != ncol(object)){

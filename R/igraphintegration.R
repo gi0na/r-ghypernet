@@ -1,4 +1,5 @@
 # auxiliary function for to extract igraph properties
+#' @exportS3Method
 check_specs.igraph <- function(object, ...){
   if(requireNamespace("igraph", quietly = TRUE) && igraph::is.igraph(object)){
     # if(is.null(directed)){
