@@ -1,207 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Significantlinks.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Tutorial_NRM.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/tutorial.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BootstrapProperty.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ComputeXi.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CreateIgGraphs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/FitOmega.html</loc>
-  </url>
-  <url>
-    <loc>/reference/JnBlock.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RMSE.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RMSLE.html</loc>
-  </url>
-  <url>
-    <loc>/reference/adj2el.html</loc>
-  </url>
-  <url>
-    <loc>/reference/adj_karate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.ghype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bccm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/checkGraphtype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coef.nrm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compute_xi.html</loc>
-  </url>
-  <url>
-    <loc>/reference/conf.test.html</loc>
-  </url>
-  <url>
-    <loc>/reference/contacts.adj.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cospons_mat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coxsnellR2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createPredictors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createPredictors.list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_predictors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_predictors.list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dtcommittee.html</loc>
-  </url>
-  <url>
-    <loc>/reference/el2adj.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extract.nrm.cluster.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_zero_dummy.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ghype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gof.test.html</loc>
-  </url>
-  <url>
-    <loc>/reference/highschool.multiplex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/highschool.predictors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/homophily_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/isNetwork.html</loc>
-  </url>
-  <url>
-    <loc>/reference/linkSignificance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/link_significance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/logLik.ghype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/logl.html</loc>
-  </url>
-  <url>
-    <loc>/reference/loglratio.html</loc>
-  </url>
-  <url>
-    <loc>/reference/lr.test.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mat2vec.ix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mcfaddenR2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nr.ci.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nr.significance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nrm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nrm_choose.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nrm_selection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/onlinesim_mat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict.nrm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/reciprocity_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/regularm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/residuals.nrm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rghype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sharedPartner_stat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.nrm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.nrm_selection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vec2mat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vertexlabels.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/Significantlinks.html</loc></url>
+<url><loc>/articles/Tutorial_NRM.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/tutorial.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/BootstrapProperty.html</loc></url>
+<url><loc>/reference/CreateIgGraphs.html</loc></url>
+<url><loc>/reference/FitOmega.html</loc></url>
+<url><loc>/reference/JnBlock.html</loc></url>
+<url><loc>/reference/RMSE.html</loc></url>
+<url><loc>/reference/RMSLE.html</loc></url>
+<url><loc>/reference/adj2el.html</loc></url>
+<url><loc>/reference/adj_karate.html</loc></url>
+<url><loc>/reference/as.ghype.html</loc></url>
+<url><loc>/reference/bccm.html</loc></url>
+<url><loc>/reference/checkGraphtype.html</loc></url>
+<url><loc>/reference/coef.nrm.html</loc></url>
+<url><loc>/reference/compute_xi.html</loc></url>
+<url><loc>/reference/conf.test.html</loc></url>
+<url><loc>/reference/contacts.adj.html</loc></url>
+<url><loc>/reference/cospons_mat.html</loc></url>
+<url><loc>/reference/coxsnellR2.html</loc></url>
+<url><loc>/reference/createPredictors.list.html</loc></url>
+<url><loc>/reference/create_predictors.html</loc></url>
+<url><loc>/reference/create_predictors.list.html</loc></url>
+<url><loc>/reference/dmvhyper_base.html</loc></url>
+<url><loc>/reference/dt.html</loc></url>
+<url><loc>/reference/dtcommittee.html</loc></url>
+<url><loc>/reference/el2adj.html</loc></url>
+<url><loc>/reference/extract.nrm.cluster.html</loc></url>
+<url><loc>/reference/get_zero_dummy.html</loc></url>
+<url><loc>/reference/ghype.html</loc></url>
+<url><loc>/reference/gof.test.html</loc></url>
+<url><loc>/reference/highschool.multiplex.html</loc></url>
+<url><loc>/reference/highschool.predictors.html</loc></url>
+<url><loc>/reference/homophily_stat.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/isNetwork.html</loc></url>
+<url><loc>/reference/linkSignificance.html</loc></url>
+<url><loc>/reference/link_significance.html</loc></url>
+<url><loc>/reference/logLik.ghype.html</loc></url>
+<url><loc>/reference/logl.html</loc></url>
+<url><loc>/reference/loglratio.html</loc></url>
+<url><loc>/reference/lr.test.html</loc></url>
+<url><loc>/reference/mat2vec.ix.html</loc></url>
+<url><loc>/reference/mcfaddenR2.html</loc></url>
+<url><loc>/reference/nr.ci.html</loc></url>
+<url><loc>/reference/nr.significance.html</loc></url>
+<url><loc>/reference/nrm.html</loc></url>
+<url><loc>/reference/nrm_choose.html</loc></url>
+<url><loc>/reference/nrm_selection.html</loc></url>
+<url><loc>/reference/onlinesim_mat.html</loc></url>
+<url><loc>/reference/predict.nrm.html</loc></url>
+<url><loc>/reference/reciprocity_stat.html</loc></url>
+<url><loc>/reference/regularm.html</loc></url>
+<url><loc>/reference/residuals.nrm.html</loc></url>
+<url><loc>/reference/rghype.html</loc></url>
+<url><loc>/reference/rmvhyper_base.html</loc></url>
+<url><loc>/reference/scm.html</loc></url>
+<url><loc>/reference/sharedPartner_stat.html</loc></url>
+<url><loc>/reference/summary.nrm.html</loc></url>
+<url><loc>/reference/summary.nrm_selection.html</loc></url>
+<url><loc>/reference/vec2mat.html</loc></url>
+<url><loc>/reference/vertexlabels.html</loc></url>
 </urlset>
+
